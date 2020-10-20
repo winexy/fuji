@@ -1,8 +1,8 @@
 import type { VContext, VFunc, VError, Fuji } from './types';
 import { createContext } from './utils';
 
-export function validate(
-  schema: Fuji, 
+export function validate<T>(
+  schema: Fuji<T>, 
   context: VContext
 ): VContext {
   return schema.rules.reduce(
@@ -10,11 +10,11 @@ export function validate(
   );
 }
 
-function runWith<T>(schema: Fuji, v: T): VError[] {
-  const res = validate(schema, createContext<T>(v));
+function runWith<T>(schema: Fuji<T>, v: T): VError[] {
+  const res = validate<T>(schema, createContext<T>(v));
   return res.errors;
 }
 
-const fuji = (...rules: VFunc[]): Fuji => ({ rules });
+const fuji = <T>(...rules: VFunc<T>[]): Fuji<T> => ({ rules });
 
 export { fuji, runWith };

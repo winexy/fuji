@@ -2,7 +2,7 @@ import type { ShapeSchema, VContext, VFunc } from '../types';
 import { validate } from '../fuji';
 import { isUndef } from '../utils';
 
-function validateShape(schema: ShapeSchema, context: VContext) {
+function validateShape<T>(schema: ShapeSchema<T>, context: VContext) {
   return Object.keys(schema).reduce((ctx, key) => {
     const res = validate(schema[key], {
       root: ctx.root,
@@ -20,7 +20,8 @@ function validateShape(schema: ShapeSchema, context: VContext) {
   }, context);
 }
 
-export const shape = (schema: ShapeSchema): VFunc =>
+export const shape = <T>(schema: ShapeSchema<T>): VFunc =>
   function ObjectOfV8N(ctx) {
     return validateShape(schema, ctx);
   };
+  

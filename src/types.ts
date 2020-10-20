@@ -1,5 +1,5 @@
-export type Fuji = {
-  rules: VFunc[];
+export type Fuji<T> = {
+  rules: VFunc<T>[];
 }
 
 export type VFunc<T = any> = (ctx: VContext<T>) => VContext<T>;
@@ -19,5 +19,5 @@ export type VContext<T = any> = {
 
 
 export type RequiredIfPredicate = (root: VContext['root'], value: any) => boolean;
-export type TransformFunc = <A>(current: A, original: A) => A;
-export type ShapeSchema = Record<string, Fuji>;
+export type TransformFunc<T> = (current: T, original: T) => T;
+export type ShapeSchema<T> = Record<string, Fuji<T>>;
