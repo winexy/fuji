@@ -1,10 +1,9 @@
 import type { ShapeSchema, VContext, VFunc } from '../types';
 import { validate } from '../fuji';
-import { isUndef, log } from '../utils';
+import { isUndef } from '../utils';
 
 function validateShape(schema: ShapeSchema, context: VContext) {
   return Object.keys(schema).reduce((ctx, key) => {
-    log('-'.repeat(ctx.path.length + 1), key);
     const res = validate(schema[key], {
       root: ctx.root,
       original: !isUndef(ctx.original)
@@ -15,7 +14,6 @@ function validateShape(schema: ShapeSchema, context: VContext) {
       errors: [],
     });
 
-    log('result', res.path, res.errors);
     ctx.errors.push(...res.errors);
 
     return ctx;
