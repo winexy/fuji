@@ -11,8 +11,8 @@ export function validate<T>(
 }
 
 function runWith<T>(schema: Fuji<T>, v: T): VError[] {
-  const res = validate<T>(schema, createContext<T>(v));
-  return res.errors;
+  const { errors } = validate<T>(schema, createContext<T>(v));
+  return errors;
 }
 
 const fuji = <T>(...rules: VFunc<T>[]): Fuji<T> => ({ rules });
