@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint src/**/*.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
