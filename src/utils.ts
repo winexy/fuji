@@ -19,7 +19,7 @@ export const createError = (
   meta
 });
 
-export const createContext = <T>(value: T): VContext => ({
+export const createContext = <R>(value: R): VContext<R> => ({
   original: value,
   current: value,
   root: value,
