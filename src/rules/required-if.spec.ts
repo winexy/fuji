@@ -1,11 +1,13 @@
+import { random } from 'faker';
 import { requiredIf } from './required-if';
 import { createContext } from '../utils';
 import { VFunc } from '../types';
 
 describe('rules.required-if', () => {
   let rule: VFunc<{ v: number }>;
+  let msg = random.word();
   beforeEach(() => {
-    rule = requiredIf<{ v: number }>(root => root.v === 42, 'required-if error');
+    rule = requiredIf<{ v: number }>(root => root.v === 42, msg);
   });
 
   it('should return provided error message for invalid value', () => {
@@ -14,7 +16,7 @@ describe('rules.required-if', () => {
 
     const res = rule(ctx);
 
-    expect(res.errors[0]).toHaveProperty('message', 'required-if error');
+    expect(res.errors[0]).toHaveProperty('message', msg);
   });
 
   it('should push errors for true predicate', () => {

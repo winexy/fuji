@@ -1,15 +1,17 @@
+import { random } from 'faker';
 import { string } from './string';
 import { createContext } from '../utils';
 
 describe('rules.string', () => {
   let rule = null;
+  let msg = random.word();
   beforeEach(() => {
-    rule = string('string error');
+    rule = string(msg);
   });
 
   it('should push provided message for invalid value', () => {
     const { errors } = rule(createContext({}));
-    expect(errors[0]).toHaveProperty('message', 'string error');
+    expect(errors[0]).toHaveProperty('message', msg);
   });
 
   it('should push error for number', () => {
