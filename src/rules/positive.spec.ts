@@ -1,9 +1,10 @@
 import { random } from 'faker';
 import { positive } from './positive';
 import { createContext } from '../utils';
+import { VFunc } from '../types';
 
 describe('rules.positive', () => {
-  let rule;
+  let rule: VFunc<number>;
   let msg = random.word();
   beforeEach(() => {
     rule = positive(msg);

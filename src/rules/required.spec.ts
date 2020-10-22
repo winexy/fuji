@@ -1,8 +1,9 @@
 import { required } from './required';
 import { createContext } from '../utils';
+import { VFunc } from '../types';
 
 describe('rules.required', () => {
-  let rule;
+  let rule: VFunc<any>;
   beforeEach(() => {
     rule = required('error');
   });

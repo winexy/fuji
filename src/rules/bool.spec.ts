@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { random } from 'faker';
 import { bool } from './bool';
 import { createContext } from '../utils';

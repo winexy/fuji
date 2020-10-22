@@ -1,9 +1,10 @@
 import { random } from 'faker';
 import { string } from './string';
 import { createContext } from '../utils';
+import { VFunc } from '../types';
 
 describe('rules.string', () => {
-  let rule = null;
+  let rule: VFunc<string>;
   let msg = random.word();
   beforeEach(() => {
     rule = string(msg);
