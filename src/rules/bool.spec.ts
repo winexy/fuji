@@ -4,9 +4,9 @@ import { createContext } from '../utils';
 
 describe('rules.bool', () => {
   let rule;
-  let msg;
+  let msg = random.word();
   beforeEach(() => {
-    rule = bool(random.word());
+    rule = bool(msg);
   });
 
   it('should contain err message for invalid value', () => {
