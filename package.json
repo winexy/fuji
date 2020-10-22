@@ -1,16 +1,26 @@
 {
   "name": "fuji",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "prepublish": "npm run lint && npm run test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/winexy/fuji"
+  },
+  "engines" : { 
+    "node" : ">= 12.16.2" 
+  },
+  "author": "Seitmagambet Olzhas",
+  "description": "",
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
