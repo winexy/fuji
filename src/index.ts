@@ -39,4 +39,4 @@ export { min } from './rules/min';
 export { max } from './rules/max';
 export { between } from './rules/between';
 
-export { fuji } from './fuji';
+export { fuji, runWith } from './fuji';
