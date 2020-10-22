@@ -1,4 +1,4 @@
-import ts from '@rollup/plugin-typescript';
+import ts from "@wessberg/rollup-plugin-ts";
 import { terser } from 'rollup-plugin-terser';
 
 export default {
@@ -13,5 +13,8 @@ export default {
       format: 'cjs'
     }
   ],
-  plugins: [ts({ lib: ['es6'] }), terser()]
+  plugins: [
+    ts(),
+    terser()
+  ]
 };
