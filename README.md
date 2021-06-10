@@ -1,0 +1,6 @@
+![version](https://badgen.net/npm/v/@winexy/fuji)
+![types](https://badgen.net/npm/types/tslib)
+![minified](https://badgen.net/bundlephobia/min/@winexy/fuji)
+![minified + gzip](https://badgen.net/bundlephobia/minzip/@winexy/fuji)
+![dependencies](https://badgen.net/bundlephobia/dependency-count/@winexy/fuji)
+![tree-shaking](https://badgen.net/bundlephobia/tree-shaking/@winexy/fuji)
