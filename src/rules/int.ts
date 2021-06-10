@@ -3,7 +3,7 @@ import { createError } from '../utils'
 
 export type IntType = 'int'
 
-export const int = (msg: string): VFunc<number> =>
+export const int = (msg?: string): VFunc<number> =>
   function IntV8N(ctx) {
     if (!Number.isInteger(ctx.current)) {
       ctx.errors.push(createError('int', msg, ctx))

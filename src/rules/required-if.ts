@@ -5,7 +5,7 @@ export type RequiredIfType = 'required-if'
 
 export const requiredIf = <T = any>(
   predicate: RequiredIfPredicate,
-  msg: string
+  msg?: string
 ): VFunc<T> =>
   function RequiredIfV8N(ctx) {
     if (predicate(ctx.root, ctx.current) && isUndef(ctx.current)) {
