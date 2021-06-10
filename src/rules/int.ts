@@ -1,6 +1,8 @@
 import type { VFunc } from '../types';
 import { createError } from '../utils';
 
+export type IntType = 'int';
+
 export const int = (msg: string): VFunc<number> =>
   function IntV8N(ctx) {
     if (!Number.isInteger(ctx.current)) {

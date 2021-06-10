@@ -1,6 +1,8 @@
 import type { VFunc } from '../types';
 import { createError, isUndef } from '../utils';
 
+export type ArrayType = 'array';
+
 export const array = (msg: string): VFunc<any[]> =>
   function ArrayV8N(ctx) {
     if (!isUndef(ctx.current) && !Array.isArray(ctx.current)) {

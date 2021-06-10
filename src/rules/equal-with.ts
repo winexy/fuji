@@ -1,6 +1,8 @@
 import type { VFunc } from '../types';
 import { createError } from '../utils';
 
+export type EqualWithType = 'equal-with';
+
 export const equalWith = (f: (root: any) => any, msg: string): VFunc =>
   function EqualWithV8N(ctx) {
     if (f(ctx.root) !== ctx.current) {

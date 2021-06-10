@@ -1,6 +1,8 @@
 import type { VFunc } from '../types';
 import { createError } from '../utils';
 
+export type MaxLengthType = 'max-length';
+
 export const maxLength = <T>(limit: number, msg: string): VFunc<T[]> =>
   function MaxLenV8N(ctx) {
     if (ctx.current != null && ctx.current.length > limit) {

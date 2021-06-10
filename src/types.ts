@@ -1,23 +1,57 @@
 import { FujiConfig } from './fuji';
 import type { StringType } from './rules/string';
-import type { RequiredType } from './rules/required'
+import type { RequiredType } from './rules/required';
 import type { RequiredIfType } from './rules/required-if';
 import type { PositiveType } from './rules/positive';
 import type { BoolType } from './rules/bool';
 import type { IncludesType } from './rules/includes';
 import type { OneOfType } from './rules/one-of';
-import { CustomRuleI } from './rules/use';
+import type { CustomRuleI } from './rules/use';
+import type { ArrayType } from './rules/array';
+import type { EqualToType } from './rules/equal-to';
+import type { BetweenType } from './rules/between';
+import type { EqualWithType } from './rules/equal-with';
+import type { EvenType } from './rules/even';
+import type { InstanceOfType } from './rules/instance-of';
+import type { MaxType } from './rules/max';
+import type { MaxLengthType } from './rules/max-length';
+import type { IntType } from './rules/int';
+import type { MinLengthType } from './rules/min-length';
+import type { NegativeType } from './rules/negative';
+import type { NumberType } from './rules/number';
+import type { ObjectType } from './rules/object';
+import type { OddType } from './rules/odd';
+import type { PatternType } from './rules/pattern';
+import type { NumericType } from './rules/numeric';
+import type { MinType } from './rules/min';
 
-export type ErrorType = StringType
+export type ErrorType =
+  | StringType
   | RequiredType
   | RequiredIfType
   | PositiveType
   | BoolType
   | IncludesType
   | OneOfType
+  | ArrayType
+  | EqualToType
+  | EqualWithType
+  | BetweenType
+  | EvenType
+  | InstanceOfType
+  | MaxType
+  | MinType
+  | MaxLengthType
+  | IntType
+  | MinLengthType
+  | NegativeType
+  | NumberType
+  | ObjectType
+  | OddType
+  | PatternType
+  | NumericType
   | CustomRuleI['Type']
-  | 'unsupported-type'
-
+  | 'unsupported-type';
 
 export type Fuji<T> = {
   rules: VFunc<T>[];

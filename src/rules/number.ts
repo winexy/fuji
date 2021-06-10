@@ -1,6 +1,8 @@
 import type { VFunc } from '../types';
 import { createError } from '../utils';
 
+export type NumberType = 'number';
+
 export const number = (msg: string): VFunc<number> =>
   function NumberV8N(ctx) {
     if (typeof ctx.current !== 'number' || Number.isNaN(ctx.current)) {
