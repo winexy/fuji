@@ -1,7 +1,7 @@
-// @ts-nocheck
 import { random } from 'faker';
 import { bool } from './bool';
 import { createContext } from '../utils';
+import { DEFAULT_CONFIG } from '../fuji';
 
 describe('rules.bool', () => {
   let rule;
@@ -11,17 +11,17 @@ describe('rules.bool', () => {
   });
 
   it('should contain err message for invalid value', () => {
-    const { errors } = rule(createContext('test'));
+    const { errors } = rule(createContext('test', DEFAULT_CONFIG));
     expect(errors[0]).toHaveProperty('message', msg);
   });
 
   it('should push error for invalid value', () => {
-    const { errors } = rule(createContext(42));
+    const { errors } = rule(createContext(42, DEFAULT_CONFIG));
     expect(errors).toBeArrayOfSize(1);
   });
 
   it('should contain err message for invalid value', () => {
-    const { errors } = rule(createContext(false));
+    const { errors } = rule(createContext(false, DEFAULT_CONFIG));
     expect(errors).toBeEmpty();
   });
 });
