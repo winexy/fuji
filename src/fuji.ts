@@ -1,8 +1,9 @@
 import type { VContext, VFunc, VError, Fuji } from './types';
 import { createContext } from './utils';
+import { ErrorType, ErrContext } from './types';
 
 export function validate<T>(
-  schema: Fuji<T>, 
+  schema: Fuji<T>,
   context: VContext
 ): VContext {
   return schema.rules.reduce(
@@ -10,8 +11,29 @@ export function validate<T>(
   );
 }
 
-function runWith<T>(schema: Fuji<T>, v: T): VError[] {
-  const { errors } = validate<T>(schema, createContext<T>(v));
+export type FujiConfig = {
+  failFast: boolean,
+  allowUnknown: boolean,
+  dict: Record<ErrorType, (context: ErrContext) => string>
+}
+
+export const DEFAULT_DICT: FujiConfig['dict'] = {
+}
+
+export const DEFAULT_CONFIG: FujiConfig = {
+  failFast: false,
+  allowUnknown: false,
+  dict: DEFAULT_DICT
+}
+
+function createConfig(config: Partial<FujiConfig>): FujiConfig {
+  return { ...config, ...DEFAULT_CONFIG }
+}
+
+function runWith<T>(schema: Fuji<T>, v: T, config: Partial<FujiConfig> = DEFAULT_CONFIG): VError[] {
+  const configuration = createConfig(config)
+  const context = createContext<T>(v, configuration)
+  const { errors } = validate<T>(schema, context);
   return errors;
 }
 

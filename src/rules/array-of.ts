@@ -10,7 +10,8 @@ export const arrayOf = <T>(schema: Fuji<T>): VFunc =>
           current: value,
           original: value,
           path: [...ctx.path, index.toString()],
-          errors: []
+          errors: [],
+          config: ctx.config
         });
 
         context.errors.push(...res.errors);

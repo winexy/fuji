@@ -1,4 +1,5 @@
-import { VContext } from './types';
+import { FujiConfig } from './fuji';
+import { VContext, ErrorType } from './types';
 
 export const isUndef = (v: any): v is undefined =>
   v === undefined;
@@ -8,21 +9,29 @@ export function log(...args: any) {
 }
 
 export const createError = (
-  type: string,
-  message = '', 
+  type: ErrorType,
+  msg = '',
   ctx: VContext,
   meta: Record<string, any> = {}
-) => ({
-  type,
-  message,
-  path: ctx.path.join('.'),
-  meta
-});
+) => {
+  const path = ctx.path.join('.')
+  const { dict } = ctx.config
+  const errContext = { ...ctx, joinedPath: path, meta }
+  const message = msg || dict[type](errContext)
 
-export const createContext = <R>(value: R): VContext<R> => ({
+  return {
+    type,
+    message,
+    path,
+    meta
+  }
+};
+
+export const createContext = <R>(value: R, config: FujiConfig): VContext<R> => ({
   original: value,
   current: value,
   root: value,
   errors: [],
-  path: []
+  path: [],
+  config
 });

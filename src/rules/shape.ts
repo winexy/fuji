@@ -12,6 +12,7 @@ function validateShape<T>(schema: ShapeSchema<T>, context: VContext) {
         ? ctx.current[key] : undefined,
       path: [...ctx.path, key],
       errors: [],
+      config: ctx.config
     });
 
     ctx.errors.push(...res.errors);
