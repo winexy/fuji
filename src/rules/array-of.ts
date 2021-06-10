@@ -1,7 +1,7 @@
-import type { Fuji, VFunc } from '../types';
-import { validate } from '../fuji';
+import type { Fuji, VFunc } from '../types'
+import { validate } from '../fuji'
 
-export const arrayOf = <T>(schema: Fuji<T>): VFunc => 
+export const arrayOf = <T>(schema: Fuji<T>): VFunc =>
   function ArrayOfV8N(context) {
     if (Array.isArray(context.current)) {
       return context.current.reduce((ctx, value, index) => {
@@ -12,13 +12,13 @@ export const arrayOf = <T>(schema: Fuji<T>): VFunc =>
           path: [...ctx.path, index.toString()],
           errors: [],
           config: ctx.config
-        });
+        })
 
-        context.errors.push(...res.errors);
+        context.errors.push(...res.errors)
 
-        return ctx;
-      }, context);
+        return ctx
+      }, context)
     }
 
-    return context; 
-  };
+    return context
+  }

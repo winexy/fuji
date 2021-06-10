@@ -1,7 +1,7 @@
-import type { RequiredIfPredicate, VFunc } from '../types';
-import { createError, isUndef } from '../utils';
+import type { RequiredIfPredicate, VFunc } from '../types'
+import { createError, isUndef } from '../utils'
 
-export type RequiredIfType = 'required-if';
+export type RequiredIfType = 'required-if'
 
 export const requiredIf = <T = any>(
   predicate: RequiredIfPredicate,
@@ -9,8 +9,8 @@ export const requiredIf = <T = any>(
 ): VFunc<T> =>
   function RequiredIfV8N(ctx) {
     if (predicate(ctx.root, ctx.current) && isUndef(ctx.current)) {
-      ctx.errors.push(createError('required-if', msg, ctx, { f: predicate }));
+      ctx.errors.push(createError('required-if', msg, ctx, { f: predicate }))
     }
 
-    return ctx;
-  };
+    return ctx
+  }

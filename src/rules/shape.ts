@@ -1,28 +1,25 @@
-import type { ShapeSchema, VContext, VFunc } from '../types';
-import { validate } from '../fuji';
-import { isUndef } from '../utils';
+import type { ShapeSchema, VContext, VFunc } from '../types'
+import { validate } from '../fuji'
+import { isUndef } from '../utils'
 
 function validateShape<T>(schema: ShapeSchema<T>, context: VContext) {
   return Object.keys(schema).reduce((ctx, key) => {
     const res = validate(schema[key], {
       root: ctx.root,
-      original: !isUndef(ctx.original)
-        ? ctx.original[key] : undefined,
-      current: !isUndef(ctx.current)
-        ? ctx.current[key] : undefined,
+      original: !isUndef(ctx.original) ? ctx.original[key] : undefined,
+      current: !isUndef(ctx.current) ? ctx.current[key] : undefined,
       path: [...ctx.path, key],
       errors: [],
       config: ctx.config
-    });
+    })
 
-    ctx.errors.push(...res.errors);
+    ctx.errors.push(...res.errors)
 
-    return ctx;
-  }, context);
+    return ctx
+  }, context)
 }
 
 export const shape = <T>(schema: ShapeSchema<T>): VFunc =>
   function ShapeOfV8N(ctx) {
-    return validateShape(schema, ctx);
-  };
-  
+    return validateShape(schema, ctx)
+  }

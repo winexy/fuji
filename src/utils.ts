@@ -1,11 +1,10 @@
-import { FujiConfig } from './fuji';
-import { VContext, ErrorType } from './types';
+import { FujiConfig } from './fuji'
+import { VContext, ErrorType } from './types'
 
-export const isUndef = (v: any): v is undefined =>
-  v === undefined;
+export const isUndef = (v: any): v is undefined => v === undefined
 
 export function log(...args: any) {
-  globalThis.console.log(...args);
+  globalThis.console.log(...args)
 }
 
 export const createError = (
@@ -25,13 +24,16 @@ export const createError = (
     path,
     meta
   }
-};
+}
 
-export const createContext = <R>(value: R, config: FujiConfig): VContext<R> => ({
+export const createContext = <R>(
+  value: R,
+  config: FujiConfig
+): VContext<R> => ({
   original: value,
   current: value,
   root: value,
   errors: [],
   path: [],
   config
-});
+})

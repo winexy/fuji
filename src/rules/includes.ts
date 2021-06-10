@@ -1,9 +1,12 @@
-import type { VFunc } from '../types';
-import { createError } from '../utils';
+import type { VFunc } from '../types'
+import { createError } from '../utils'
 
 export type IncludesType = 'includes'
 
-export const includes = <T>(target: T, msg?: string): VFunc<{ indexOf: (x: T) => number }> =>
+export const includes = <T>(
+  target: T,
+  msg?: string
+): VFunc<{ indexOf: (x: T) => number }> =>
   function IncludesV8N(ctx) {
     if (typeof ctx.current?.indexOf !== 'function') {
       ctx.errors.push(createError('unsupported-type', msg, ctx, { target }))
@@ -11,8 +14,8 @@ export const includes = <T>(target: T, msg?: string): VFunc<{ indexOf: (x: T) =>
     }
 
     if (ctx.current.indexOf(target) === -1) {
-      ctx.errors.push(createError('includes', msg, ctx, { target }));
+      ctx.errors.push(createError('includes', msg, ctx, { target }))
     }
 
-    return ctx;
-  };
+    return ctx
+  }

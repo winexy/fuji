@@ -1,13 +1,13 @@
-import type { VFunc } from '../types';
-import { createError } from '../utils';
+import type { VFunc } from '../types'
+import { createError } from '../utils'
 
-export type EvenType = 'even';
+export type EvenType = 'even'
 
 export const even = (msg: string): VFunc<number> =>
   function EvenV8N(ctx) {
     if (ctx.current % 2 === 1) {
-      ctx.errors.push(createError('even', msg, ctx));
+      ctx.errors.push(createError('even', msg, ctx))
     }
 
-    return ctx;
-  };
+    return ctx
+  }
