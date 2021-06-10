@@ -5,6 +5,11 @@ export type IncludesType = 'includes'
 
 export const includes = <T>(target: T, msg?: string): VFunc<{ indexOf: (x: T) => number }> =>
   function IncludesV8N(ctx) {
+    if (typeof ctx.current?.indexOf !== 'function') {
+      ctx.errors.push(createError('unsupported-type', msg, ctx, { target }))
+      return ctx
+    }
+
     if (ctx.current.indexOf(target) === -1) {
       ctx.errors.push(createError('includes', msg, ctx, { target }));
     }
