@@ -2,12 +2,13 @@ import { random } from 'faker';
 import { bool } from './bool';
 import { createContext } from '../utils';
 import { DEFAULT_CONFIG } from '../fuji';
+import { VFunc } from '../types';
 
 describe('rules.bool', () => {
-  let rule;
+  let rule: VFunc<boolean>;
   let msg = random.word();
   beforeEach(() => {
-    rule = bool(msg);
+    rule = bool(msg); 
   });
 
   it('should contain err message for invalid value', () => {
