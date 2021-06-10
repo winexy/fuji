@@ -1,6 +1,8 @@
 import type { VFunc } from '../types';
 import { createError, isUndef } from '../utils';
 
+export type RequiredType = 'required'
+
 export const required = (msg: string): VFunc =>
   function RequiredV8N(ctx) {
     if (isUndef(ctx.current) || ctx.current === '') {

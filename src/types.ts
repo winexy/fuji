@@ -1,4 +1,23 @@
-export type ErrorType = unknown
+import { FujiConfig } from './fuji';
+import type { StringType } from './rules/string';
+import type { RequiredType } from './rules/required'
+import type { RequiredIfType } from './rules/required-if';
+import type { PositiveType } from './rules/positive';
+import type { BoolType } from './rules/bool';
+import type { IncludesType } from './rules/includes';
+import type { OneOfType } from './rules/one-of';
+import { CustomRuleI } from './rules/use';
+
+export type ErrorType = StringType
+  | RequiredType
+  | RequiredIfType
+  | PositiveType
+  | BoolType
+  | IncludesType
+  | OneOfType
+  | CustomRuleI['Type']
+  | 'unsupported-type'
+
 
 export type Fuji<T> = {
   rules: VFunc<T>[];

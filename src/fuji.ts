@@ -18,6 +18,15 @@ export type FujiConfig = {
 }
 
 export const DEFAULT_DICT: FujiConfig['dict'] = {
+  string: ctx => `${ctx.joinedPath} should be type of string`,
+  bool: ctx => `${ctx.joinedPath} should be type of bool`,
+  includes: ctx => `${ctx.joinedPath} should include ${ctx.meta.target}`,
+  ['unsupported-type']: ctx => `${ctx.joinedPath} has unsupported type`,
+  required: ctx => `${ctx.joinedPath} is required`,
+  'required-if': ctx => `${ctx.joinedPath} is required`,
+  'one-of': ctx => 'todo: one-of',
+  'positive': ctx => `${ctx.joinedPath} should be positive`,
+  'custom': ctx => 'todo custom'
 }
 
 export const DEFAULT_CONFIG: FujiConfig = {

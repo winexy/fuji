@@ -22,7 +22,7 @@ function validateShape<T>(schema: ShapeSchema<T>, context: VContext) {
 }
 
 export const shape = <T>(schema: ShapeSchema<T>): VFunc =>
-  function ObjectOfV8N(ctx) {
+  function ShapeOfV8N(ctx) {
     return validateShape(schema, ctx);
   };
   
