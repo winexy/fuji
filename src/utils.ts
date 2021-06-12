@@ -42,14 +42,17 @@ export const createError = (
   }
 }
 
-export const createContext = <R>(
-  value: R,
-  config: FujiConfig
-): VContext<R> => ({
-  original: value,
+export const createContext = <Value>(
+  value: Value,
+  config: FujiConfig,
+  override: Partial<VContext<Value>> = {}
+): VContext<Value> => ({
   current: value,
-  root: value,
   errors: [],
   path: [],
-  config
+  config,
+  parent: null,
+  root: value,
+  required: false,
+  ...override
 })
