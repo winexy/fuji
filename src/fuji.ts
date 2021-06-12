@@ -46,27 +46,22 @@ export const DEFAULT_DICT: FujiConfig['dict'] = {
   numeric: stub
 }
 
-export const DEFAULT_CONFIG: FujiConfig = {
-  failFast: false,
-  allowUnknown: false,
-  dict: DEFAULT_DICT
+function fuji<Value>(...rules: VFunc<Value>[]): Fuji<Value> {
+  return { rules: sortRules(rules) }
 }
 
-function createConfig(config: Partial<FujiConfig>): FujiConfig {
-  return { ...config, ...DEFAULT_CONFIG }
-}
+const highPriority = [RequiredName, RequiredIfName]
 
-function runWith<T>(
-  schema: Fuji<T>,
-  v: T,
-  config: Partial<FujiConfig> = DEFAULT_CONFIG
-): VError[] {
-  const configuration = createConfig(config)
-  const context = createContext<T>(v, configuration)
-  const { errors } = validate<T>(schema, context)
-  return errors
-}
+function sortRules<Value>(rules: VFunc<Value>[]): VFunc<Value>[] {
+  return rules.sort((rule1, rule2) => {
+    if (highPriority.includes(rule1.name)) {
+      return -1
+    } else if (highPriority.includes(rule2.name)) {
+      return 1
+    }
 
-const fuji = <T>(...rules: VFunc<T>[]): Fuji<T> => ({ rules })
+    return 0
+  })
+}
 
 export { fuji, runWith }
