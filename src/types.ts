@@ -1,29 +1,29 @@
 import { FujiConfig } from './fuji'
 import type { StringType } from './rules/string'
 import type { RequiredType } from './rules/required'
-import type { RequiredIfType } from './rules/required-if'
+import type { RequiredIfMeta, RequiredIfType } from './rules/required-if'
 import type { PositiveType } from './rules/positive'
 import type { BoolType } from './rules/bool'
-import type { IncludesType } from './rules/includes'
-import type { OneOfType } from './rules/one-of'
-import type { CustomRuleI } from './rules/use'
+import type { IncludesMeta, IncludesType } from './rules/includes'
+import type { OneOfMeta, OneOfType } from './rules/one-of'
+import type { CustomRuleI, CustomRuleMeta } from './rules/use'
 import type { ArrayType } from './rules/array'
-import type { EqualToType } from './rules/equal-to'
-import type { BetweenType } from './rules/between'
-import type { EqualWithType } from './rules/equal-with'
+import type { EqualToMeta, EqualToType } from './rules/equal-to'
+import type { BetweenMeta, BetweenType } from './rules/between'
+import type { EqualWithMeta, EqualWithType } from './rules/equal-with'
 import type { EvenType } from './rules/even'
-import type { InstanceOfType } from './rules/instance-of'
-import type { MaxType } from './rules/max'
-import type { MaxLengthType } from './rules/max-length'
+import type { InstanceOfMeta, InstanceOfType } from './rules/instance-of'
+import type { MaxMeta, MaxType } from './rules/max'
+import type { MaxLengthMeta, MaxLengthType } from './rules/max-length'
 import type { IntType } from './rules/int'
-import type { MinLengthType } from './rules/min-length'
+import type { MinLengthMeta, MinLengthType } from './rules/min-length'
 import type { NegativeType } from './rules/negative'
 import type { NumberType } from './rules/number'
 import type { ObjectType } from './rules/object'
 import type { OddType } from './rules/odd'
-import type { PatternType } from './rules/pattern'
+import type { PatternMeta, PatternType } from './rules/pattern'
 import type { NumericType } from './rules/numeric'
-import type { MinType } from './rules/min'
+import type { MinMeta, MinType } from './rules/min'
 
 export type ErrorType =
   | StringType
@@ -53,8 +53,50 @@ export type ErrorType =
   | CustomRuleI['Type']
   | 'unsupported-type'
 
-export type Fuji<T> = {
-  rules: VFunc<T>[]
+export type ErrorMeta =
+  | RequiredIfMeta
+  | IncludesMeta
+  | MaxLengthMeta
+  | MinLengthMeta
+  | MaxMeta
+  | MinMeta
+  | PatternMeta
+  | OneOfMeta
+  | EqualToMeta
+  | EqualWithMeta
+  | BetweenMeta
+  | InstanceOfMeta
+  | null
+
+export type ResolveTypeMeta<Type extends ErrorType> =
+  Type extends RequiredIfType
+    ? RequiredIfMeta
+    : Type extends IncludesType
+    ? IncludesMeta
+    : Type extends MaxLengthType
+    ? MaxLengthMeta
+    : Type extends MinLengthType
+    ? MinLengthMeta
+    : Type extends MaxType
+    ? MaxMeta
+    : Type extends MinType
+    ? MinMeta
+    : Type extends PatternType
+    ? PatternMeta
+    : Type extends OneOfType
+    ? OneOfMeta
+    : Type extends EqualToType
+    ? EqualToMeta
+    : Type extends EqualWithType
+    ? EqualWithMeta
+    : Type extends BetweenType
+    ? BetweenMeta
+    : Type extends InstanceOfType
+    ? InstanceOfMeta
+    : Type extends CustomRuleI['Type']
+    ? CustomRuleMeta
+    : null
+
 }
 
 export type VFunc<T = any> = (

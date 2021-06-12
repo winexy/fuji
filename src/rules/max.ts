@@ -3,6 +3,10 @@ import { createError } from '../utils'
 
 export type MaxType = 'max'
 
+export type MaxMeta = {
+  limit: number
+}
+
 export const max = (limit: number, msg?: string): VFunc<number> =>
   function MaxV8N(ctx) {
     if (ctx.current > limit) {

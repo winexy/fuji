@@ -3,8 +3,10 @@ import { createError } from '../utils'
 
 export type IncludesType = 'includes'
 
-export const includes = <T>(
-  target: T,
+export type IncludesMeta = {
+  target: any
+}
+
   msg?: string
 ): VFunc<{ indexOf: (x: T) => number }> =>
   function IncludesV8N(ctx) {

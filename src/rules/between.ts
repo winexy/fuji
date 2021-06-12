@@ -3,8 +3,11 @@ import { createError } from '../utils'
 
 export type BetweenType = 'between'
 
-export const between = (left: number, right: number, msg?: string): VFunc =>
-  function BetweenV8N(ctx) {
+export type BetweenMeta = {
+  left: number
+  right: number
+}
+
     if (left > ctx.current || ctx.current < right) {
       ctx.errors.push(createError('between', msg, ctx, { left, right }))
     }

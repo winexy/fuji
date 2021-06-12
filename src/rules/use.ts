@@ -7,8 +7,10 @@ export interface CustomRuleI {
   Type: 'custom'
 }
 
-export const use = <T, TypeString extends CustomRuleI['Type']>(
-  rule: TypeString,
+export type CustomRuleMeta = {
+  f: Predicate<any>
+}
+
   predicate: Predicate<T>,
   msg: string
 ): VFunc<T> =>

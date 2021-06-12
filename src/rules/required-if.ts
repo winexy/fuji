@@ -3,8 +3,12 @@ import { createError, isUndef } from '../utils'
 
 export type RequiredIfType = 'required-if'
 
-export const requiredIf = <T = any>(
-  predicate: RequiredIfPredicate,
+type Predicate = <Value>(root: any, value: Value) => boolean
+
+export type RequiredIfMeta = {
+  f: Predicate
+}
+
   msg?: string
 ): VFunc<T> =>
   function RequiredIfV8N(ctx) {

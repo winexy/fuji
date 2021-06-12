@@ -3,7 +3,12 @@ import { createError } from '../utils'
 
 export type EqualWithType = 'equal-with'
 
-export const equalWith = (f: (root: any) => any, msg?: string): VFunc =>
+type Extractor<Value> = (root: unknown) => Value
+
+export type EqualWithMeta = {
+  f: Extractor<any>
+}
+
   function EqualWithV8N(ctx) {
     if (f(ctx.root) !== ctx.current) {
       ctx.errors.push(createError('equal-with', msg, ctx, { f }))
