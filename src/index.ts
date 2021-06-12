@@ -41,6 +41,8 @@ export { between } from './rules/between'
 
 export { map } from './operators/map'
 
+export { Infer, ErrorType, ErrorsDict } from './types'
+
 export { fuji, runWith } from './fuji'
 
 export { DEFAULT_DICT } from './defaults'

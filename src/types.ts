@@ -118,7 +118,24 @@ export type VContext<R = any, T = any> = {
 export type ErrContext<R = any, T = any, Meta = any> = {
   joinedPath: string
   meta: Meta
-} & VContext<R, T>
+export type Infer<FujiSchema> = FujiSchema extends Fuji<infer Value>
+  ? Value extends Record<string, Fuji<any>>
+    ? InferRecord<Value>
+    : Value extends Array<Record<any, Fuji<any>>>
+    ? InferArrayOfRecords<Value>[]
+    : Value
+  : never
+
+type InferArrayOfRecords<Value extends Array<Record<any, Fuji<any>>>> =
+  Value extends Array<infer RecordValue>
+    ? RecordValue extends Record<any, Fuji<any>>
+      ? InferRecord<RecordValue>
+      : never
+    : never
+
+type InferRecord<Shape extends Record<string, Fuji<any>>> = {
+  [K in keyof Shape]: Infer<Shape[K]>
+}
 
 export type RequiredIfPredicate = (
   root: VContext['root'],
