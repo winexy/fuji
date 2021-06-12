@@ -46,6 +46,73 @@ export const DEFAULT_DICT: FujiConfig['dict'] = {
   numeric: stub
 }
 
+function fuji<V>(r1: VFunc<V>): Fuji<V>
+
+function fuji<A, B, C>(r1: VFunc<A, B>, r2: VFunc<B, C>): Fuji<C>
+
+function fuji<A, B, C, D>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>
+): Fuji<D>
+
+function fuji<A, B, C, D, E>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>
+): Fuji<E>
+
+function fuji<A, B, C, D, E, F>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>
+): Fuji<F>
+
+function fuji<A, B, C, D, E, F, G>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>
+): Fuji<G>
+
+function fuji<A, B, C, D, E, F, G, H>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>
+): Fuji<H>
+
+function fuji<A, B, C, D, E, F, G, H, I>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>
+): Fuji<I>
+
+function fuji<A, B, C, D, E, F, G, H, I, J>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>
+): Fuji<J>
+
 function fuji<Value>(...rules: VFunc<Value>[]): Fuji<Value> {
   return { rules: sortRules(rules) }
 }
