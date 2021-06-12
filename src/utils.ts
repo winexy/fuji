@@ -3,6 +3,22 @@ import { VContext, ErrorType } from './types'
 
 export const isUndef = (v: any): v is undefined => v === undefined
 
+export const isFunc = (v: unknown): v is (...args: any[]) => any =>
+  typeof v === 'function'
+
+export const isObject = (value: unknown): value is AnyRecord => {
+  return value !== null && typeof value === 'object'
+}
+
+export const isString = (value: unknown): value is string =>
+  typeof value === 'string'
+
+export const isNumber = (value: unknown): value is number =>
+  typeof value === 'number'
+
+export const isBool = (value: unknown): value is boolean =>
+  typeof value === 'boolean'
+
 export function log(...args: any) {
   globalThis.console.log(...args)
 }
