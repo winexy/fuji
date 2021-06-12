@@ -1,0 +1,33 @@
+name: CI
+
+on: 
+  push: 
+    branches: [master]
+  
+env:
+  NODE_VERISON: 14
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint Source Code
+        run: npm run lint
+  check-types:
+    runs-on: ubuntu-latest        
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }} 
+      - name: Install Dependencies
+        run: npm ci
+      - name: Check Types
+        run: npm run check-types
+      
