@@ -112,9 +112,7 @@ export type VContext<R = any, T = any> = {
   config: FujiConfig
   errors: VError[]
   path: string[]
-  original: T
-  current: T
-  root: R
+  required: boolean
 }
 
 export type ErrContext<R = any, T = any, Meta = any> = {

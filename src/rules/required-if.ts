@@ -9,12 +9,18 @@ export type RequiredIfMeta = {
   f: Predicate
 }
 
+
+export const requiredIf = <Value>(
+  isRequired: Predicate,
   msg?: string
-): VFunc<T> =>
-  function RequiredIfV8N(ctx) {
-    if (predicate(ctx.root, ctx.current) && isUndef(ctx.current)) {
-      ctx.errors.push(createError('required-if', msg, ctx, { f: predicate }))
+): VFunc<Value> => {
+  return function RequiredIfV8N(ctx) {
+    ctx.required = isRequired(ctx.root, ctx.current)
+
+    if (ctx.required && isUndef(ctx.current)) {
+      ctx.errors.push(createError('required-if', msg, ctx, { f: isRequired }))
     }
 
     return ctx
   }
+}
