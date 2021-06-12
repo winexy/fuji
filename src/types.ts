@@ -1,4 +1,3 @@
-import { FujiConfig } from './fuji'
 import type { StringType } from './rules/string'
 import type { RequiredType } from './rules/required'
 import type { RequiredIfMeta, RequiredIfType } from './rules/required-if'
@@ -97,27 +96,39 @@ export type ResolveTypeMeta<Type extends ErrorType> =
     ? CustomRuleMeta
     : null
 
+export type Fuji<Value> = {
+  rules: VFunc<Value>[]
 }
 
-export type VFunc<T = any> = (
-  ctx: VContext<VContext['root'], T>
-) => VContext<VContext['root'], T>
+export type VFunc<A, B = A> = (ctx: VContext<A>) => VContext<B>
+
 export type VError = {
   type: string
   message: string
   path: string
-  meta: Record<string, any>
+  meta: ErrorMeta
 }
-export type VContext<R = any, T = any> = {
+
+export type RuleRunner = {
+  <Value>(schema: Fuji<Value>, context: VContext<Value>): VContext<Value>
+}
+
+export type VContext<Value> = {
   config: FujiConfig
   errors: VError[]
   path: string[]
+  current: Value
+  parent: Record<any, any> | null
+  root: Record<any, any> | Value
   required: boolean
 }
 
-export type ErrContext<R = any, T = any, Meta = any> = {
-  joinedPath: string
+export type ErrorContext<Meta extends ErrorMeta | null = null> = {
+  valueName: string
+  path: string
   meta: Meta
+}
+
 export type Infer<FujiSchema> = FujiSchema extends Fuji<infer Value>
   ? Value extends Record<string, Fuji<any>>
     ? InferRecord<Value>
@@ -137,9 +148,43 @@ type InferRecord<Shape extends Record<string, Fuji<any>>> = {
   [K in keyof Shape]: Infer<Shape[K]>
 }
 
-export type RequiredIfPredicate = (
-  root: VContext['root'],
-  value: any
-) => boolean
-export type TransformFunc<T> = (current: T, original: T) => T
-export type ShapeSchema<T> = Record<string, Fuji<T>>
+export type FormatMessage<Meta extends ErrorMeta | null = null> = {
+  (context: ErrorContext<Meta>): string
+}
+export interface ErrorsDict {
+  string: FormatMessage
+  bool: FormatMessage
+  includes: FormatMessage<IncludesMeta>
+  'unsupported-type': FormatMessage
+  required: FormatMessage
+  'required-if': FormatMessage<RequiredIfMeta>
+  'one-of': FormatMessage<OneOfMeta>
+  positive: FormatMessage
+  negative: FormatMessage
+  custom: FormatMessage
+  number: FormatMessage
+  object: FormatMessage
+  array: FormatMessage
+  'equal-to': FormatMessage<EqualToMeta>
+  'equal-with': FormatMessage
+  between: FormatMessage<BetweenMeta>
+  even: FormatMessage
+  odd: FormatMessage
+  'instance-of': FormatMessage<InstanceOfMeta>
+  max: FormatMessage<MaxMeta>
+  min: FormatMessage<MinMeta>
+  'max-length': FormatMessage<MaxLengthMeta>
+  'min-length': FormatMessage<MinLengthMeta>
+  pattern: FormatMessage<PatternMeta>
+  numeric: FormatMessage
+  int: FormatMessage
+}
+
+export type FujiConfig = {
+  failFast: boolean
+  allowUnknown: boolean
+  dict: ErrorsDict
+  valueName: string
+}
+
+export type AnyRecord = Record<any, any>

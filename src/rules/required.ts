@@ -3,6 +3,7 @@ import { createError, isUndef } from '../utils'
 
 export type RequiredType = 'required'
 
+export const RequiredName = 'RequiredV8N'
 
 export const required = <Value extends any = any>(
   msg?: string

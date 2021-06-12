@@ -1,5 +1,12 @@
-import { FujiConfig } from './fuji'
-import { VContext, ErrorType } from './types'
+import { AnyRecord, ResolveTypeMeta } from './types'
+import {
+  VContext,
+  ErrorType,
+  ErrorContext,
+  FormatMessage,
+  VError,
+  FujiConfig
+} from './types'
 
 export const isUndef = (v: any): v is undefined => v === undefined
 
@@ -23,16 +30,22 @@ export function log(...args: any) {
   globalThis.console.log(...args)
 }
 
-export const createError = (
-  type: ErrorType,
-  msg = '',
-  ctx: VContext,
-  meta: Record<string, any> = {}
-) => {
+export const createError = <Type extends ErrorType>(
+  type: Type,
+  userMessage: string | undefined,
+  ctx: VContext<any>,
+  meta: ResolveTypeMeta<Type> | null = null
+): VError => {
   const path = ctx.path.join('.')
-  const { dict } = ctx.config
-  const errContext = { ...ctx, joinedPath: path, meta }
-  const message = msg || dict[type](errContext)
+  const { dict, valueName } = ctx.config
+  const errorContext: ErrorContext<typeof meta> = { path, meta, valueName }
+  const formatMessage = dict[type] as FormatMessage<typeof meta>
+
+  const DEFAULT_MESSAGE = 'not-specified'
+  const message =
+    isUndef(userMessage) && isFunc(formatMessage)
+      ? formatMessage(errorContext) ?? DEFAULT_MESSAGE
+      : userMessage ?? DEFAULT_MESSAGE
 
   return {
     type,

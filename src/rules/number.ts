@@ -1,11 +1,13 @@
 import type { VFunc } from '../types'
-import { createError } from '../utils'
+import { createError, isNumber, isUndef } from '../utils'
 
 export type NumberType = 'number'
 
 export const number = (msg?: string): VFunc<number> =>
   function NumberV8N(ctx) {
-    if (typeof ctx.current !== 'number' || Number.isNaN(ctx.current)) {
+    const shouldCheck = !isUndef(ctx.current) || ctx.required
+
+    if (shouldCheck && (!isNumber(ctx.current) || Number.isNaN(ctx.current))) {
       ctx.errors.push(createError('number', msg, ctx))
     }
 

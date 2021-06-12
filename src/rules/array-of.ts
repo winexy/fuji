@@ -1,8 +1,9 @@
+import { runner } from '../fuji'
 import type { Fuji, VFunc } from '../types'
-import { validate } from '../fuji'
+import { createContext } from '../utils'
 
-export const arrayOf = <T>(schema: Fuji<T>): VFunc =>
-  function ArrayOfV8N(context) {
+export const arrayOf = <Value>(schema: Fuji<Value>): VFunc<Value[]> => {
+  return function ArrayOfV8N(context) {
     if (Array.isArray(context.current)) {
       return context.current.reduce((ctx, current, index) => {
         const res = runner(
@@ -22,3 +23,4 @@ export const arrayOf = <T>(schema: Fuji<T>): VFunc =>
 
     return context
   }
+}

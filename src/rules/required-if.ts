@@ -1,4 +1,4 @@
-import type { RequiredIfPredicate, VFunc } from '../types'
+import type { VFunc } from '../types'
 import { createError, isUndef } from '../utils'
 
 export type RequiredIfType = 'required-if'
@@ -9,6 +9,7 @@ export type RequiredIfMeta = {
   f: Predicate
 }
 
+export const RequiredIfName = 'RequiredIfV8N'
 
 export const requiredIf = <Value>(
   isRequired: Predicate,

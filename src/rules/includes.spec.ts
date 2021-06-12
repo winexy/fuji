@@ -1,7 +1,7 @@
 import { random } from 'faker'
 import { includes } from './includes'
 import { createContext } from '../utils'
-import { DEFAULT_CONFIG } from '../fuji'
+import { DEFAULT_CONFIG } from '../defaults'
 
 describe('rules.includes', () => {
   it('should contain err message for invalid value', () => {

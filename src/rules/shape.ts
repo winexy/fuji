@@ -1,25 +1,40 @@
-import type { ShapeSchema, VContext, VFunc } from '../types'
-import { validate } from '../fuji'
-import { isUndef } from '../utils'
+import { runner } from '../fuji'
+import type { Fuji, VFunc } from '../types'
+import { createContext, isUndef, isObject } from '../utils'
 
-function validateShape<T>(schema: ShapeSchema<T>, context: VContext) {
-  return Object.keys(schema).reduce((ctx, key) => {
-    const res = validate(schema[key], {
-      root: ctx.root,
-      original: !isUndef(ctx.original) ? ctx.original[key] : undefined,
-      current: !isUndef(ctx.current) ? ctx.current[key] : undefined,
-      path: [...ctx.path, key],
-      errors: [],
-      config: ctx.config
-    })
+export const shape = <Shape extends Record<string, Fuji<any>>>(
+  schema: Shape
+): VFunc<Shape> => {
+  return function ShapeOfV8N(ctx) {
+    const keys: Array<keyof Shape> = Object.keys(schema)
 
-    ctx.errors.push(...res.errors)
+    return keys.reduce((parentContext, key) => {
+      const { parent, root, path, config } = ctx
+      const value = schema[key]
 
-    return ctx
-  }, context)
-}
+      const hasParent = !isUndef(parent)
 
-export const shape = <T>(schema: ShapeSchema<T>): VFunc =>
-  function ShapeOfV8N(ctx) {
-    return validateShape(schema, ctx)
+      const parentKey = path[path.length - 1]
+      // at root level we have no parent, so we use root as parent
+      const currentParent =
+        hasParent && isObject(parent) ? parent[parentKey] : root
+
+      // getting "current" value accessing key from parent or root if its a root level
+      const current =
+        hasParent && isObject(currentParent) ? currentParent[key] : root[key]
+
+      const result = runner(
+        value,
+        createContext(current, config, {
+          path: [...path, key.toString()],
+          parent: currentParent,
+          root
+        })
+      )
+
+      parentContext.errors.push(...result.errors)
+
+      return parentContext
+    }, ctx)
   }
+}

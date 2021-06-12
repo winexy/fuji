@@ -1,49 +1,27 @@
-import type { VContext, VFunc, VError, Fuji } from './types'
+import { DEFAULT_CONFIG } from './defaults'
+import { RequiredName } from './rules/required'
+import { RequiredIfName } from './rules/required-if'
+import type { RuleRunner, VFunc, VError, Fuji, FujiConfig } from './types'
 import { createContext } from './utils'
-import { ErrorType, ErrContext } from './types'
 
-export function validate<T>(schema: Fuji<T>, context: VContext): VContext {
-  // prettier-ignore
-  return schema.rules.reduce(
-    (ctx, f) => f(ctx), context
-  );
+export const runner: RuleRunner = (schema, context) => {
+  return schema.rules.reduce((ctx, func) => func(ctx), context)
 }
 
-export type FujiConfig = {
-  failFast: boolean
-  allowUnknown: boolean
-  dict: Record<ErrorType, (context: ErrContext) => string>
+function createConfig(config: Partial<FujiConfig>): FujiConfig {
+  return { ...DEFAULT_CONFIG, ...config }
 }
 
-const stub = () => 'todo: stub'
+function runWith<Value>(
+  schema: Fuji<Value>,
+  value: unknown,
+  config: Partial<FujiConfig> = DEFAULT_CONFIG
+): VError[] {
+  const configuration = createConfig(config)
+  const context = createContext<Value>(value as Value, configuration)
+  const { errors } = runner<Value>(schema, context)
 
-export const DEFAULT_DICT: FujiConfig['dict'] = {
-  string: ctx => `${ctx.joinedPath} should be type of string`,
-  bool: ctx => `${ctx.joinedPath} should be type of bool`,
-  includes: ctx => `${ctx.joinedPath} should include ${ctx.meta.target}`,
-  ['unsupported-type']: ctx => `${ctx.joinedPath} has unsupported type`,
-  required: ctx => `${ctx.joinedPath} is required`,
-  'required-if': ctx => `${ctx.joinedPath} is required`,
-  'one-of': ctx => 'todo: one-of',
-  positive: ctx => `${ctx.joinedPath} should be positive`,
-  custom: ctx => 'todo custom',
-  number: stub,
-  object: stub,
-  array: stub,
-  'equal-to': stub,
-  'equal-with': stub,
-  between: stub,
-  even: stub,
-  'instance-of': stub,
-  max: stub,
-  min: stub,
-  'max-length': stub,
-  int: stub,
-  'min-length': stub,
-  negative: stub,
-  odd: stub,
-  pattern: stub,
-  numeric: stub
+  return errors
 }
 
 function fuji<V>(r1: VFunc<V>): Fuji<V>

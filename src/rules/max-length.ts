@@ -7,9 +7,17 @@ export type MaxLengthMeta = {
   limit: number
 }
 
+type WithLength = { length: number }
+
+export const maxLength = <Value extends WithLength>(
+  limit: number,
+  msg?: string
+): VFunc<Value> => {
+  return function MaxLenV8N(ctx) {
     if (ctx.current != null && ctx.current.length > limit) {
       ctx.errors.push(createError('max-length', msg, ctx, { limit }))
     }
 
     return ctx
   }
+}

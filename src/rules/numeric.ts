@@ -3,9 +3,10 @@ import { createError } from '../utils'
 
 export type NumericType = 'numeric'
 
-export const numeric = (msg?: string): VFunc<string | number> =>
+export const numeric = <Value = unknown>(msg?: string): VFunc<Value> =>
   function NumericV8N(ctx) {
-    if (Number.isNaN(ctx.current)) {
+    // @ts-expect-error isNaN expects number ??wtf??
+    if (isNaN(ctx.current)) {
       ctx.errors.push(createError('numeric', msg, ctx))
     }
 

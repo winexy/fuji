@@ -1,13 +1,16 @@
 import type { VFunc } from '../types'
-import { createError } from '../utils'
+import { createError, isObject } from '../utils'
 
 export type ObjectType = 'object'
 
-export const object = (msg?: string): VFunc<object> =>
-  function ObjectV8N(ctx) {
-    if (ctx.current === null || typeof ctx.current !== 'object') {
+type AnyObject = Record<any, any>
+
+export const object = (msg?: string): VFunc<AnyObject> => {
+  return function ObjectV8N(ctx) {
+    if (!isObject(ctx.current)) {
       ctx.errors.push(createError('object', msg, ctx))
     }
 
     return ctx
   }
+}

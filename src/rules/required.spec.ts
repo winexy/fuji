@@ -1,7 +1,7 @@
 import { required } from './required'
 import { createContext } from '../utils'
 import { VFunc } from '../types'
-import { DEFAULT_CONFIG } from '../fuji'
+import { DEFAULT_CONFIG } from '../defaults'
 
 describe('rules.required', () => {
   let rule: VFunc<any>

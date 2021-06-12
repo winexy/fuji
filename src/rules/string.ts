@@ -1,11 +1,13 @@
-import { VContext, VFunc } from '../types'
-import { createError } from '../utils'
+import { VFunc } from '../types'
+import { createError, isString, isUndef } from '../utils'
 
 export type StringType = 'string'
 
 export const string = (msg?: string): VFunc<string> =>
-  function StringV8N(ctx): VContext<VContext['root'], string> {
-    if (typeof ctx.current !== 'string') {
+  function StringV8N(ctx) {
+    const shouldCheck = !isUndef(ctx.current) || ctx.required
+
+    if (shouldCheck && !isString(ctx.current)) {
       ctx.errors.push(createError('string', msg, ctx))
     }
 

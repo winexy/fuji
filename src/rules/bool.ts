@@ -1,13 +1,16 @@
 import type { VFunc } from '../types'
-import { createError } from '../utils'
+import { createError, isBool, isUndef } from '../utils'
 
 export type BoolType = 'bool'
 
-export const bool = (msg?: string): VFunc<boolean> =>
-  function BoolV8N(ctx) {
-    if (typeof ctx.current !== 'boolean') {
+export const bool = (msg?: string): VFunc<boolean> => {
+  return function BoolV8N(ctx) {
+    const shouldCheck = !isUndef(ctx.current) || ctx.required
+
+    if (shouldCheck && !isBool(ctx.current)) {
       ctx.errors.push(createError('bool', msg, ctx))
     }
 
     return ctx
   }
+}

@@ -1,5 +1,5 @@
 import type { VFunc } from '../types'
-import { createError } from '../utils'
+import { createError, isFunc } from '../utils'
 
 export type IncludesType = 'includes'
 
@@ -7,11 +7,15 @@ export type IncludesMeta = {
   target: any
 }
 
+type WithIndexOf<T> = { indexOf(arg: T): number }
+
+export const includes = <Value extends WithIndexOf<Value>>(
+  target: Value,
   msg?: string
-): VFunc<{ indexOf: (x: T) => number }> =>
+): VFunc<Value> =>
   function IncludesV8N(ctx) {
-    if (typeof ctx.current?.indexOf !== 'function') {
-      ctx.errors.push(createError('unsupported-type', msg, ctx, { target }))
+    if (!isFunc(ctx.current?.indexOf)) {
+      ctx.errors.push(createError('unsupported-type', msg, ctx))
       return ctx
     }
 
