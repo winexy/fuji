@@ -26,6 +26,9 @@ export const isNumber = (value: unknown): value is number =>
 export const isBool = (value: unknown): value is boolean =>
   typeof value === 'boolean'
 
+export const isNil = (value: unknown): value is null | undefined =>
+  value === null || value === undefined
+
 export function log(...args: any) {
   globalThis.console.log(...args)
 }
