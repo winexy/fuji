@@ -1,5 +1,5 @@
 import { runner } from '../runner'
-import type { ShapeSchema, VContext, VFunc } from '../types'
+import type { ShapeSchema, VContext, Rule } from '../types'
 import { createContext, isUndef, isObject, createError } from '../utils'
 
 export type ShapeMismatchType = 'shape-mismatch'
@@ -38,7 +38,7 @@ function checkUnknownKeys<Shape extends ShapeSchema>(
 
 export const shape = <Shape extends ShapeSchema>(
   schema: Shape
-): VFunc<Shape> => {
+): Rule<Shape> => {
   return function ShapeOfV8N(ctx) {
     const keys: Array<keyof Shape> = Object.keys(schema)
     const { failFast, allowUnknown } = ctx.config

@@ -1,4 +1,4 @@
-import type { VFunc } from '../types'
+import type { Rule } from '../types'
 import { createError, isFunc } from '../utils'
 
 export type IncludesType = 'includes'
@@ -12,7 +12,7 @@ type WithIndexOf<T> = { indexOf(arg: T): number }
 export const includes = <Value extends WithIndexOf<Value>>(
   target: Value,
   msg?: string
-): VFunc<Value> =>
+): Rule<Value> =>
   function IncludesV8N(ctx) {
     if (!isFunc(ctx.current?.indexOf)) {
       ctx.errors.push(createError('unsupported-type', msg, ctx))

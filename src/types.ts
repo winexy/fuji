@@ -105,10 +105,10 @@ export type ResolveTypeMeta<Type extends ErrorType> = Type extends ShapeMismatch
   : null
 
 export type Fuji<Value> = {
-  rules: VFunc<Value>[]
+  rules: Rule<Value>[]
 }
 
-export type VFunc<A, B = A> = (ctx: VContext<A>) => VContext<B>
+export type Rule<A, B = A> = (ctx: VContext<A>) => VContext<B>
 
 export type VError<Type extends ErrorType = ErrorType> = {
   type: Type

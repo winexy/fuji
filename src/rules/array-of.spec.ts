@@ -6,7 +6,7 @@ import { maxLength } from './max-length'
 import { minLength } from './min-length'
 import { DEFAULT_CONFIG } from '../defaults'
 import { expectTypeOf } from 'expect-type'
-import { VFunc } from '../types'
+import { Rule } from '../types'
 
 describe('rules.arrayOf', () => {
   it.each`
@@ -19,7 +19,7 @@ describe('rules.arrayOf', () => {
     ({ value, expectedSize }) => {
       const schema = arrayOf(fuji(string(), maxLength(3), minLength(3)))
 
-      expectTypeOf(schema).toMatchTypeOf<VFunc<string[]>>()
+      expectTypeOf(schema).toMatchTypeOf<Rule<string[]>>()
 
       const { errors } = schema(createContext(value, DEFAULT_CONFIG))
 

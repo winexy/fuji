@@ -2,73 +2,73 @@ import { arrayOf } from './rules/array-of'
 import { RequiredName } from './rules/required'
 import { RequiredIfName } from './rules/required-if'
 import { shape } from './rules/shape'
-import type { VFunc, Fuji, ShapeSchema } from './types'
+import type { Rule, Fuji, ShapeSchema } from './types'
 
-function fuji<V>(r1: VFunc<V>): Fuji<V>
+function fuji<V>(r1: Rule<V>): Fuji<V>
 
-function fuji<A, B = A, C = B>(r1: VFunc<A, B>, r2: VFunc<B, C>): Fuji<C>
+function fuji<A, B = A, C = B>(r1: Rule<A, B>, r2: Rule<B, C>): Fuji<C>
 
 function fuji<A, B = A, C = B, D = C>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>
 ): Fuji<D>
 
 function fuji<A, B = A, C = B, D = C, E = D>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>
 ): Fuji<E>
 
 function fuji<A, B = A, C = B, D = C, E = D, F = E>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>
 ): Fuji<F>
 
 function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>
 ): Fuji<G>
 
 function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>
 ): Fuji<H>
 
 function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G, I = H>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>
 ): Fuji<I>
 
 function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G, I = H, J = I>(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>
 ): Fuji<J>
 
 function fuji<
@@ -84,16 +84,16 @@ function fuji<
   J = I,
   K = J
 >(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>,
-  r10: VFunc<J, K>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>,
+  r10: Rule<J, K>
 ): Fuji<K>
 
 function fuji<
@@ -110,17 +110,17 @@ function fuji<
   K = J,
   L = K
 >(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>,
-  r10: VFunc<J, K>,
-  r11: VFunc<K, L>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>,
+  r10: Rule<J, K>,
+  r11: Rule<K, L>
 ): Fuji<L>
 
 function fuji<
@@ -138,18 +138,18 @@ function fuji<
   L = K,
   M = L
 >(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>,
-  r10: VFunc<J, K>,
-  r11: VFunc<K, L>,
-  r12: VFunc<L, M>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>,
+  r10: Rule<J, K>,
+  r11: Rule<K, L>,
+  r12: Rule<L, M>
 ): Fuji<M>
 
 function fuji<
@@ -168,19 +168,19 @@ function fuji<
   M = L,
   N = M
 >(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>,
-  r10: VFunc<J, K>,
-  r11: VFunc<K, L>,
-  r12: VFunc<L, M>,
-  r13: VFunc<M, N>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>,
+  r10: Rule<J, K>,
+  r11: Rule<K, L>,
+  r12: Rule<L, M>,
+  r13: Rule<M, N>
 ): Fuji<N>
 
 function fuji<
@@ -200,20 +200,20 @@ function fuji<
   N = M,
   O = N
 >(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>,
-  r10: VFunc<J, K>,
-  r11: VFunc<K, L>,
-  r12: VFunc<L, M>,
-  r13: VFunc<M, N>,
-  r14: VFunc<N, O>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>,
+  r10: Rule<J, K>,
+  r11: Rule<K, L>,
+  r12: Rule<L, M>,
+  r13: Rule<M, N>,
+  r14: Rule<N, O>
 ): Fuji<O>
 
 function fuji<
@@ -234,24 +234,24 @@ function fuji<
   O = N,
   P = O
 >(
-  r1: VFunc<A, B>,
-  r2: VFunc<B, C>,
-  r3: VFunc<C, D>,
-  r4: VFunc<D, E>,
-  r5: VFunc<E, F>,
-  r6: VFunc<F, G>,
-  r7: VFunc<G, H>,
-  r8: VFunc<H, I>,
-  r9: VFunc<I, J>,
-  r10: VFunc<J, K>,
-  r11: VFunc<K, L>,
-  r12: VFunc<L, M>,
-  r13: VFunc<M, N>,
-  r14: VFunc<N, O>,
-  r15: VFunc<O, P>
+  r1: Rule<A, B>,
+  r2: Rule<B, C>,
+  r3: Rule<C, D>,
+  r4: Rule<D, E>,
+  r5: Rule<E, F>,
+  r6: Rule<F, G>,
+  r7: Rule<G, H>,
+  r8: Rule<H, I>,
+  r9: Rule<I, J>,
+  r10: Rule<J, K>,
+  r11: Rule<K, L>,
+  r12: Rule<L, M>,
+  r13: Rule<M, N>,
+  r14: Rule<N, O>,
+  r15: Rule<O, P>
 ): Fuji<P>
 
-function fuji<Value>(...rules: VFunc<Value>[]): Fuji<Value> {
+function fuji<Value>(...rules: Rule<Value>[]): Fuji<Value> {
   return { rules: sortRules(rules) }
 }
 
@@ -261,7 +261,7 @@ fuji.array = <Value>(schema: Fuji<Value>) => fuji(arrayOf(schema))
 
 const highPriority = [RequiredName, RequiredIfName]
 
-function sortRules<Value>(rules: VFunc<Value>[]): VFunc<Value>[] {
+function sortRules<Value>(rules: Rule<Value>[]): Rule<Value>[] {
   return rules.sort((rule1, rule2) => {
     if (highPriority.includes(rule1.name)) {
       return -1

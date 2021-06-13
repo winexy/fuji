@@ -1,4 +1,4 @@
-import type { VFunc } from '../types'
+import type { Rule } from '../types'
 import { createError, isUndef } from '../utils'
 
 export type BetweenType = 'between'
@@ -8,7 +8,15 @@ export type BetweenMeta = {
   right: number
 }
 
-export const between = (left: number, right: number, msg?: string): VFunc<number> => {
+export const between = (
+  
+  left: number,
+
+   right: number,
+
+   msg?: string
+
+): Rule<number> => {
   return function BetweenV8N(ctx) {
     const shouldCheck = ctx.required || !isUndef(ctx.current)
 

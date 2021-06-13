@@ -1,4 +1,4 @@
-import type { VFunc } from '../types'
+import type { Rule } from '../types'
 import { createError, isUndef } from '../utils'
 
 export type RequiredIfType = 'required-if'
@@ -14,7 +14,7 @@ export const RequiredIfName = 'RequiredIfV8N'
 export const requiredIf = <Value>(
   isRequired: Predicate,
   msg?: string
-): VFunc<Value> => {
+): Rule<Value> => {
   return function RequiredIfV8N(ctx) {
     ctx.required = isRequired(ctx.root, ctx.current)
 

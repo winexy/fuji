@@ -1,4 +1,4 @@
-import type { VFunc } from '../types'
+import type { Rule } from '../types'
 import { createError } from '../utils'
 
 export type EqualWithType = 'equal-with'
@@ -12,7 +12,7 @@ export type EqualWithMeta = {
 export const equalWith = <Value>(
   extractor: Extractor<Value>,
   msg?: string
-): VFunc<Value> =>
+): Rule<Value> =>
   function EqualWithV8N(ctx) {
     if (extractor(ctx.root) !== ctx.current) {
       ctx.errors.push(createError('equal-with', msg, ctx, { f: extractor }))

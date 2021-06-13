@@ -1,4 +1,4 @@
-import type { VFunc } from '../types'
+import type { Rule } from '../types'
 import { createError, isNil } from '../utils'
 
 export type MinLengthType = 'min-length'
@@ -12,7 +12,7 @@ type WithLength = { length: number }
 export const minLength = <Value extends WithLength>(
   limit: number,
   msg?: string
-): VFunc<Value> => {
+): Rule<Value> => {
   return function MinLenV8N(ctx) {
     const shouldCheck = ctx.required || !isNil(ctx.current)
 
