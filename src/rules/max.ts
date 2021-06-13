@@ -1,5 +1,5 @@
 import type { VFunc } from '../types'
-import { createError } from '../utils'
+import { createError, isNumber } from '../utils'
 
 export type MaxType = 'max'
 
@@ -9,7 +9,7 @@ export type MaxMeta = {
 
 export const max = (limit: number, msg?: string): VFunc<number> =>
   function MaxV8N(ctx) {
-    if (ctx.current > limit) {
+    if (!isNumber(ctx.current) || ctx.current > limit) {
       ctx.errors.push(createError('max', msg, ctx, { limit }))
     }
 
