@@ -11,7 +11,6 @@ import type { EqualToMeta, EqualToType } from './rules/equal-to'
 import type { BetweenMeta, BetweenType } from './rules/between'
 import type { EqualWithMeta, EqualWithType } from './rules/equal-with'
 import type { EvenType } from './rules/even'
-import type { InstanceOfMeta, InstanceOfType } from './rules/instance-of'
 import type { MaxMeta, MaxType } from './rules/max'
 import type { MaxLengthMeta, MaxLengthType } from './rules/max-length'
 import type { IntType } from './rules/int'
@@ -37,7 +36,6 @@ export type ErrorType =
   | EqualWithType
   | BetweenType
   | EvenType
-  | InstanceOfType
   | MaxType
   | MinType
   | MaxLengthType
@@ -64,7 +62,6 @@ export type ErrorMeta =
   | EqualToMeta
   | EqualWithMeta
   | BetweenMeta
-  | InstanceOfMeta
   | null
 
 export type ResolveTypeMeta<Type extends ErrorType> =
@@ -90,8 +87,6 @@ export type ResolveTypeMeta<Type extends ErrorType> =
     ? EqualWithMeta
     : Type extends BetweenType
     ? BetweenMeta
-    : Type extends InstanceOfType
-    ? InstanceOfMeta
     : Type extends CustomRuleI['Type']
     ? CustomRuleMeta
     : null
@@ -170,7 +165,6 @@ export interface ErrorsDict {
   between: FormatMessage<BetweenMeta>
   even: FormatMessage
   odd: FormatMessage
-  'instance-of': FormatMessage<InstanceOfMeta>
   max: FormatMessage<MaxMeta>
   min: FormatMessage<MinMeta>
   'max-length': FormatMessage<MaxLengthMeta>

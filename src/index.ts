@@ -33,7 +33,6 @@ export { required } from './rules/required'
 
 export { use } from './rules/use'
 export { pattern } from './rules/pattern'
-export { instanceOf } from './rules/instance-of'
 
 export { min } from './rules/min'
 export { max } from './rules/max'

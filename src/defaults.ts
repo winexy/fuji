@@ -37,10 +37,6 @@ export const DEFAULT_DICT: ErrorsDict = {
     `"${ctx.path || ctx.valueName}" should not exceed ${ctx.meta.limit}`,
   min: ctx =>
     `"${ctx.path || ctx.valueName}" should be greater than ${ctx.meta.limit}`,
-  'instance-of': ctx =>
-    `"${ctx.path || ctx.valueName}" should be instance of ${
-      ctx.meta.Constructor
-    }`,
   'min-length': ctx =>
     `"${ctx.path || ctx.valueName}" should have length greater than ${
       ctx.meta.limit
