@@ -14,8 +14,7 @@
 ```ts
 import { f, runWith, string, int, required, oneOf, pattern } from '@winexy/fuji'
 
-const urlRegEx = /.../
-const emailRegEx = /.../
+const urlRegex = /.../
 
 const schema = f.shape({
   name: f(string(), required()),
@@ -23,11 +22,11 @@ const schema = f.shape({
   workspaces: f.array(f(string())),
   repository: f.shape({
     type: f(string(), required(), oneOf(['git', 'vcs'])),
-    url: f(string(), pattern(urlRegEx))
+    url: f(string(), pattern(urlRegex))
   })
 })
 
-const errors = runWith(schema, {
+const errors = run(schema, {
   name: '@winexy/fuji',
   version: '0.0.0',
   repository: {
