@@ -1,5 +1,7 @@
+import { arrayOf } from './rules/array-of'
 import { RequiredName } from './rules/required'
 import { RequiredIfName } from './rules/required-if'
+import { shape } from './rules/shape'
 import type { VFunc, Fuji } from './types'
 
 function fuji<V>(r1: VFunc<V>): Fuji<V>
@@ -166,6 +168,10 @@ function fuji<Value>(...rules: VFunc<Value>[]): Fuji<Value> {
   return { rules: sortRules(rules) }
 }
 
+const f = fuji
+fuji.shape = shape
+fuji.array = arrayOf
+
 const highPriority = [RequiredName, RequiredIfName]
 
 function sortRules<Value>(rules: VFunc<Value>[]): VFunc<Value>[] {
@@ -180,4 +186,4 @@ function sortRules<Value>(rules: VFunc<Value>[]): VFunc<Value>[] {
   })
 }
 
-export { fuji }
+export { fuji, f }
