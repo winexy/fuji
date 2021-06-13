@@ -12,7 +12,7 @@
 ## Example
 
 ```ts
-import { f, runWith, string, int, required, oneOf, pattern } from '@winexy/fuji'
+import { f, run, string, int, required, oneOf, pattern } from '@winexy/fuji'
 
 const urlRegex = /.../
 
