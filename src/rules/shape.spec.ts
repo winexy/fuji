@@ -107,4 +107,65 @@ describe('shape', () => {
 
     expect(errors).toBeEmpty()
   })
+
+  it.each`
+    input
+    ${'not_an_object'}
+    ${42}
+    ${[]}
+    ${true}
+  `('should return shape-mismatch for input=$input', ({ input }) => {
+    const schema = fuji(
+      shape({
+        a: fuji(string()),
+        b: fuji(number())
+      })
+    )
+
+    const errors = runWith(schema, input)
+
+    expect(errors).toBeArrayOfSize(1)
+    expect(errors[0]).toEqual(
+      expect.objectContaining({
+        type: 'shape-mismatch',
+        message: '"value" has invalid shape. Missing keys: a, b',
+        meta: {
+          keys: ['a', 'b']
+        }
+      })
+    )
+  })
+
+  it.each`
+    input
+    ${'not_an_object'}
+    ${42}
+    ${[]}
+    ${true}
+  `('should return shape-mismatch for input=$input', ({ input }) => {
+    const schema = fuji(
+      shape({
+        object: fuji(
+          shape({
+            a: fuji(string()),
+            b: fuji(number())
+          })
+        )
+      })
+    )
+
+    const errors = runWith(schema, { object: input })
+
+    expect(errors).toBeArrayOfSize(1)
+    expect(errors[0]).toEqual(
+      expect.objectContaining({
+        type: 'shape-mismatch',
+        message: '"object" has invalid shape. Missing keys: a, b',
+        path: 'object',
+        meta: {
+          keys: ['a', 'b']
+        }
+      })
+    )
+  })
 })

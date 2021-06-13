@@ -1,6 +1,12 @@
 import { runner } from '../fuji'
 import type { Fuji, VFunc } from '../types'
-import { createContext, isUndef, isObject } from '../utils'
+import { createContext, isUndef, isObject, createError } from '../utils'
+
+export type ShapeMismatchType = 'shape-mismatch'
+
+export type ShapeMismatchMeta = {
+  keys: string[]
+}
 
 export const shape = <Shape extends Record<string, Fuji<any>>>(
   schema: Shape
@@ -8,7 +14,14 @@ export const shape = <Shape extends Record<string, Fuji<any>>>(
   return function ShapeOfV8N(ctx) {
     const keys: Array<keyof Shape> = Object.keys(schema)
 
-    return keys.reduce((parentContext, key) => {
+    if (!isObject(ctx.current)) {
+      ctx.errors.push(
+        createError('shape-mismatch', undefined, ctx, {
+          keys: keys as string[]
+        })
+      )
+      return ctx
+    }
       const { parent, root, path, config } = ctx
       const value = schema[key]
 

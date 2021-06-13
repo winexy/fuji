@@ -14,7 +14,7 @@ export const isFunc = (v: unknown): v is (...args: any[]) => any =>
   typeof v === 'function'
 
 export const isObject = (value: unknown): value is AnyRecord => {
-  return value !== null && typeof value === 'object'
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
 
 export const isString = (value: unknown): value is string =>

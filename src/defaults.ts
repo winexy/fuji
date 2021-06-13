@@ -48,7 +48,11 @@ export const DEFAULT_DICT: ErrorsDict = {
   negative: ctx => `"${ctx.path || ctx.valueName}" should be negative`,
   pattern: ctx =>
     `"${ctx.path || ctx.valueName}" should match ${ctx.meta.regex}`,
-  numeric: ctx => `"${ctx.path || ctx.valueName}" should be numeric`
+  numeric: ctx => `"${ctx.path || ctx.valueName}" should be numeric`,
+  'shape-mismatch': ctx =>
+    `"${
+      ctx.path || ctx.valueName
+    }" has invalid shape. Missing keys: ${ctx.meta.keys.join(', ')}`
 }
 
 export const DEFAULT_CONFIG: FujiConfig = {

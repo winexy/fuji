@@ -22,8 +22,10 @@ import type { OddType } from './rules/odd'
 import type { PatternMeta, PatternType } from './rules/pattern'
 import type { NumericType } from './rules/numeric'
 import type { MinMeta, MinType } from './rules/min'
+import { ShapeMismatchType, ShapeMismatchMeta } from './rules/shape'
 
 export type ErrorType =
+  | ShapeMismatchType
   | StringType
   | RequiredType
   | RequiredIfType
@@ -51,6 +53,7 @@ export type ErrorType =
   | 'unsupported-type'
 
 export type ErrorMeta =
+  | ShapeMismatchMeta
   | RequiredIfMeta
   | IncludesMeta
   | MaxLengthMeta
@@ -65,7 +68,9 @@ export type ErrorMeta =
   | null
 
 export type ResolveTypeMeta<Type extends ErrorType> =
-  Type extends RequiredIfType
+  Type extends ShapeMismatchType
+    ? ShapeMismatchMeta
+    : Type extends RequiredIfType
     ? RequiredIfMeta
     : Type extends IncludesType
     ? IncludesMeta
@@ -172,6 +177,7 @@ export interface ErrorsDict {
   pattern: FormatMessage<PatternMeta>
   numeric: FormatMessage
   int: FormatMessage
+  'shape-mismatch': FormatMessage<ShapeMismatchMeta>
 }
 
 export type FujiConfig = {
