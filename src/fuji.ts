@@ -5,7 +5,21 @@ import type { RuleRunner, VFunc, VError, Fuji, FujiConfig } from './types'
 import { createContext } from './utils'
 
 export const runner: RuleRunner = (schema, context) => {
-  return schema.rules.reduce((ctx, func) => func(ctx), context)
+  const { failFast } = context.config
+  let runnerContext = context
+
+  for (let i = 0; i < schema.rules.length; i++) {
+    const rule = schema.rules[i]
+    const nextContext = rule(runnerContext)
+
+    if (failFast && nextContext.errors.length > 0) {
+      return nextContext
+    }
+
+    runnerContext = nextContext
+  }
+
+  return runnerContext
 }
 
 function createConfig(config: Partial<FujiConfig>): FujiConfig {

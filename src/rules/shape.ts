@@ -13,6 +13,7 @@ export const shape = <Shape extends Record<string, Fuji<any>>>(
 ): VFunc<Shape> => {
   return function ShapeOfV8N(ctx) {
     const keys: Array<keyof Shape> = Object.keys(schema)
+    const { failFast } = ctx.config
 
     if (!isObject(ctx.current)) {
       ctx.errors.push(
@@ -22,6 +23,11 @@ export const shape = <Shape extends Record<string, Fuji<any>>>(
       )
       return ctx
     }
+
+    let parentContext = ctx
+
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
       const { parent, root, path, config } = ctx
       const value = schema[key]
 
@@ -47,7 +53,11 @@ export const shape = <Shape extends Record<string, Fuji<any>>>(
 
       parentContext.errors.push(...result.errors)
 
-      return parentContext
-    }, ctx)
+      if (failFast && result.errors.length > 0) {
+        return parentContext
+      }
+    }
+
+    return parentContext
   }
 }

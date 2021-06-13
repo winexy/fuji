@@ -33,3 +33,49 @@ test('number', () => {
 
   expect(res).toBeEmpty()
 })
+
+test.each`
+  failFast | expectedSize
+  ${true}  | ${1}
+  ${false} | ${3}
+`(
+  'when failFast=$failFast expected errors size $expectedSize',
+  ({ failFast, expectedSize }) => {
+    const schema = F.fuji(F.number(), F.positive(), F.max(100))
+
+    const errors = F.runWith(schema, 'not_a_number', {
+      failFast
+    })
+
+    expect(errors).toBeArrayOfSize(expectedSize)
+  }
+)
+
+test.each`
+  failFast | expectedSize
+  ${true}  | ${1}
+  ${false} | ${5}
+`(
+  'when failFast=$failFast expected errors size $expectedSize',
+  ({ failFast, expectedSize }) => {
+    const schema = F.fuji(
+      F.shape({
+        price: F.fuji(F.number(), F.positive(), F.max(100)),
+        login: F.fuji(F.string(), F.minLength(1))
+      })
+    )
+
+    const errors = F.runWith(
+      schema,
+      {
+        price: 'login',
+        login: 42
+      },
+      {
+        failFast
+      }
+    )
+
+    expect(errors).toBeArrayOfSize(expectedSize)
+  }
+)
