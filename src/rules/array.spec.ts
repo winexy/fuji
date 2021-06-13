@@ -1,6 +1,5 @@
 import { array } from './array'
-import { runWith } from '../fuji'
-import { fuji } from '..'
+import { fuji, runWith } from '..'
 import { random } from 'faker'
 
 describe('rules.array', () => {

@@ -42,6 +42,7 @@ export { map } from './operators/map'
 
 export { Infer, ErrorType, ErrorsDict } from './types'
 
-export { fuji, runWith } from './fuji'
+export { fuji } from './fuji'
+export { runWith } from './run-with'
 
 export { DEFAULT_DICT } from './defaults'

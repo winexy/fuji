@@ -102,11 +102,11 @@ export type Fuji<Value> = {
 
 export type VFunc<A, B = A> = (ctx: VContext<A>) => VContext<B>
 
-export type VError = {
-  type: string
+export type VError<Type extends ErrorType = ErrorType> = {
+  type: Type
   message: string
   path: string
-  meta: ErrorMeta
+  meta: ResolveTypeMeta<Type>
 }
 
 export type RuleRunner = {

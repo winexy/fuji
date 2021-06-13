@@ -1,3 +1,4 @@
+import { DEFAULT_CONFIG } from './defaults'
 import { AnyRecord, ResolveTypeMeta } from './types'
 import {
   VContext,
@@ -72,3 +73,7 @@ export const createContext = <Value>(
   required: false,
   ...override
 })
+
+export function createConfig(config: Partial<FujiConfig>): FujiConfig {
+  return { ...DEFAULT_CONFIG, ...config }
+}

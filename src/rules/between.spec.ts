@@ -1,4 +1,4 @@
-import { fuji, runWith } from '../fuji'
+import { fuji, runWith } from '..'
 import { between } from './between'
 import { required } from './required'
 

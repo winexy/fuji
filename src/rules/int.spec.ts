@@ -1,5 +1,5 @@
 import { random } from 'faker'
-import { fuji, runWith } from '../fuji'
+import { fuji, runWith } from '..'
 import { int } from './int'
 
 describe('rules.int', () => {

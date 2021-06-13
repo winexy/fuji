@@ -1,10 +1,10 @@
-import { fuji, runWith } from '../fuji'
 import { shape } from './shape'
 import { string } from './string'
 import { expectTypeOf } from 'expect-type'
 import { Fuji } from '../types'
 import { required } from './required'
 import { number } from './number'
+import { fuji, runWith } from '..'
 
 describe('shape', () => {
   it('should match type', () => {

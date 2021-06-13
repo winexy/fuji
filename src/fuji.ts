@@ -1,42 +1,6 @@
-import { DEFAULT_CONFIG } from './defaults'
 import { RequiredName } from './rules/required'
 import { RequiredIfName } from './rules/required-if'
-import type { RuleRunner, VFunc, VError, Fuji, FujiConfig } from './types'
-import { createContext } from './utils'
-
-export const runner: RuleRunner = (schema, context) => {
-  const { failFast } = context.config
-  let runnerContext = context
-
-  for (let i = 0; i < schema.rules.length; i++) {
-    const rule = schema.rules[i]
-    const nextContext = rule(runnerContext)
-
-    if (failFast && nextContext.errors.length > 0) {
-      return nextContext
-    }
-
-    runnerContext = nextContext
-  }
-
-  return runnerContext
-}
-
-function createConfig(config: Partial<FujiConfig>): FujiConfig {
-  return { ...DEFAULT_CONFIG, ...config }
-}
-
-function runWith<Value>(
-  schema: Fuji<Value>,
-  value: unknown,
-  config: Partial<FujiConfig> = DEFAULT_CONFIG
-): VError[] {
-  const configuration = createConfig(config)
-  const context = createContext<Value>(value as Value, configuration)
-  const { errors } = runner<Value>(schema, context)
-
-  return errors
-}
+import type { VFunc, Fuji } from './types'
 
 function fuji<V>(r1: VFunc<V>): Fuji<V>
 
@@ -216,4 +180,4 @@ function sortRules<Value>(rules: VFunc<Value>[]): VFunc<Value>[] {
   })
 }
 
-export { fuji, runWith }
+export { fuji }

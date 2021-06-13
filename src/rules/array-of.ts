@@ -1,4 +1,4 @@
-import { runner } from '../fuji'
+import { runner } from '../runner'
 import type { Fuji, VFunc } from '../types'
 import { createContext } from '../utils'
 
