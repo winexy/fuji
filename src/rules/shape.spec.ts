@@ -37,7 +37,7 @@ describe('shape', () => {
       })
     )
 
-    const res = run(schema, {
+    const { errors } = run(schema, {
       user: {
         city: {
           name: 42
@@ -63,7 +63,7 @@ describe('shape', () => {
       path: 'user.id'
     })
 
-    expect(res).toEqual(
+    expect(errors).toEqual(
       expect.arrayContaining([cityNameError, idError, idError2])
     )
   })
@@ -84,7 +84,7 @@ describe('shape', () => {
       })
     )
 
-    const errors = run(schema, {
+    const { errors } = run(schema, {
       user: {
         city: {
           name: 'LA'
@@ -93,7 +93,7 @@ describe('shape', () => {
       }
     })
 
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 
   it('should return no errors for optional fields', () => {
@@ -103,9 +103,9 @@ describe('shape', () => {
       })
     )
 
-    const errors = run(schema, {})
+    const { errors } = run(schema, {})
 
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 
   it.each`
@@ -122,10 +122,10 @@ describe('shape', () => {
       })
     )
 
-    const errors = run(schema, input)
+    const { errors } = run(schema, input)
 
     expect(errors).toBeArrayOfSize(1)
-    expect(errors[0]).toEqual(
+    expect(errors![0]).toEqual(
       expect.objectContaining({
         type: 'shape-mismatch',
         message: 'value has invalid shape. Missing keys: a, b',
@@ -154,10 +154,10 @@ describe('shape', () => {
       })
     )
 
-    const errors = run(schema, { object: input })
+    const { errors } = run(schema, { object: input })
 
     expect(errors).toBeArrayOfSize(1)
-    expect(errors[0]).toEqual(
+    expect(errors![0]).toEqual(
       expect.objectContaining({
         type: 'shape-mismatch',
         message: '"object" has invalid shape. Missing keys: a, b',

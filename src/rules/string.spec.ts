@@ -1,42 +1,37 @@
 import { random } from 'faker'
 import { string } from './string'
-import { createContext } from '../utils'
-import { VFunc } from '../types'
-import { DEFAULT_CONFIG } from '../defaults'
+import { Fuji } from '../types'
+import { f, run } from '..'
 
 describe('rules.string', () => {
-  let rule: VFunc<string>
+  let schema: Fuji<string>
   let msg = random.word()
   beforeEach(() => {
-    rule = string(msg)
-  })
+    schema = f(string(msg))
+  }) 
 
   it('should push provided message for invalid value', () => {
-    // @ts-expect-error
-    const { errors } = rule(createContext({}, DEFAULT_CONFIG))
-    expect(errors[0]).toHaveProperty('message', msg)
+    const { errors } = run(schema, {})
+    expect(errors![0]).toHaveProperty('message', msg)
   })
 
   it('should push error for number', () => {
-    // @ts-expect-error
-    const { errors } = rule(createContext(42, DEFAULT_CONFIG))
+    const { errors } = run(schema, 42)
     expect(errors).toBeArrayOfSize(1)
   })
 
   it('should push error for boolean', () => {
-    // @ts-expect-error
-    const { errors } = rule(createContext(false, DEFAULT_CONFIG))
+    const { errors } = run(schema, false)
     expect(errors).toBeArrayOfSize(1)
   })
 
   it('should push error for array', () => {
-    // @ts-expect-error
-    const { errors } = rule(createContext([], DEFAULT_CONFIG))
+    const { errors } = run(schema, [])
     expect(errors).toBeArrayOfSize(1)
   })
 
   it('should not push error for string type', () => {
-    const res = rule(createContext('hello', DEFAULT_CONFIG))
-    expect(res.errors).toBeEmpty()
+    const res = run(schema, 'hello')
+    expect(res.errors).toBeNull()
   })
 })

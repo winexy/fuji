@@ -1,22 +1,21 @@
 import { pattern } from './pattern'
-import { createContext } from '../utils'
-import { DEFAULT_CONFIG } from '../defaults'
+import { f, run } from '..'
 
 describe('rules.pattern', () => {
   it('should return no error for valid pattern', () => {
-    const rule = pattern(/hello world/)
+    const schema = f(pattern(/hello world/))
     const value = 'hello world'
 
-    const { errors } = rule(createContext(value, DEFAULT_CONFIG))
+    const { errors } = run(schema, value)
 
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 
   it('should not push error if number is positive', () => {
-    const rule = pattern(/hello world/)
+    const schema = f(pattern(/hello world/))
     const value = 'hello there'
 
-    const { errors } = rule(createContext(value, DEFAULT_CONFIG))
+    const { errors } = run(schema, value)
 
     expect(errors).toBeArrayOfSize(1)
   })

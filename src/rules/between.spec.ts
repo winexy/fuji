@@ -14,10 +14,10 @@ describe('rules.between', () => {
     ({ left, right, input }) => {
       const schema = fuji(between(left, right))
 
-      const errors = run(schema, input)
+      const { errors } = run(schema, input)
 
       expect(errors).toBeArrayOfSize(1)
-      expect(errors[0]).toEqual(
+      expect(errors![0]).toEqual(
         expect.objectContaining({
           type: 'between',
           message: `value should be in between ${left} and ${right}`
@@ -37,24 +37,24 @@ describe('rules.between', () => {
     ({ left, right, input }) => {
       const schema = fuji(between(left, right))
 
-      const errors = run(schema, input)
+      const { errors } = run(schema, input)
 
-      expect(errors).toBeEmpty()
+      expect(errors).toBeNull()
     }
   )
 
   it('should not return error if value is not required', () => {
     const schema = fuji(between(1, 100))
 
-    const errors = run(schema, undefined)
+    const { errors } = run(schema, undefined)
 
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 
   it('should return error if value is required', () => {
     const schema = fuji(between(1, 100), required())
 
-    const errors = run(schema, undefined)
+    const { errors } = run(schema, undefined)
 
     expect(errors).toBeArrayOfSize(1)
   })

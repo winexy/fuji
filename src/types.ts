@@ -129,6 +129,7 @@ export type VContext<Value> = {
   parent: Record<any, any> | null
   root: Record<any, any> | Value
   required: boolean
+  result: any
 }
 
 export type ErrorContext<Meta extends ErrorMeta | null = null> = {
@@ -180,3 +181,15 @@ export type FujiConfig = {
 export type AnyRecord = Record<any, any>
 
 export type ShapeSchema = Record<string, Fuji<any>>
+
+export type Result<Value> =
+  | {
+      invalid: true
+      value: null
+      errors: VError[]
+    }
+  | {
+      invalid: false
+      value: Infer<Fuji<Value>>
+      errors: null
+    }

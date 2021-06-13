@@ -1,22 +1,29 @@
-import { DEFAULT_CONFIG } from '../defaults'
-import { createContext } from '../utils'
+import { f } from '..'
 import { numeric } from './numeric'
+import { run } from '../run'
 
 describe('rules.numeric', () => {
   it.each`
-    value       | expectedSize
-    ${42}       | ${0}
-    ${'42'}     | ${0}
-    ${'test'}   | ${1}
-    ${'42test'} | ${1}
-  `(
-    'when value=$value expected errors size is $expectedSize',
-    ({ value, expectedSize }) => {
-      const rule = numeric()
+    value
+    ${42}
+    ${'42'}
+  `('when value=$value expected errors size is $expectedSize', ({ value }) => {
+    const schema = f(numeric())
 
-      const { errors } = rule(createContext(value, DEFAULT_CONFIG))
+    const { errors } = run(schema, value)
 
-      expect(errors).toBeArrayOfSize(expectedSize)
-    }
-  )
+    expect(errors).toBeNull()
+  })
+
+  it.each`
+    value
+    ${'test'}
+    ${'42test'}
+  `('when value=$value expected errors size is $expectedSize', ({ value }) => {
+    const schema = f(numeric())
+
+    const { errors } = run(schema, value)
+
+    expect(errors).toBeArrayOfSize(1)
+  })
 })

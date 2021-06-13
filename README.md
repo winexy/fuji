@@ -26,7 +26,7 @@ const schema = f.shape({
   })
 })
 
-const errors = run(schema, {
+const { value, errors, invalid } = run(schema, {
   name: '@winexy/fuji',
   version: '0.0.0',
   repository: {

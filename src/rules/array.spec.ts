@@ -11,10 +11,10 @@ describe('rules.array', () => {
   `('when input=$input ', input => {
     const schema = fuji(array())
 
-    const errors = run(schema, input)
+    const { errors } = run(schema, input)
 
     expect(errors).toBeArrayOfSize(1)
-    expect(errors[0]).toEqual(
+    expect(errors![0]).toEqual(
       expect.objectContaining({
         type: 'array',
         message: 'value should be type of array'
@@ -29,8 +29,8 @@ describe('rules.array', () => {
   `('should not return error', ({ input }) => {
     const schema = fuji(array())
 
-    const errors = run(schema, input)
+    const { errors } = run(schema, input)
 
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 })

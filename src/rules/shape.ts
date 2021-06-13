@@ -52,11 +52,11 @@ export const shape = <Shape extends ShapeSchema>(
       return ctx
     }
 
-    let nextContext = ctx
+    let nextContext = !allowUnknown
+      ? checkUnknownKeys(ctx, keys as string[])
+      : ctx
 
-    if (!allowUnknown) {
-      nextContext = checkUnknownKeys(ctx, keys as string[])
-    }
+    const result: Partial<Shape> = {}
 
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
@@ -74,7 +74,7 @@ export const shape = <Shape extends ShapeSchema>(
       const current =
         hasParent && isObject(currentParent) ? currentParent[key] : root[key]
 
-      const result = runner(
+      const { errors, current: resultValue } = runner(
         value,
         createContext(current, config, {
           path: [...path, key.toString()],
@@ -83,12 +83,16 @@ export const shape = <Shape extends ShapeSchema>(
         })
       )
 
-      nextContext.errors.push(...result.errors)
+      result[key] = resultValue
 
-      if (failFast && result.errors.length > 0) {
+      nextContext.errors.push(...errors)
+
+      if (failFast && errors.length > 0) {
         return nextContext
       }
     }
+
+    nextContext.current = result as Shape
 
     return nextContext
   }

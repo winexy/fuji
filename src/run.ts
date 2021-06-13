@@ -1,16 +1,28 @@
 import { DEFAULT_CONFIG } from './defaults'
 import { runner } from './runner'
-import { Fuji, FujiConfig, VError } from './types'
+import { Fuji, FujiConfig, Infer, Result } from './types'
 import { createConfig, createContext } from './utils'
 
 export function run<Value>(
   schema: Fuji<Value>,
-  value: unknown,
+  value: any,
   config: Partial<FujiConfig> = DEFAULT_CONFIG
-): VError[] {
+): Result<Value> {
   const configuration = createConfig(config)
   const context = createContext<Value>(value as Value, configuration)
-  const { errors } = runner<Value>(schema, context)
+  const output = runner<Value>(schema, context)
 
-  return errors
+  if (output.errors.length > 0) {
+    return {
+      invalid: true,
+      errors: output.errors,
+      value: null
+    }
+  }
+
+  return {
+    invalid: false,
+    value: output.current as Infer<Fuji<Value>>,
+    errors: null
+  }
 }

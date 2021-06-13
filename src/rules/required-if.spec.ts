@@ -1,43 +1,34 @@
 import { random } from 'faker'
 import { requiredIf } from './required-if'
-import { createContext } from '../utils'
-import { VFunc } from '../types'
-import { DEFAULT_CONFIG } from '../defaults'
+import { Fuji } from '../types'
+import { f, number, run } from '..'
 
 describe('rules.required-if', () => {
-  let rule: VFunc<{ v: number }>
+  let schema: Fuji<{ a: Fuji<number>; b: Fuji<number> }>
   let msg = random.word()
+
   beforeEach(() => {
-    rule = requiredIf<{ v: number }>(root => root?.v === 42, msg)
+    schema = f.shape({
+      a: f(number()),
+      b: f(requiredIf(root => root?.a === 42, msg))
+    })
   })
 
   it('should return provided error message for invalid value', () => {
-    const ctx = createContext({ v: 42 }, DEFAULT_CONFIG)
-    // @ts-ignore
-    ctx.current = undefined
+    const { errors } = run(schema, { a: 42 })
 
-    const res = rule(ctx)
-
-    expect(res.errors[0]).toHaveProperty('message', msg)
+    expect(errors![0]).toHaveProperty('message', msg)
   })
 
   it('should push errors for true predicate', () => {
-    const ctx = createContext({ v: 42 }, DEFAULT_CONFIG)
-    // @ts-ignore
-    ctx.current = undefined
-
-    const { errors } = rule(ctx)
+    const { errors } = run(schema, { a: 42 })
 
     expect(errors).toBeArrayOfSize(1)
   })
 
   it('should not push error for false predicate', () => {
-    const ctx = createContext({ v: 42 }, DEFAULT_CONFIG)
-    // @ts-expect-error
-    ctx.current = 42
+    const { errors } = run(schema, { a: 1 })
 
-    const { errors } = rule(ctx)
-
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 })

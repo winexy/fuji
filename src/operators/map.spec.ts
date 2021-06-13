@@ -11,8 +11,8 @@ describe('operators.map', () => {
       int()
     )
 
-    const errors = run(schema, '42test')
+    const { errors } = run(schema, '42test')
 
-    expect(errors).toBeEmpty()
+    expect(errors).toBeNull()
   })
 })

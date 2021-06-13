@@ -1,26 +1,25 @@
 import { required } from './required'
-import { createContext } from '../utils'
-import { VFunc } from '../types'
-import { DEFAULT_CONFIG } from '../defaults'
+import { Fuji } from '../types'
+import { f, run } from '..'
 
 describe('rules.required', () => {
-  let rule: VFunc<any>
+  let schema: Fuji<any>
   beforeEach(() => {
-    rule = required('error')
+    schema = f(required('error'))
   })
 
   it('should push error for undefined value', () => {
-    const { errors } = rule(createContext(undefined, DEFAULT_CONFIG))
+    const { errors } = run(schema, undefined)
     expect(errors).toBeArrayOfSize(1)
-  })
+  }) 
 
   it('should push provided message for invalid value', () => {
-    const { errors } = rule(createContext(undefined, DEFAULT_CONFIG))
-    expect(errors[0]).toHaveProperty('message', 'error')
+    const { errors } = run(schema, undefined)
+    expect(errors![0]).toHaveProperty('message', 'error')
   })
 
   it('should not push error for non undefined value', () => {
-    const { errors } = rule(createContext(42, DEFAULT_CONFIG))
-    expect(errors).toBeEmpty()
+    const { errors } = run(schema, 42)
+    expect(errors).toBeNull()
   })
 })

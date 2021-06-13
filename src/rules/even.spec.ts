@@ -1,22 +1,29 @@
-import { DEFAULT_CONFIG } from '../defaults'
-import { createContext } from '../utils'
+import { f } from '..'
 import { even } from './even'
+import { run } from '../run'
 
 describe('rules.even', () => {
   it.each`
-    value | expectedSize
-    ${1}  | ${1}
-    ${2}  | ${0}
-    ${42} | ${0}
-    ${43} | ${1}
-  `(
-    'when value=$value expected errors size is $expectedSize',
-    ({ value, expectedSize }) => {
-      const rule = even()
+    value
+    ${1}
+    ${43}
+  `('when value=$value expected errors size is $expectedSize', ({ value }) => {
+    const schema = f(even())
 
-      const { errors } = rule(createContext(value, DEFAULT_CONFIG))
+    const { errors } = run(schema, value)
 
-      expect(errors).toBeArrayOfSize(expectedSize)
-    }
-  )
+    expect(errors).toBeArrayOfSize(1)
+  })
+
+  it.each`
+    value
+    ${2}
+    ${42}
+  `('when value=$value expected errors size is $expectedSize', ({ value }) => {
+    const schema = f(even())
+
+    const { errors } = run(schema, value)
+
+    expect(errors).toBeNull()
+  })
 })

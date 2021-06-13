@@ -1,22 +1,28 @@
-import { DEFAULT_CONFIG } from '../defaults'
-import { createContext } from '../utils'
+import { f, run } from '..'
 import { odd } from './odd'
 
 describe('rules.odd', () => {
   it.each`
-    value | expectedSize
-    ${1}  | ${0}
-    ${2}  | ${1}
-    ${42} | ${1}
-    ${43} | ${0}
-  `(
-    'when value=$value expected errors size is $expectedSize',
-    ({ value, expectedSize }) => {
-      const rule = odd()
+    value
+    ${1}
+    ${43}
+  `('when value=$value expected errors size is $expectedSize', ({ value }) => {
+    const schema = f(odd())
 
-      const { errors } = rule(createContext(value, DEFAULT_CONFIG))
+    const { errors } = run(schema, value)
 
-      expect(errors).toBeArrayOfSize(expectedSize)
-    }
-  )
+    expect(errors).toBeNull()
+  })
+
+  it.each`
+    value
+    ${2}
+    ${42}
+  `('when value=$value expected errors size is $expectedSize', ({ value }) => {
+    const schema = f(odd())
+
+    const { errors } = run(schema, value)
+
+    expect(errors).toBeArrayOfSize(1)
+  })
 })
