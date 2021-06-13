@@ -1,5 +1,5 @@
 import { array } from './array'
-import { fuji, runWith } from '..'
+import { fuji, run } from '..'
 import { random } from 'faker'
 
 describe('rules.array', () => {
@@ -11,7 +11,7 @@ describe('rules.array', () => {
   `('when input=$input ', input => {
     const schema = fuji(array())
 
-    const errors = runWith(schema, input)
+    const errors = run(schema, input)
 
     expect(errors).toBeArrayOfSize(1)
     expect(errors[0]).toEqual(
@@ -29,7 +29,7 @@ describe('rules.array', () => {
   `('should not return error', ({ input }) => {
     const schema = fuji(array())
 
-    const errors = runWith(schema, input)
+    const errors = run(schema, input)
 
     expect(errors).toBeEmpty()
   })

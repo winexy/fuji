@@ -4,7 +4,7 @@ import { expectTypeOf } from 'expect-type'
 import { Fuji } from '../types'
 import { required } from './required'
 import { number } from './number'
-import { fuji, runWith } from '..'
+import { fuji, run } from '..'
 
 describe('shape', () => {
   it('should match type', () => {
@@ -37,7 +37,7 @@ describe('shape', () => {
       })
     )
 
-    const res = runWith(schema, {
+    const res = run(schema, {
       user: {
         city: {
           name: 42
@@ -84,7 +84,7 @@ describe('shape', () => {
       })
     )
 
-    const errors = runWith(schema, {
+    const errors = run(schema, {
       user: {
         city: {
           name: 'LA'
@@ -103,7 +103,7 @@ describe('shape', () => {
       })
     )
 
-    const errors = runWith(schema, {})
+    const errors = run(schema, {})
 
     expect(errors).toBeEmpty()
   })
@@ -122,7 +122,7 @@ describe('shape', () => {
       })
     )
 
-    const errors = runWith(schema, input)
+    const errors = run(schema, input)
 
     expect(errors).toBeArrayOfSize(1)
     expect(errors[0]).toEqual(
@@ -154,7 +154,7 @@ describe('shape', () => {
       })
     )
 
-    const errors = runWith(schema, { object: input })
+    const errors = run(schema, { object: input })
 
     expect(errors).toBeArrayOfSize(1)
     expect(errors[0]).toEqual(

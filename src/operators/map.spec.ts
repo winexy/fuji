@@ -1,7 +1,7 @@
 import { map } from './map'
 import { string } from '../rules/string'
 import { int } from '../rules/int'
-import { fuji, runWith } from '..'
+import { fuji, run } from '..'
 
 describe('operators.map', () => {
   it('should correctly map value between types', () => {
@@ -11,7 +11,7 @@ describe('operators.map', () => {
       int()
     )
 
-    const errors = runWith(schema, '42test')
+    const errors = run(schema, '42test')
 
     expect(errors).toBeEmpty()
   })

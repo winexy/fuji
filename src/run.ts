@@ -3,7 +3,7 @@ import { runner } from './runner'
 import { Fuji, FujiConfig, VError } from './types'
 import { createConfig, createContext } from './utils'
 
-export function runWith<Value>(
+export function run<Value>(
   schema: Fuji<Value>,
   value: unknown,
   config: Partial<FujiConfig> = DEFAULT_CONFIG

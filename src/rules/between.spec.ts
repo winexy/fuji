@@ -1,4 +1,4 @@
-import { fuji, runWith } from '..'
+import { fuji, run } from '..'
 import { between } from './between'
 import { required } from './required'
 
@@ -14,7 +14,7 @@ describe('rules.between', () => {
     ({ left, right, input }) => {
       const schema = fuji(between(left, right))
 
-      const errors = runWith(schema, input)
+      const errors = run(schema, input)
 
       expect(errors).toBeArrayOfSize(1)
       expect(errors[0]).toEqual(
@@ -37,7 +37,7 @@ describe('rules.between', () => {
     ({ left, right, input }) => {
       const schema = fuji(between(left, right))
 
-      const errors = runWith(schema, input)
+      const errors = run(schema, input)
 
       expect(errors).toBeEmpty()
     }
@@ -46,7 +46,7 @@ describe('rules.between', () => {
   it('should not return error if value is not required', () => {
     const schema = fuji(between(1, 100))
 
-    const errors = runWith(schema, undefined)
+    const errors = run(schema, undefined)
 
     expect(errors).toBeEmpty()
   })
@@ -54,7 +54,7 @@ describe('rules.between', () => {
   it('should return error if value is required', () => {
     const schema = fuji(between(1, 100), required())
 
-    const errors = runWith(schema, undefined)
+    const errors = run(schema, undefined)
 
     expect(errors).toBeArrayOfSize(1)
   })

@@ -1,5 +1,5 @@
 import { random } from 'faker'
-import { fuji, runWith } from '..'
+import { fuji, run } from '..'
 import { int } from './int'
 
 describe('rules.int', () => {
@@ -11,7 +11,7 @@ describe('rules.int', () => {
   `('should return error when input=$input', ({ input }) => {
     const schema = fuji(int())
 
-    const errors = runWith(schema, input)
+    const errors = run(schema, input)
 
     expect(errors).toBeArrayOfSize(1)
     expect(errors[0]).toEqual(
@@ -25,7 +25,7 @@ describe('rules.int', () => {
   it('should not return error for int', () => {
     const schema = fuji(int())
 
-    const errors = runWith(schema, random.number())
+    const errors = run(schema, random.number())
 
     expect(errors).toBeEmpty()
   })
