@@ -1,17 +1,32 @@
-import * as F from './index'
+import {
+  even,
+  f,
+  run,
+  includes,
+  max,
+  maxLength,
+  minLength,
+  number,
+  numeric,
+  pattern,
+  positive,
+  required,
+  string
+} from './index'
+import { oneOf } from './rules/one-of'
 
 test('string', () => {
-  const schema = F.fuji(
-    F.string(),
-    F.minLength(3),
-    F.maxLength(3),
-    F.includes('A'),
-    F.oneOf(['ALA', 'MAD']),
-    F.pattern(/\w/),
-    F.required()
+  const schema = f(
+    string(),
+    minLength(3),
+    maxLength(3),
+    includes('A'),
+    oneOf(['ALA', 'MAD']),
+    pattern(/\w/),
+    required()
   )
 
-  const res = F.runWith(schema, 'ALA', {
+  const res = run(schema, 'ALA', {
     valueName: 'code'
   })
 
@@ -19,15 +34,9 @@ test('string', () => {
 })
 
 test('number', () => {
-  const schema = F.fuji(
-    F.required(),
-    F.number(),
-    F.positive(),
-    F.numeric(),
-    F.even()
-  )
+  const schema = f(required(), number(), positive(), numeric(), even())
 
-  const res = F.runWith(schema, 42, {
+  const res = run(schema, 42, {
     valueName: 'number'
   })
 
@@ -42,9 +51,9 @@ describe('failFast', () => {
   `(
     'when failFast=$failFast expected errors size $expectedSize',
     ({ failFast, expectedSize }) => {
-      const schema = F.fuji(F.number(), F.positive(), F.max(100))
+      const schema = f(number(), positive(), max(100))
 
-      const errors = F.runWith(schema, 'not_a_number', {
+      const errors = run(schema, 'not_a_number', {
         failFast
       })
 
@@ -59,14 +68,12 @@ describe('failFast', () => {
   `(
     'when failFast=$failFast expected errors size $expectedSize',
     ({ failFast, expectedSize }) => {
-      const schema = F.fuji(
-        F.shape({
-          price: F.fuji(F.number(), F.positive(), F.max(100)),
-          login: F.fuji(F.string(), F.minLength(1))
-        })
-      )
+      const schema = shape({
+        price: f(number(), positive(), max(100)),
+        login: f(string(), minLength(1))
+      })
 
-      const errors = F.runWith(
+      const errors = run(
         schema,
         {
           price: 'login',
@@ -84,17 +91,15 @@ describe('failFast', () => {
 
 describe('allowUnknown', () => {
   test('should forbid unknown properties', () => {
-    const schema = F.fuji(
-      F.shape({
-        id: F.fuji(F.number(), F.positive()),
-        nickname: F.fuji(F.string(), F.minLength(1))
-      })
-    )
+    const schema = shape({
+      id: f(number(), positive()),
+      nickname: f(string(), minLength(1))
+    })
 
     const HOW_ABOUT = 'howAbout'
     const OR = 'or'
 
-    const errors = F.runWith(schema, {
+    const errors = run(schema, {
       id: 4,
       nickname: 'winexy',
       [HOW_ABOUT]: 'that?',
@@ -119,14 +124,12 @@ describe('allowUnknown', () => {
   })
 
   it('should allow uknown properties', () => {
-    const schema = F.fuji(
-      F.shape({
-        id: F.fuji(F.number(), F.positive()),
-        nickname: F.fuji(F.string(), F.minLength(1))
-      })
-    )
+    const schema = f.shape({
+      id: f(number(), positive()),
+      nickname: f(string(), minLength(1))
+    })
 
-    const errors = F.runWith(
+    const errors = run(
       schema,
       {
         id: 4,
