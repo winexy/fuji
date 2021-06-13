@@ -1,5 +1,5 @@
 import { runner } from '../runner'
-import type { Fuji, VContext, VFunc } from '../types'
+import type { ShapeSchema, VContext, VFunc } from '../types'
 import { createContext, isUndef, isObject, createError } from '../utils'
 
 export type ShapeMismatchType = 'shape-mismatch'
@@ -35,8 +35,6 @@ function checkUnknownKeys<Shape extends ShapeSchema>(
 
   return ctx
 }
-
-type ShapeSchema = Record<string, Fuji<any>>
 
 export const shape = <Shape extends ShapeSchema>(
   schema: Shape

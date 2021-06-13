@@ -2,7 +2,7 @@ import { arrayOf } from './rules/array-of'
 import { RequiredName } from './rules/required'
 import { RequiredIfName } from './rules/required-if'
 import { shape } from './rules/shape'
-import type { VFunc, Fuji } from './types'
+import type { VFunc, Fuji, ShapeSchema } from './types'
 
 function fuji<V>(r1: VFunc<V>): Fuji<V>
 
@@ -169,8 +169,8 @@ function fuji<Value>(...rules: VFunc<Value>[]): Fuji<Value> {
 }
 
 const f = fuji
-fuji.shape = shape
-fuji.array = arrayOf
+fuji.shape = <Shape extends ShapeSchema>(schema: Shape) => fuji(shape(schema))
+fuji.array = <Value>(schema: Fuji<Value>) => fuji(arrayOf(schema))
 
 const highPriority = [RequiredName, RequiredIfName]
 

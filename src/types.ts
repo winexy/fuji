@@ -178,3 +178,5 @@ export type FujiConfig = {
 }
 
 export type AnyRecord = Record<any, any>
+
+export type ShapeSchema = Record<string, Fuji<any>>
