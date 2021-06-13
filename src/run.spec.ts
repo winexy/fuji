@@ -163,6 +163,48 @@ describe('run', () => {
 
     expect(value).toBe(42)
   })
+
+  test('should return transformed value without mutating input', () => {
+    const schema = f.shape({
+      user: f.shape({
+        name: f(
+          string(),
+          map(n => n.toUpperCase())
+        ),
+        email: f(
+          string(),
+          map(s => s.trim()),
+          map(s => s.toLowerCase())
+        )
+      })
+    })
+
+    const NAME = 'bot'
+    const EMAIL = ' bOt@ExaMple.COM        '
+
+    const data = {
+      user: {
+        name: NAME,
+        email: EMAIL
+      }
+    }
+
+    const result = run(schema, data)
+
+    expect(result.value).toEqual({
+      user: {
+        name: NAME.toUpperCase(),
+        email: EMAIL.trim().toLowerCase()
+      }
+    })
+
+    expect(data).toEqual({
+      user: {
+        name: NAME,
+        email: EMAIL
+      }
+    })
+  })
 })
 
 describe('failFast', () => {
