@@ -151,34 +151,16 @@ type InferRecord<Shape extends Record<string, Fuji<any>>> = {
 export type FormatMessage<Meta extends ErrorMeta | null = null> = {
   (context: ErrorContext<Meta>): string
 }
-export interface ErrorsDict {
-  string: FormatMessage
-  bool: FormatMessage
-  includes: FormatMessage<IncludesMeta>
-  'unsupported-type': FormatMessage
-  required: FormatMessage
-  'required-if': FormatMessage<RequiredIfMeta>
-  'one-of': FormatMessage<OneOfMeta>
-  positive: FormatMessage
-  negative: FormatMessage
+export interface ErrorsDictI {
   custom: FormatMessage
-  number: FormatMessage
-  object: FormatMessage
-  array: FormatMessage
-  'equal-to': FormatMessage<EqualToMeta>
-  'equal-with': FormatMessage
-  between: FormatMessage<BetweenMeta>
-  even: FormatMessage
-  odd: FormatMessage
-  max: FormatMessage<MaxMeta>
-  min: FormatMessage<MinMeta>
-  'max-length': FormatMessage<MaxLengthMeta>
-  'min-length': FormatMessage<MinLengthMeta>
-  pattern: FormatMessage<PatternMeta>
-  numeric: FormatMessage
-  int: FormatMessage
-  'shape-mismatch': FormatMessage<ShapeMismatchMeta>
 }
+
+export type ErrorsDict = ErrorsDictI &
+  {
+    [Type in ErrorType]: ResolveTypeMeta<Type> extends null
+      ? FormatMessage
+      : FormatMessage<ResolveTypeMeta<Type>>
+  }
 
 export type FujiConfig = {
   failFast: boolean
