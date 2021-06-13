@@ -17,7 +17,7 @@ describe('rules.int', () => {
     expect(errors[0]).toEqual(
       expect.objectContaining({
         type: 'int',
-        message: '"value" should be type of int'
+        message: 'value should be type of int'
       })
     )
   })

@@ -128,7 +128,7 @@ describe('shape', () => {
     expect(errors[0]).toEqual(
       expect.objectContaining({
         type: 'shape-mismatch',
-        message: '"value" has invalid shape. Missing keys: a, b',
+        message: 'value has invalid shape. Missing keys: a, b',
         meta: {
           keys: ['a', 'b']
         }

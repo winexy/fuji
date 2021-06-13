@@ -20,7 +20,7 @@ describe('rules.between', () => {
       expect(errors[0]).toEqual(
         expect.objectContaining({
           type: 'between',
-          message: `"value" should be in between ${left} and ${right}`
+          message: `value should be in between ${left} and ${right}`
         })
       )
     }

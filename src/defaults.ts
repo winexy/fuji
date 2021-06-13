@@ -1,7 +1,17 @@
-import { ErrorsDict, FormatMessage, FujiConfig } from './types'
+import { ErrorsDict, FormatMessage, FujiConfig, ErrorContext } from './types'
 
 const shouldBeTypeOf = (type: string): FormatMessage => {
-  return ctx => `"${ctx.path || ctx.valueName}" should be type of ${type}`
+  return ctx => `${name(ctx)} should be type of ${type}`
+}
+
+const name = (ctx: ErrorContext<any>): string => {
+  if (ctx.path) {
+    return `"${ctx.path}"`
+  }
+
+  return ctx.valueName === DEFAULT_CONFIG.valueName
+    ? ctx.valueName
+    : `"${ctx.valueName}"`
 }
 
 export const DEFAULT_DICT: ErrorsDict = {
@@ -11,48 +21,31 @@ export const DEFAULT_DICT: ErrorsDict = {
   object: shouldBeTypeOf('object'),
   array: shouldBeTypeOf('array'),
   int: shouldBeTypeOf('int'),
-  includes: ctx =>
-    `"${ctx.path || ctx.valueName}" should include ${ctx.meta.target}`,
-  ['unsupported-type']: ctx =>
-    `"${ctx.path || ctx.valueName}" has unsupported type`,
-  required: ctx => `"${ctx.path || ctx.valueName}" is required`,
-  'required-if': ctx => `"${ctx.path || ctx.valueName}" is required`,
+  includes: ctx => `${name(ctx)} should include ${ctx.meta.target}`,
+  ['unsupported-type']: ctx => `${name(ctx)} has unsupported type`,
+  required: ctx => `${name(ctx)} is required`,
+  'required-if': ctx => `${name(ctx)} is required`,
   'one-of': ctx =>
-    `"${ctx.path || ctx.valueName}" should be one of [${ctx.meta.variants.join(
-      ', '
-    )}]`,
-  positive: ctx => `"${ctx.path || ctx.valueName}" should be positive`,
+    `${name(ctx)} should be one of [${ctx.meta.variants.join(', ')}]`,
+  positive: ctx => `${name(ctx)} should be positive`,
   custom: () => 'custom error',
-  'equal-to': ctx =>
-    `"${ctx.path || ctx.valueName}" should be equal to ${ctx.meta.target}`,
-  'equal-with': ctx =>
-    `"${ctx.path || ctx.valueName}" is not equal to expected value`,
+  'equal-to': ctx => `${name(ctx)} should be equal to ${ctx.meta.target}`,
+  'equal-with': ctx => `${name(ctx)} is not equal to expected value`,
   between: ctx =>
-    `"${ctx.path || ctx.valueName}" should be in between ${ctx.meta.left} and ${
-      ctx.meta.right
-    }`,
-  odd: ctx => `"${ctx.path || ctx.valueName}" should be odd`,
-  even: ctx => `"${ctx.path || ctx.valueName}" should be even`,
-  max: ctx =>
-    `"${ctx.path || ctx.valueName}" should not exceed ${ctx.meta.limit}`,
-  min: ctx =>
-    `"${ctx.path || ctx.valueName}" should be greater than ${ctx.meta.limit}`,
+    `${name(ctx)} should be in between ${ctx.meta.left} and ${ctx.meta.right}`,
+  odd: ctx => `${name(ctx)} should be odd`,
+  even: ctx => `${name(ctx)} should be even`,
+  max: ctx => `${name(ctx)} should not exceed ${ctx.meta.limit}`,
+  min: ctx => `${name(ctx)} should be greater than ${ctx.meta.limit}`,
   'min-length': ctx =>
-    `"${ctx.path || ctx.valueName}" should have length greater than ${
-      ctx.meta.limit
-    }`,
+    `${name(ctx)} should have length greater than ${ctx.meta.limit}`,
   'max-length': ctx =>
-    `"${ctx.path || ctx.valueName}" should have length less than ${
-      ctx.meta.limit
-    }`,
-  negative: ctx => `"${ctx.path || ctx.valueName}" should be negative`,
-  pattern: ctx =>
-    `"${ctx.path || ctx.valueName}" should match ${ctx.meta.regex}`,
-  numeric: ctx => `"${ctx.path || ctx.valueName}" should be numeric`,
+    `${name(ctx)} should have length less than ${ctx.meta.limit}`,
+  negative: ctx => `${name(ctx)} should be negative`,
+  pattern: ctx => `${name(ctx)} should match ${ctx.meta.regex}`,
+  numeric: ctx => `${name(ctx)} should be numeric`,
   'shape-mismatch': ctx =>
-    `"${
-      ctx.path || ctx.valueName
-    }" has invalid shape. Missing keys: ${ctx.meta.keys.join(', ')}`
+    `${name(ctx)} has invalid shape. Missing keys: ${ctx.meta.keys.join(', ')}`,
 }
 
 export const DEFAULT_CONFIG: FujiConfig = {

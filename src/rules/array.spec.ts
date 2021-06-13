@@ -17,7 +17,7 @@ describe('rules.array', () => {
     expect(errors[0]).toEqual(
       expect.objectContaining({
         type: 'array',
-        message: '"value" should be type of array'
+        message: 'value should be type of array'
       })
     )
   })
