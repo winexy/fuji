@@ -91,6 +91,99 @@ function fuji<A, B, C, D, E, F, G, H, I, J>(
   r9: VFunc<I, J>
 ): Fuji<J>
 
+function fuji<A, B, C, D, E, F, G, H, I, J, K>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>,
+  r10: VFunc<J, K>
+): Fuji<K>
+
+function fuji<A, B, C, D, E, F, G, H, I, J, K, L>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>,
+  r10: VFunc<J, K>,
+  r11: VFunc<K, L>
+): Fuji<L>
+
+function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>,
+  r10: VFunc<J, K>,
+  r11: VFunc<K, L>,
+  r12: VFunc<L, M>
+): Fuji<M>
+
+function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>,
+  r10: VFunc<J, K>,
+  r11: VFunc<K, L>,
+  r12: VFunc<L, M>,
+  r13: VFunc<M, N>
+): Fuji<N>
+
+function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>,
+  r10: VFunc<J, K>,
+  r11: VFunc<K, L>,
+  r12: VFunc<L, M>,
+  r13: VFunc<M, N>,
+  r14: VFunc<N, O>
+): Fuji<O>
+
+function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(
+  r1: VFunc<A, B>,
+  r2: VFunc<B, C>,
+  r3: VFunc<C, D>,
+  r4: VFunc<D, E>,
+  r5: VFunc<E, F>,
+  r6: VFunc<F, G>,
+  r7: VFunc<G, H>,
+  r8: VFunc<H, I>,
+  r9: VFunc<I, J>,
+  r10: VFunc<J, K>,
+  r11: VFunc<K, L>,
+  r12: VFunc<L, M>,
+  r13: VFunc<M, N>,
+  r14: VFunc<N, O>,
+  r15: VFunc<O, P>
+): Fuji<P>
+
 function fuji<Value>(...rules: VFunc<Value>[]): Fuji<Value> {
   return { rules: sortRules(rules) }
 }
