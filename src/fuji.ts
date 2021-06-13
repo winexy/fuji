@@ -6,22 +6,22 @@ import type { VFunc, Fuji, ShapeSchema } from './types'
 
 function fuji<V>(r1: VFunc<V>): Fuji<V>
 
-function fuji<A, B, C>(r1: VFunc<A, B>, r2: VFunc<B, C>): Fuji<C>
+function fuji<A, B = A, C = B>(r1: VFunc<A, B>, r2: VFunc<B, C>): Fuji<C>
 
-function fuji<A, B, C, D>(
+function fuji<A, B = A, C = B, D = C>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>
 ): Fuji<D>
 
-function fuji<A, B, C, D, E>(
+function fuji<A, B = A, C = B, D = C, E = D>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
   r4: VFunc<D, E>
 ): Fuji<E>
 
-function fuji<A, B, C, D, E, F>(
+function fuji<A, B = A, C = B, D = C, E = D, F = E>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -29,7 +29,7 @@ function fuji<A, B, C, D, E, F>(
   r5: VFunc<E, F>
 ): Fuji<F>
 
-function fuji<A, B, C, D, E, F, G>(
+function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -38,7 +38,7 @@ function fuji<A, B, C, D, E, F, G>(
   r6: VFunc<F, G>
 ): Fuji<G>
 
-function fuji<A, B, C, D, E, F, G, H>(
+function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -48,7 +48,7 @@ function fuji<A, B, C, D, E, F, G, H>(
   r7: VFunc<G, H>
 ): Fuji<H>
 
-function fuji<A, B, C, D, E, F, G, H, I>(
+function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G, I = H>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -59,7 +59,7 @@ function fuji<A, B, C, D, E, F, G, H, I>(
   r8: VFunc<H, I>
 ): Fuji<I>
 
-function fuji<A, B, C, D, E, F, G, H, I, J>(
+function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G, I = H, J = I>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -71,7 +71,19 @@ function fuji<A, B, C, D, E, F, G, H, I, J>(
   r9: VFunc<I, J>
 ): Fuji<J>
 
-function fuji<A, B, C, D, E, F, G, H, I, J, K>(
+function fuji<
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I,
+  K = J
+>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -84,7 +96,20 @@ function fuji<A, B, C, D, E, F, G, H, I, J, K>(
   r10: VFunc<J, K>
 ): Fuji<K>
 
-function fuji<A, B, C, D, E, F, G, H, I, J, K, L>(
+function fuji<
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I,
+  K = J,
+  L = K
+>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -98,7 +123,21 @@ function fuji<A, B, C, D, E, F, G, H, I, J, K, L>(
   r11: VFunc<K, L>
 ): Fuji<L>
 
-function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M>(
+function fuji<
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I,
+  K = J,
+  L = K,
+  M = L
+>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -113,7 +152,22 @@ function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M>(
   r12: VFunc<L, M>
 ): Fuji<M>
 
-function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(
+function fuji<
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I,
+  K = J,
+  L = K,
+  M = L,
+  N = M
+>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -129,7 +183,23 @@ function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(
   r13: VFunc<M, N>
 ): Fuji<N>
 
-function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
+function fuji<
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I,
+  K = J,
+  L = K,
+  M = L,
+  N = M,
+  O = N
+>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
@@ -146,7 +216,24 @@ function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
   r14: VFunc<N, O>
 ): Fuji<O>
 
-function fuji<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(
+function fuji<
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I,
+  K = J,
+  L = K,
+  M = L,
+  N = M,
+  O = N,
+  P = O
+>(
   r1: VFunc<A, B>,
   r2: VFunc<B, C>,
   r3: VFunc<C, D>,
