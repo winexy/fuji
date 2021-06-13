@@ -129,7 +129,6 @@ export type VContext<Value> = {
   parent: Record<any, any> | null
   root: Record<any, any> | Value
   required: boolean
-  result: any
 }
 
 export type ErrorContext<Meta extends ErrorMeta | null = null> = {

@@ -1,7 +1,5 @@
 import { random } from 'faker'
 import { includes } from './includes'
-import { createContext } from '../utils'
-import { DEFAULT_CONFIG } from '../defaults'
 import { f, run } from '..'
 
 describe('rules.includes', () => {
