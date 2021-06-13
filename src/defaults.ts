@@ -46,6 +46,7 @@ export const DEFAULT_DICT: ErrorsDict = {
   numeric: ctx => `${name(ctx)} should be numeric`,
   'shape-mismatch': ctx =>
     `${name(ctx)} has invalid shape. Missing keys: ${ctx.meta.keys.join(', ')}`,
+  'unknown-key': ctx => `${name(ctx)} has unknown key: ${ctx.meta.key}`
 }
 
 export const DEFAULT_CONFIG: FujiConfig = {

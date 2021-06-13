@@ -22,7 +22,12 @@ import type { OddType } from './rules/odd'
 import type { PatternMeta, PatternType } from './rules/pattern'
 import type { NumericType } from './rules/numeric'
 import type { MinMeta, MinType } from './rules/min'
-import { ShapeMismatchType, ShapeMismatchMeta } from './rules/shape'
+import {
+  ShapeMismatchType,
+  ShapeMismatchMeta,
+  UnknownKeyType,
+  UnknownKeyMeta
+} from './rules/shape'
 
 export type ErrorType =
   | ShapeMismatchType
@@ -49,6 +54,7 @@ export type ErrorType =
   | OddType
   | PatternType
   | NumericType
+  | UnknownKeyType
   | CustomRuleI['Type']
   | 'unsupported-type'
 
@@ -65,36 +71,38 @@ export type ErrorMeta =
   | EqualToMeta
   | EqualWithMeta
   | BetweenMeta
+  | UnknownKeyMeta
   | null
 
-export type ResolveTypeMeta<Type extends ErrorType> =
-  Type extends ShapeMismatchType
-    ? ShapeMismatchMeta
-    : Type extends RequiredIfType
-    ? RequiredIfMeta
-    : Type extends IncludesType
-    ? IncludesMeta
-    : Type extends MaxLengthType
-    ? MaxLengthMeta
-    : Type extends MinLengthType
-    ? MinLengthMeta
-    : Type extends MaxType
-    ? MaxMeta
-    : Type extends MinType
-    ? MinMeta
-    : Type extends PatternType
-    ? PatternMeta
-    : Type extends OneOfType
-    ? OneOfMeta
-    : Type extends EqualToType
-    ? EqualToMeta
-    : Type extends EqualWithType
-    ? EqualWithMeta
-    : Type extends BetweenType
-    ? BetweenMeta
-    : Type extends CustomRuleI['Type']
-    ? CustomRuleMeta
-    : null
+export type ResolveTypeMeta<Type extends ErrorType> = Type extends ShapeMismatchType
+  ? ShapeMismatchMeta
+  : Type extends UnknownKeyType
+  ? UnknownKeyMeta
+  : Type extends RequiredIfType
+  ? RequiredIfMeta
+  : Type extends IncludesType
+  ? IncludesMeta
+  : Type extends MaxLengthType
+  ? MaxLengthMeta
+  : Type extends MinLengthType
+  ? MinLengthMeta
+  : Type extends MaxType
+  ? MaxMeta
+  : Type extends MinType
+  ? MinMeta
+  : Type extends PatternType
+  ? PatternMeta
+  : Type extends OneOfType
+  ? OneOfMeta
+  : Type extends EqualToType
+  ? EqualToMeta
+  : Type extends EqualWithType
+  ? EqualWithMeta
+  : Type extends BetweenType
+  ? BetweenMeta
+  : Type extends CustomRuleI['Type']
+  ? CustomRuleMeta
+  : null
 
 export type Fuji<Value> = {
   rules: VFunc<Value>[]

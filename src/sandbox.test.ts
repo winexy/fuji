@@ -81,3 +81,64 @@ describe('failFast', () => {
     }
   )
 })
+
+describe('allowUnknown', () => {
+  test('should forbid unknown properties', () => {
+    const schema = F.fuji(
+      F.shape({
+        id: F.fuji(F.number(), F.positive()),
+        nickname: F.fuji(F.string(), F.minLength(1))
+      })
+    )
+
+    const HOW_ABOUT = 'howAbout'
+    const OR = 'or'
+
+    const errors = F.runWith(schema, {
+      id: 4,
+      nickname: 'winexy',
+      [HOW_ABOUT]: 'that?',
+      [OR]: 'that?'
+    })
+
+    expect(errors).toBeArrayOfSize(2)
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: 'unknown-key',
+          meta: { key: HOW_ABOUT },
+          message: `value has unknown key: ${HOW_ABOUT}`
+        }),
+        expect.objectContaining({
+          type: 'unknown-key',
+          meta: { key: OR },
+          message: `value has unknown key: ${OR}`
+        })
+      ])
+    )
+  })
+
+  it('should allow uknown properties', () => {
+    const schema = F.fuji(
+      F.shape({
+        id: F.fuji(F.number(), F.positive()),
+        nickname: F.fuji(F.string(), F.minLength(1))
+      })
+    )
+
+    const errors = F.runWith(
+      schema,
+      {
+        id: 4,
+        nickname: 'winexy',
+        howAbout: 'that?',
+        or: 'that?'
+      },
+      {
+        allowUnknown: true
+      }
+    )
+
+    expect(errors).toBeEmpty()
+  })
+})

@@ -1,5 +1,5 @@
 import { runner } from '../runner'
-import type { Fuji, VFunc } from '../types'
+import type { Fuji, VContext, VFunc } from '../types'
 import { createContext, isUndef, isObject, createError } from '../utils'
 
 export type ShapeMismatchType = 'shape-mismatch'
@@ -8,12 +8,42 @@ export type ShapeMismatchMeta = {
   keys: string[]
 }
 
-export const shape = <Shape extends Record<string, Fuji<any>>>(
+export type UnknownKeyType = 'unknown-key'
+
+export type UnknownKeyMeta = {
+  key: string
+}
+
+function getUnknownKeys(allKeys: string[], knownKeys: string[]) {
+  const knownSet = new Set(knownKeys)
+  return allKeys.filter(key => !knownSet.has(key))
+}
+
+function checkUnknownKeys<Shape extends ShapeSchema>(
+  ctx: VContext<Shape>,
+  keys: string[]
+): VContext<Shape> {
+  const unknownKeys = getUnknownKeys(Object.keys(ctx.current), keys)
+
+  if (unknownKeys.length > 0) {
+    ctx.errors.push(
+      ...unknownKeys.map(key =>
+        createError('unknown-key', undefined, ctx, { key })
+      )
+    )
+  }
+
+  return ctx
+}
+
+type ShapeSchema = Record<string, Fuji<any>>
+
+export const shape = <Shape extends ShapeSchema>(
   schema: Shape
 ): VFunc<Shape> => {
   return function ShapeOfV8N(ctx) {
     const keys: Array<keyof Shape> = Object.keys(schema)
-    const { failFast } = ctx.config
+    const { failFast, allowUnknown } = ctx.config
 
     if (!isObject(ctx.current)) {
       ctx.errors.push(
@@ -24,7 +54,11 @@ export const shape = <Shape extends Record<string, Fuji<any>>>(
       return ctx
     }
 
-    let parentContext = ctx
+    let nextContext = ctx
+
+    if (!allowUnknown) {
+      nextContext = checkUnknownKeys(ctx, keys as string[])
+    }
 
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
@@ -51,13 +85,13 @@ export const shape = <Shape extends Record<string, Fuji<any>>>(
         })
       )
 
-      parentContext.errors.push(...result.errors)
+      nextContext.errors.push(...result.errors)
 
       if (failFast && result.errors.length > 0) {
-        return parentContext
+        return nextContext
       }
     }
 
-    return parentContext
+    return nextContext
   }
 }
