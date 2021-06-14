@@ -168,9 +168,29 @@ describe('run', () => {
       map(x => parseInt(x))
     )
 
-    const { value } = run(schema, '42')
+    const result = run(schema, '42')
 
-    expect(value).toBe(42)
+    expect(result.value).toBe(42)
+  })
+
+  test('todo: single optional', () => {
+    const schema = f(string())
+
+    const result = run(schema, 'optional')
+
+    if (!result.invalid) {
+      expectTypeOf(result.value).toMatchTypeOf<string | undefined>()
+    }
+  })
+
+  test('todo: single required', () => {
+    const schema = f(string(), required())
+
+    const result = run(schema, 'required')
+
+    if (!result.invalid) {
+      expectTypeOf(result.value).toMatchTypeOf<string>()
+    }
   })
 
   test('should return transformed value without mutating input', () => {

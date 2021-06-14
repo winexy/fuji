@@ -178,12 +178,17 @@ export type Fuji<Types extends RuleType, Value> = {
 }
 
 /** Infer */
-export type Infer<FujiSchema> = FujiSchema extends Fuji<any, infer Value>
+export type Infer<FujiSchema> = FujiSchema extends Fuji<
+  infer $RuleType,
+  infer Value
+>
   ? Value extends AnyShapeSchema
     ? InferRecord<Value>
     : Value extends Array<AnyShapeSchema>
     ? InferArrayOfRecords<Value>[]
-    : Value
+    : RequiredType extends $RuleType
+    ? Value
+    : Value | undefined
   : never
 
 type InferArrayOfRecords<Value extends Array<AnyShapeSchema>> =
