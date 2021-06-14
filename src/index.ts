@@ -1,4 +1,21 @@
-export * from './types'
+export {
+  Infer,
+  RuleType,
+  RuleMeta,
+  RuleCreator,
+  RuleFunc,
+  Rule,
+  VError,
+  VContext,
+  ErrorContext,
+  FormatMessage,
+  ErrorsDictI,
+  ErrorsDict,
+  FujiConfig,
+  Fuji,
+  AnyShapeSchema,
+  Result
+} from './types'
 
 export { minLength } from './rules/min-length'
 export { maxLength } from './rules/max-length'
@@ -39,8 +56,6 @@ export { max } from './rules/max'
 export { between } from './rules/between'
 
 export { map } from './operators/map'
-
-export { Infer, RuleType, ErrorsDict } from './types'
 
 export { fuji, f } from './fuji'
 export { run } from './run'
