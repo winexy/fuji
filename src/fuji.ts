@@ -1,4 +1,5 @@
 import { arrayOf } from './rules/array-of'
+import { required } from './rules/required'
 import { shape } from './rules/shape'
 import type { Fuji, Rule, RuleType, AnyShapeSchema } from './types'
 
@@ -30,16 +31,7 @@ function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D, F = E>(
   r5: Rule<TS, E, F>
 ): Fuji<TS, F>
 
-function fuji<
-  TS extends RuleType,
-  A,
-  B = A,
-  C = B,
-  D = C,
-  E = D,
-  F = E,
-  G = F
->(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D, F = E, G = F>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
@@ -308,6 +300,8 @@ function fuji<Types extends RuleType, Value>(
 
 const f = fuji
 fuji.shape = <Shape extends AnyShapeSchema>(schema: Shape) => f(shape(schema))
+fuji.shapeRequired = <Shape extends AnyShapeSchema>(schema: Shape) =>
+  f(shape(schema), required())
 fuji.array = <Value>(schema: Fuji<RuleType, Value>) => f(arrayOf(schema))
 
 const requiredTypes: RuleType[] = ['required', 'required-if']

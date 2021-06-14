@@ -38,7 +38,7 @@ describe('run', () => {
         map(workspaces => workspaces.map(w => w.split('').join('_'))),
         map(workspaces => workspaces.join('::'))
       ),
-      repository: f.shape({
+      repository: f.shapeRequired({
         type: f(
           string(),
           required(),
@@ -68,13 +68,16 @@ describe('run', () => {
       }
     })
 
-    expectTypeOf(result.value!.name).toEqualTypeOf<string>()
-    expectTypeOf(result.value!.version).toEqualTypeOf<number[] | undefined>()
-    expectTypeOf(result.value!.workspaces).toEqualTypeOf<string | undefined>()
-    expectTypeOf(result.value!.repository!.type).toEqualTypeOf<string>()
-    expectTypeOf(result.value!.repository!.url).toEqualTypeOf<
-      string | undefined
-    >()
+    if (!result.invalid) {
+      expectTypeOf(result.value.name).toEqualTypeOf<string>()
+      expectTypeOf(result.value.version).toEqualTypeOf<number[] | undefined>()
+      expectTypeOf(result.value.workspaces).toEqualTypeOf<string | undefined>()
+      expectTypeOf(result.value.repository).not.toBeNullable()
+      expectTypeOf(result.value.repository!.type).toEqualTypeOf<string>()
+      expectTypeOf(result.value.repository!.url).toEqualTypeOf<
+        string | undefined
+      >()
+    }
 
     expect(result.invalid).toBeFalse()
     expect(result.value).toEqual({
