@@ -1,29 +1,43 @@
-import { createContext } from '../utils'
-import { fuji } from '../fuji'
 import { arrayOf } from './array-of'
 import { string } from './string'
 import { maxLength } from './max-length'
 import { minLength } from './min-length'
-import { DEFAULT_CONFIG } from '../defaults'
 import { expectTypeOf } from 'expect-type'
-import { Rule } from '../types'
+import { Fuji } from '../types'
+import { f, run } from '..'
 
 describe('rules.arrayOf', () => {
   it.each`
-    value                | expectedSize
-    ${[]}                | ${0}
-    ${['MOW', 'ALA']}    | ${0}
-    ${['TEST', 'VALUE']} | ${2}
-  `(
-    'when value=$value expected errors size is $expectedSize',
-    ({ value, expectedSize }) => {
-      const schema = arrayOf(fuji(string(), maxLength(3), minLength(3)))
+    input
+    ${[]}
+    ${['MOW', 'ALA']}
+  `('should return null errors when input=$input', ({ input }) => {
+    const schema = f(arrayOf(f(string(), maxLength(3), minLength(3))))
 
-      expectTypeOf(schema).toMatchTypeOf<Rule<string[]>>()
+    const { errors } = run(schema, input)
 
-      const { errors } = schema(createContext(value, DEFAULT_CONFIG))
+    expect(errors).toBeNull()
+  })
 
-      expect(errors).toBeArrayOfSize(expectedSize)
-    }
-  )
+  it('should return errors for every invalid item', () => {
+    const schema = f(arrayOf(f(string(), maxLength(3), minLength(3))))
+    const input = ['TEST', 'VALUE']
+
+    const { errors } = run(schema, input)
+
+    expect(errors).toEqual([
+      expect.objectContaining({
+        type: 'max-length',
+      }),
+      expect.objectContaining({
+        type: 'max-length'
+      })
+    ])
+  })
+
+  it('should match inferred type', () => {
+    const schema = f.array(f(string()))
+
+    expectTypeOf(schema).toMatchTypeOf<Fuji<string[]>>()
+  })
 })

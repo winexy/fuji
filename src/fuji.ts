@@ -256,8 +256,8 @@ function fuji<Value>(...rules: Rule<Value>[]): Fuji<Value> {
 }
 
 const f = fuji
-fuji.shape = <Shape extends ShapeSchema>(schema: Shape) => fuji(shape(schema))
-fuji.array = <Value>(schema: Fuji<Value>) => fuji(arrayOf(schema))
+fuji.shape = <Shape extends ShapeSchema>(schema: Shape) => f(shape(schema))
+fuji.array = <Value>(schema: Fuji<Value>) => f(arrayOf(schema))
 
 const highPriority = [RequiredName, RequiredIfName]
 

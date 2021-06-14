@@ -1,5 +1,5 @@
 import { random } from 'faker'
-import { fuji, run } from '..'
+import { f, run } from '..'
 import { int } from './int'
 
 describe('rules.int', () => {
@@ -9,7 +9,7 @@ describe('rules.int', () => {
     ${random.boolean()}
     ${random.float()}
   `('should return error when input=$input', ({ input }) => {
-    const schema = fuji(int())
+    const schema = f(int())
 
     const { errors } = run(schema, input)
 
@@ -23,7 +23,7 @@ describe('rules.int', () => {
   })
 
   it('should not return error for int', () => {
-    const schema = fuji(int())
+    const schema = f(int())
 
     const { errors } = run(schema, random.number())
 

@@ -4,13 +4,13 @@ import { expectTypeOf } from 'expect-type'
 import { Fuji } from '../types'
 import { required } from './required'
 import { number } from './number'
-import { fuji, run } from '..'
+import { f, run } from '..'
 
 describe('shape', () => {
   it('should match type', () => {
-    const schema = fuji(
+    const schema = f(
       shape({
-        name: fuji(string())
+        name: f(string())
       })
     )
 
@@ -22,14 +22,14 @@ describe('shape', () => {
   })
 
   it('should caught errors for deeply nested object', () => {
-    const schema = fuji(
+    const schema = f(
       shape({
-        user: fuji(
+        user: f(
           shape({
-            id: fuji(required(), number()),
-            city: fuji(
+            id: f(required(), number()),
+            city: f(
               shape({
-                name: fuji(string())
+                name: f(string())
               })
             )
           })
@@ -69,14 +69,14 @@ describe('shape', () => {
   })
 
   it('should return no errors for deeply neseted object', () => {
-    const schema = fuji(
+    const schema = f(
       shape({
-        user: fuji(
+        user: f(
           shape({
-            id: fuji(required(), number()),
-            city: fuji(
+            id: f(required(), number()),
+            city: f(
               shape({
-                name: fuji(string())
+                name: f(string())
               })
             )
           })
@@ -97,9 +97,9 @@ describe('shape', () => {
   })
 
   it('should return no errors for optional fields', () => {
-    const schema = fuji(
+    const schema = f(
       shape({
-        optional: fuji(string())
+        optional: f(string())
       })
     )
 
@@ -115,10 +115,10 @@ describe('shape', () => {
     ${[]}
     ${true}
   `('should return shape-mismatch for input=$input', ({ input }) => {
-    const schema = fuji(
+    const schema = f(
       shape({
-        a: fuji(string()),
-        b: fuji(number())
+        a: f(string()),
+        b: f(number())
       })
     )
 
@@ -143,12 +143,12 @@ describe('shape', () => {
     ${[]}
     ${true}
   `('should return shape-mismatch for input=$input', ({ input }) => {
-    const schema = fuji(
+    const schema = f(
       shape({
-        object: fuji(
+        object: f(
           shape({
-            a: fuji(string()),
-            b: fuji(number())
+            a: f(string()),
+            b: f(number())
           })
         )
       })

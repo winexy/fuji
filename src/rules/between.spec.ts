@@ -1,4 +1,4 @@
-import { fuji, run } from '..'
+import { f, run } from '..'
 import { between } from './between'
 import { required } from './required'
 
@@ -12,7 +12,7 @@ describe('rules.between', () => {
   `(
     'should return error when left=$left right=$right input=$input',
     ({ left, right, input }) => {
-      const schema = fuji(between(left, right))
+      const schema = f(between(left, right))
 
       const { errors } = run(schema, input)
 
@@ -35,7 +35,7 @@ describe('rules.between', () => {
   `(
     'should not return error when left=$left right=$right input=$input',
     ({ left, right, input }) => {
-      const schema = fuji(between(left, right))
+      const schema = f(between(left, right))
 
       const { errors } = run(schema, input)
 
@@ -44,7 +44,7 @@ describe('rules.between', () => {
   )
 
   it('should not return error if value is not required', () => {
-    const schema = fuji(between(1, 100))
+    const schema = f(between(1, 100))
 
     const { errors } = run(schema, undefined)
 
@@ -52,7 +52,7 @@ describe('rules.between', () => {
   })
 
   it('should return error if value is required', () => {
-    const schema = fuji(between(1, 100), required())
+    const schema = f(between(1, 100), required())
 
     const { errors } = run(schema, undefined)
 

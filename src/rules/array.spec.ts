@@ -1,5 +1,5 @@
 import { array } from './array'
-import { fuji, run } from '..'
+import { f, run } from '..'
 import { random } from 'faker'
 
 describe('rules.array', () => {
@@ -9,7 +9,7 @@ describe('rules.array', () => {
     ${random.number()}
     ${random.boolean()}
   `('when input=$input ', input => {
-    const schema = fuji(array())
+    const schema = f(array())
 
     const { errors } = run(schema, input)
 
@@ -27,7 +27,7 @@ describe('rules.array', () => {
     ${[random.arrayElement()]}
     ${[]}
   `('should not return error', ({ input }) => {
-    const schema = fuji(array())
+    const schema = f(array())
 
     const { errors } = run(schema, input)
 
