@@ -1,5 +1,5 @@
 import { runner } from '../runner'
-import type { ShapeSchema, VContext } from '../types'
+import type { AnyShapeSchema, VContext } from '../types'
 import { createContext, isUndef, isObject, createError } from '../utils'
 import { Rule } from '../types'
 
@@ -20,7 +20,7 @@ function getUnknownKeys(allKeys: string[], knownKeys: string[]) {
   return allKeys.filter(key => !knownSet.has(key))
 }
 
-function checkUnknownKeys<Shape extends ShapeSchema>(
+function checkUnknownKeys<Shape extends AnyShapeSchema>(
   ctx: VContext<Shape>,
   keys: string[]
 ): VContext<Shape> {
@@ -39,7 +39,7 @@ function checkUnknownKeys<Shape extends ShapeSchema>(
 
 export type ShapeType = 'shape'
 
-export const shape = <Shape extends ShapeSchema>(
+export const shape = <Shape extends AnyShapeSchema>(
   schema: Shape
 ): Rule<ShapeType, Shape> => ({
   type: 'shape',

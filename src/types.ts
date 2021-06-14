@@ -177,20 +177,18 @@ export type Fuji<Types extends RuleType, Value> = {
   rules: Rule<Types, Value>[]
 }
 
-type SchemaType2 = Record<string, Fuji<any, any>>
-
 /** Infer */
 export type Infer<FujiSchema> = FujiSchema extends Fuji<any, infer Value>
-  ? Value extends SchemaType2
+  ? Value extends AnyShapeSchema
     ? InferRecord<Value>
-    : Value extends Array<SchemaType2>
+    : Value extends Array<AnyShapeSchema>
     ? InferArrayOfRecords<Value>[]
     : Value
   : never
 
-type InferArrayOfRecords<Value extends Array<SchemaType2>> =
+type InferArrayOfRecords<Value extends Array<AnyShapeSchema>> =
   Value extends Array<infer RecordValue>
-    ? RecordValue extends SchemaType2
+    ? RecordValue extends AnyShapeSchema
       ? InferRecord<RecordValue>
       : never
     : never
@@ -202,18 +200,18 @@ type InferRecord<Shape extends Record<string, Fuji<any, any>>> = {
     [K in OptionalKeys<Shape>]?: Infer<Shape[K]>
   }
 
-type RequiredKeys<T extends SchemaType2> = {
+type RequiredKeys<T extends AnyShapeSchema> = {
   [K in keyof T]: Rule<RequiredType, any> extends T[K]['rules'][number]
     ? K
     : never
 }[keyof T]
 
-type OptionalKeys<T extends SchemaType2> = Exclude<keyof T, RequiredKeys<T>>
+type OptionalKeys<T extends AnyShapeSchema> = Exclude<keyof T, RequiredKeys<T>>
 /** Infer END */
 
 export type AnyRecord = Record<any, any>
 
-export type ShapeSchema = Record<string, Fuji<any, any>>
+export type AnyShapeSchema = Record<string, Fuji<any, any>>
 
 export type Result<Types extends RuleType, Value> =
   | {

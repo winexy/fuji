@@ -1,6 +1,6 @@
 import { arrayOf } from './rules/array-of'
 import { shape } from './rules/shape'
-import type { Fuji, Rule, RuleType, ShapeSchema } from './types'
+import type { Fuji, Rule, RuleType, AnyShapeSchema } from './types'
 
 function fuji<TS extends RuleType, V>(r1: Rule<TS, V>): Fuji<TS, V>
 
@@ -307,7 +307,7 @@ function fuji<Types extends RuleType, Value>(
 }
 
 const f = fuji
-fuji.shape = <Shape extends ShapeSchema>(schema: Shape) => f(shape(schema))
+fuji.shape = <Shape extends AnyShapeSchema>(schema: Shape) => f(shape(schema))
 fuji.array = <Value>(schema: Fuji<RuleType, Value>) => f(arrayOf(schema))
 
 const requiredTypes: RuleType[] = ['required', 'required-if']
