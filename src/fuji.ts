@@ -3,27 +3,27 @@ import { required } from './rules/required'
 import { shape } from './rules/shape'
 import type { Fuji, Rule, RuleType, AnyShapeSchema } from './types'
 
-function fuji<TS extends RuleType, V>(r1: Rule<TS, V>): Fuji<TS, V>
+function fuji<TS extends RuleType, A, B = A>(r1: Rule<TS, A, B>): Fuji<TS, B>
 
-function fuji<TS extends RuleType, A, B = A, C = B>(
+function fuji<TS extends RuleType, A, B, C>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>
 ): Fuji<TS, C>
 
-function fuji<TS extends RuleType, A, B = A, C = B, D = C>(
+function fuji<TS extends RuleType, A, B, C, D>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>
 ): Fuji<TS, D>
 
-function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D>(
+function fuji<TS extends RuleType, A, B, C, D, E>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
   r4: Rule<TS, D, E>
 ): Fuji<TS, E>
 
-function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D, F = E>(
+function fuji<TS extends RuleType, A, B, C, D, E, F>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
