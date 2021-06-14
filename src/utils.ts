@@ -2,7 +2,7 @@ import { DEFAULT_CONFIG } from './defaults'
 import { AnyRecord, ResolveTypeMeta } from './types'
 import {
   VContext,
-  ErrorType,
+  RuleType,
   ErrorContext,
   FormatMessage,
   VError,
@@ -34,7 +34,7 @@ export function log(...args: any) {
   globalThis.console.log(...args)
 }
 
-export const createError = <Type extends ErrorType>(
+export const createError = <Type extends RuleType>(
   type: Type,
   userMessage: string | undefined,
   ctx: VContext<any>,

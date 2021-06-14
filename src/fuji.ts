@@ -1,33 +1,28 @@
 import { arrayOf } from './rules/array-of'
 import { shape } from './rules/shape'
-import type {
-  Fuji,
-  Rule,
-  ErrorType,
-  ShapeSchema
-} from './types'
+import type { Fuji, Rule, RuleType, ShapeSchema } from './types'
 
-function fuji<TS extends ErrorType, V>(r1: Rule<TS, V>): Fuji<TS, V>
+function fuji<TS extends RuleType, V>(r1: Rule<TS, V>): Fuji<TS, V>
 
-function fuji<TS extends ErrorType, A, B = A, C = B>(
+function fuji<TS extends RuleType, A, B = A, C = B>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>
 ): Fuji<TS, C>
 
-function fuji<TS extends ErrorType, A, B = A, C = B, D = C>(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>
 ): Fuji<TS, D>
 
-function fuji<TS extends ErrorType, A, B = A, C = B, D = C, E = D>(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
   r4: Rule<TS, D, E>
 ): Fuji<TS, E>
 
-function fuji<TS extends ErrorType, A, B = A, C = B, D = C, E = D, F = E>(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D, F = E>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
@@ -36,7 +31,7 @@ function fuji<TS extends ErrorType, A, B = A, C = B, D = C, E = D, F = E>(
 ): Fuji<TS, F>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -54,7 +49,7 @@ function fuji<
 ): Fuji<TS, G>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -74,7 +69,7 @@ function fuji<
 ): Fuji<TS, H>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -96,7 +91,7 @@ function fuji<
 ): Fuji<TS, I>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -120,7 +115,7 @@ function fuji<
 ): Fuji<TS, J>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -146,7 +141,7 @@ function fuji<
 ): Fuji<TS, K>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -174,7 +169,7 @@ function fuji<
 ): Fuji<TS, L>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -204,7 +199,7 @@ function fuji<
 ): Fuji<TS, M>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -236,7 +231,7 @@ function fuji<
 ): Fuji<TS, N>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -270,7 +265,7 @@ function fuji<
 ): Fuji<TS, O>
 
 function fuji<
-  TS extends ErrorType,
+  TS extends RuleType,
   A,
   B = A,
   C = B,
@@ -305,7 +300,7 @@ function fuji<
   r15: Rule<TS, O, P>
 ): Fuji<TS, P>
 
-function fuji<Types extends ErrorType, Value>(
+function fuji<Types extends RuleType, Value>(
   ...rules: Rule<Types, Value>[]
 ): Fuji<Types, Value> {
   return { rules: sortRules(rules) }
@@ -313,11 +308,11 @@ function fuji<Types extends ErrorType, Value>(
 
 const f = fuji
 fuji.shape = <Shape extends ShapeSchema>(schema: Shape) => f(shape(schema))
-fuji.array = <Value>(schema: Fuji<ErrorType, Value>) => f(arrayOf(schema))
+fuji.array = <Value>(schema: Fuji<RuleType, Value>) => f(arrayOf(schema))
 
-const requiredTypes: ErrorType[] = ['required', 'required-if']
+const requiredTypes: RuleType[] = ['required', 'required-if']
 
-function sortRules<Types extends ErrorType, Value>(
+function sortRules<Types extends RuleType, Value>(
   rules: Rule<Types, Value>[]
 ): Rule<Types, Value>[] {
   return rules.sort((rule1, rule2) => {

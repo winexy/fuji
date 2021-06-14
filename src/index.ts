@@ -40,7 +40,7 @@ export { between } from './rules/between'
 
 export { map } from './operators/map'
 
-export { Infer, ErrorType, ErrorsDict } from './types'
+export { Infer, RuleType, ErrorsDict } from './types'
 
 export { fuji, f } from './fuji'
 export { run } from './run'

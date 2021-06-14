@@ -3,7 +3,7 @@ import { string } from './string'
 import { maxLength } from './max-length'
 import { minLength } from './min-length'
 import { expectTypeOf } from 'expect-type'
-import { ErrorType, Fuji } from '../types'
+import { RuleType, Fuji } from '../types'
 import { f, run } from '..'
 
 describe('rules.arrayOf', () => {
@@ -38,6 +38,6 @@ describe('rules.arrayOf', () => {
   it('should match inferred type', () => {
     const schema = f.array(f(string()))
 
-    expectTypeOf(schema).toMatchTypeOf<Fuji<ErrorType, string[]>>()
+    expectTypeOf(schema).toMatchTypeOf<Fuji<RuleType, string[]>>()
   })
 })

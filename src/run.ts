@@ -1,9 +1,9 @@
 import { DEFAULT_CONFIG } from './defaults'
 import { runner } from './runner'
-import { ErrorType, Fuji, FujiConfig, Infer, Result } from './types'
+import { RuleType, Fuji, FujiConfig, Infer, Result } from './types'
 import { createConfig, createContext } from './utils'
 
-export function run<Types extends ErrorType, Value>(
+export function run<Types extends RuleType, Value>(
   schema: Fuji<Types, Value>,
   value: any,
   config: Partial<FujiConfig> = DEFAULT_CONFIG

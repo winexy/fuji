@@ -1,10 +1,10 @@
 import { runner } from '../runner'
-import type { ErrorType, Fuji, Rule } from '../types'
+import type { RuleType, Fuji, Rule } from '../types'
 import { createContext } from '../utils'
 
 export type ArrayOfType = 'array-of'
 
-export const arrayOf = <Type extends ErrorType, Value>(
+export const arrayOf = <Type extends RuleType, Value>(
   schema: Fuji<Type, Value>
 ): Rule<ArrayOfType, Value[]> => ({
   type: 'array-of',

@@ -32,7 +32,7 @@ import {
 import { MapType } from './operators/map'
 import { ArrayOfType } from './rules/array-of'
 
-export type ErrorType =
+export type RuleType =
   | ShapeMismatchType
   | StringType
   | RequiredType
@@ -64,7 +64,7 @@ export type ErrorType =
   | ArrayOfType
   | 'unsupported-type'
 
-export type ErrorMeta =
+export type RuleMeta =
   | ShapeMismatchMeta
   | RequiredIfMeta
   | IncludesMeta
@@ -80,7 +80,7 @@ export type ErrorMeta =
   | UnknownKeyMeta
   | null
 
-export type ResolveTypeMeta<Type extends ErrorType> =
+export type ResolveTypeMeta<Type extends RuleType> =
   Type extends ShapeMismatchType
     ? ShapeMismatchMeta
     : Type extends UnknownKeyType
@@ -112,17 +112,17 @@ export type ResolveTypeMeta<Type extends ErrorType> =
     : null
 
 /** Rule START */
-export type RuleCreator = <Value>(...args: any[]) => Rule<ErrorType, Value>
+export type RuleCreator = <Value>(...args: any[]) => Rule<RuleType, Value>
 
 export type RuleFunc<A, B = A> = (ctx: VContext<A>) => VContext<B>
 
-export type Rule<Type extends ErrorType, A, B = A> = {
+export type Rule<Type extends RuleType, A, B = A> = {
   type: Type
   func: RuleFunc<A, B>
 }
 /** Rule END */
 
-export type VError<Type extends ErrorType = ErrorType> = {
+export type VError<Type extends RuleType = RuleType> = {
   type: Type
   message: string
   path: string
@@ -131,7 +131,7 @@ export type VError<Type extends ErrorType = ErrorType> = {
 
 export type RuleRunner = {
   <Value>(
-    schema: Fuji<ErrorType, Value>,
+    schema: Fuji<RuleType, Value>,
     context: VContext<Value>
   ): VContext<Value>
 }
@@ -146,13 +146,13 @@ export type VContext<Value> = {
   required: boolean
 }
 
-export type ErrorContext<Meta extends ErrorMeta | null = null> = {
+export type ErrorContext<Meta extends RuleMeta | null = null> = {
   valueName: string
   path: string
   meta: Meta
 }
 
-export type FormatMessage<Meta extends ErrorMeta | null = null> = {
+export type FormatMessage<Meta extends RuleMeta | null = null> = {
   (context: ErrorContext<Meta>): string
 }
 export interface ErrorsDictI {
@@ -161,7 +161,7 @@ export interface ErrorsDictI {
 
 export type ErrorsDict = ErrorsDictI &
   {
-    [Type in ErrorType]: ResolveTypeMeta<Type> extends null
+    [Type in RuleType]: ResolveTypeMeta<Type> extends null
       ? FormatMessage
       : FormatMessage<ResolveTypeMeta<Type>>
   }
@@ -173,7 +173,7 @@ export type FujiConfig = {
   valueName: string
 }
 
-export type Fuji<Types extends ErrorType, Value> = {
+export type Fuji<Types extends RuleType, Value> = {
   rules: Rule<Types, Value>[]
 }
 
@@ -215,7 +215,7 @@ export type AnyRecord = Record<any, any>
 
 export type ShapeSchema = Record<string, Fuji<any, any>>
 
-export type Result<Types extends ErrorType, Value> =
+export type Result<Types extends RuleType, Value> =
   | {
       invalid: true
       value: null
