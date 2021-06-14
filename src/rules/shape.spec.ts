@@ -1,5 +1,5 @@
-import { shape } from './shape'
-import { string } from './string'
+import { shape, ShapeType } from './shape'
+import { string, StringType } from './string'
 import { expectTypeOf } from 'expect-type'
 import { Fuji } from '../types'
 import { required } from './required'
@@ -14,9 +14,12 @@ describe('shape', () => {
       })
     )
 
-    type ExpectedType = Fuji<{
-      name: Fuji<string>
-    }>
+    type ExpectedType = Fuji<
+      ShapeType,
+      {
+        name: Fuji<StringType, string>
+      }
+    >
 
     expectTypeOf(schema).toMatchTypeOf<ExpectedType>()
   })

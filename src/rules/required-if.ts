@@ -9,13 +9,12 @@ export type RequiredIfMeta = {
   f: Predicate
 }
 
-export const RequiredIfName = 'RequiredIfV8N'
-
 export const requiredIf = <Value>(
   isRequired: Predicate,
   msg?: string
-): Rule<Value> => {
-  return function RequiredIfV8N(ctx) {
+): Rule<RequiredIfType, Value> => ({
+  type: 'required-if',
+  func(ctx) {
     ctx.required = isRequired(ctx.root, ctx.current)
 
     if (ctx.required && isUndef(ctx.current)) {
@@ -24,4 +23,4 @@ export const requiredIf = <Value>(
 
     return ctx
   }
-}
+})

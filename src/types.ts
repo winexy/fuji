@@ -26,8 +26,11 @@ import {
   ShapeMismatchType,
   ShapeMismatchMeta,
   UnknownKeyType,
-  UnknownKeyMeta
+  UnknownKeyMeta,
+  ShapeType
 } from './rules/shape'
+import { MapType } from './operators/map'
+import { ArrayOfType } from './rules/array-of'
 
 export type ErrorType =
   | ShapeMismatchType
@@ -56,6 +59,9 @@ export type ErrorType =
   | NumericType
   | UnknownKeyType
   | CustomRuleI['Type']
+  | MapType
+  | ShapeType
+  | ArrayOfType
   | 'unsupported-type'
 
 export type ErrorMeta =
@@ -74,41 +80,47 @@ export type ErrorMeta =
   | UnknownKeyMeta
   | null
 
-export type ResolveTypeMeta<Type extends ErrorType> = Type extends ShapeMismatchType
-  ? ShapeMismatchMeta
-  : Type extends UnknownKeyType
-  ? UnknownKeyMeta
-  : Type extends RequiredIfType
-  ? RequiredIfMeta
-  : Type extends IncludesType
-  ? IncludesMeta
-  : Type extends MaxLengthType
-  ? MaxLengthMeta
-  : Type extends MinLengthType
-  ? MinLengthMeta
-  : Type extends MaxType
-  ? MaxMeta
-  : Type extends MinType
-  ? MinMeta
-  : Type extends PatternType
-  ? PatternMeta
-  : Type extends OneOfType
-  ? OneOfMeta
-  : Type extends EqualToType
-  ? EqualToMeta
-  : Type extends EqualWithType
-  ? EqualWithMeta
-  : Type extends BetweenType
-  ? BetweenMeta
-  : Type extends CustomRuleI['Type']
-  ? CustomRuleMeta
-  : null
+export type ResolveTypeMeta<Type extends ErrorType> =
+  Type extends ShapeMismatchType
+    ? ShapeMismatchMeta
+    : Type extends UnknownKeyType
+    ? UnknownKeyMeta
+    : Type extends RequiredIfType
+    ? RequiredIfMeta
+    : Type extends IncludesType
+    ? IncludesMeta
+    : Type extends MaxLengthType
+    ? MaxLengthMeta
+    : Type extends MinLengthType
+    ? MinLengthMeta
+    : Type extends MaxType
+    ? MaxMeta
+    : Type extends MinType
+    ? MinMeta
+    : Type extends PatternType
+    ? PatternMeta
+    : Type extends OneOfType
+    ? OneOfMeta
+    : Type extends EqualToType
+    ? EqualToMeta
+    : Type extends EqualWithType
+    ? EqualWithMeta
+    : Type extends BetweenType
+    ? BetweenMeta
+    : Type extends CustomRuleI['Type']
+    ? CustomRuleMeta
+    : null
 
-export type Fuji<Value> = {
-  rules: Rule<Value>[]
+/** Rule START */
+export type RuleCreator = <Value>(...args: any[]) => Rule<ErrorType, Value>
+
+export type RuleFunc<A, B = A> = (ctx: VContext<A>) => VContext<B>
+
+export type Rule<Type extends ErrorType, A, B = A> = {
+  type: Type
+  func: RuleFunc<A, B>
 }
-
-export type Rule<A, B = A> = (ctx: VContext<A>) => VContext<B>
+/** Rule END */
 
 export type VError<Type extends ErrorType = ErrorType> = {
   type: Type
@@ -118,7 +130,10 @@ export type VError<Type extends ErrorType = ErrorType> = {
 }
 
 export type RuleRunner = {
-  <Value>(schema: Fuji<Value>, context: VContext<Value>): VContext<Value>
+  <Value>(
+    schema: Fuji<ErrorType, Value>,
+    context: VContext<Value>
+  ): VContext<Value>
 }
 
 export type VContext<Value> = {
@@ -135,25 +150,6 @@ export type ErrorContext<Meta extends ErrorMeta | null = null> = {
   valueName: string
   path: string
   meta: Meta
-}
-
-export type Infer<FujiSchema> = FujiSchema extends Fuji<infer Value>
-  ? Value extends Record<string, Fuji<any>>
-    ? InferRecord<Value>
-    : Value extends Array<Record<any, Fuji<any>>>
-    ? InferArrayOfRecords<Value>[]
-    : Value
-  : never
-
-type InferArrayOfRecords<Value extends Array<Record<any, Fuji<any>>>> =
-  Value extends Array<infer RecordValue>
-    ? RecordValue extends Record<any, Fuji<any>>
-      ? InferRecord<RecordValue>
-      : never
-    : never
-
-type InferRecord<Shape extends Record<string, Fuji<any>>> = {
-  [K in keyof Shape]: Infer<Shape[K]>
 }
 
 export type FormatMessage<Meta extends ErrorMeta | null = null> = {
@@ -177,11 +173,49 @@ export type FujiConfig = {
   valueName: string
 }
 
+export type Fuji<Types extends ErrorType, Value> = {
+  rules: Rule<Types, Value>[]
+}
+
+type SchemaType2 = Record<string, Fuji<any, any>>
+
+/** Infer */
+export type Infer<FujiSchema> = FujiSchema extends Fuji<any, infer Value>
+  ? Value extends SchemaType2
+    ? InferRecord<Value>
+    : Value extends Array<SchemaType2>
+    ? InferArrayOfRecords<Value>[]
+    : Value
+  : never
+
+type InferArrayOfRecords<Value extends Array<SchemaType2>> =
+  Value extends Array<infer RecordValue>
+    ? RecordValue extends SchemaType2
+      ? InferRecord<RecordValue>
+      : never
+    : never
+
+type InferRecord<Shape extends Record<string, Fuji<any, any>>> = {
+  [K in RequiredKeys<Shape>]: Infer<Shape[K]>
+} &
+  {
+    [K in OptionalKeys<Shape>]?: Infer<Shape[K]>
+  }
+
+type RequiredKeys<T extends SchemaType2> = {
+  [K in keyof T]: Rule<RequiredType, any> extends T[K]['rules'][number]
+    ? K
+    : never
+}[keyof T]
+
+type OptionalKeys<T extends SchemaType2> = Exclude<keyof T, RequiredKeys<T>>
+/** Infer END */
+
 export type AnyRecord = Record<any, any>
 
-export type ShapeSchema = Record<string, Fuji<any>>
+export type ShapeSchema = Record<string, Fuji<any, any>>
 
-export type Result<Value> =
+export type Result<Types extends ErrorType, Value> =
   | {
       invalid: true
       value: null
@@ -189,6 +223,6 @@ export type Result<Value> =
     }
   | {
       invalid: false
-      value: Infer<Fuji<Value>>
+      value: Infer<Fuji<Types, Value>>
       errors: null
     }

@@ -6,7 +6,7 @@ export const runner: RuleRunner = (schema, context) => {
 
   for (let i = 0; i < schema.rules.length; i++) {
     const rule = schema.rules[i]
-    const nextContext = rule(runnerContext)
+    const nextContext = rule.func(runnerContext)
 
     if (failFast && nextContext.errors.length > 0) {
       return nextContext

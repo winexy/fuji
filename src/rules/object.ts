@@ -5,12 +5,13 @@ export type ObjectType = 'object'
 
 type AnyObject = Record<any, any>
 
-export const object = (msg?: string): Rule<AnyObject> => {
-  return function ObjectV8N(ctx) {
+export const object = (msg?: string): Rule<ObjectType, AnyObject> => ({
+  type: 'object',
+  func(ctx) {
     if (!isObject(ctx.current)) {
       ctx.errors.push(createError('object', msg, ctx))
     }
 
     return ctx
   }
-}
+})

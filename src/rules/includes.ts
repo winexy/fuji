@@ -12,8 +12,9 @@ type WithIndexOf<T> = { indexOf(arg: T): number }
 export const includes = <Value extends WithIndexOf<Value>>(
   target: Value,
   msg?: string
-): Rule<Value> =>
-  function IncludesV8N(ctx) {
+): Rule<IncludesType, Value> => ({
+  type: 'includes',
+  func(ctx) {
     if (!isFunc(ctx.current?.indexOf)) {
       ctx.errors.push(createError('unsupported-type', msg, ctx))
       return ctx
@@ -25,3 +26,4 @@ export const includes = <Value extends WithIndexOf<Value>>(
 
     return ctx
   }
+})

@@ -9,15 +9,14 @@ export type BetweenMeta = {
 }
 
 export const between = (
-  
   left: number,
 
-   right: number,
+  right: number,
 
-   msg?: string
-
-): Rule<number> => {
-  return function BetweenV8N(ctx) {
+  msg?: string
+): Rule<BetweenType, number> => ({
+  type: 'between',
+  func(ctx) {
     const shouldCheck = ctx.required || !isUndef(ctx.current)
 
     if (shouldCheck && (ctx.current < left || ctx.current > right)) {
@@ -26,4 +25,4 @@ export const between = (
 
     return ctx
   }
-}
+})

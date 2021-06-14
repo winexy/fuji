@@ -14,6 +14,7 @@ import {
   string,
   use
 } from '.'
+import { expectTypeOf } from 'expect-type'
 
 describe('run', () => {
   test('should correctly transform value', () => {
@@ -44,7 +45,7 @@ describe('run', () => {
           oneOf(['git', 'vcs']),
           map(s => s.split('').reverse().join(''))
         ),
-        url: f<string>(
+        url: f(
           string(),
           use(
             // @ts-expect-error
@@ -67,6 +68,14 @@ describe('run', () => {
       }
     })
 
+    expectTypeOf(result.value!.name).toEqualTypeOf<string>()
+    expectTypeOf(result.value!.version).toEqualTypeOf<number[] | undefined>()
+    expectTypeOf(result.value!.workspaces).toEqualTypeOf<string | undefined>()
+    expectTypeOf(result.value!.repository!.type).toEqualTypeOf<string>()
+    expectTypeOf(result.value!.repository!.url).toEqualTypeOf<
+      string | undefined
+    >()
+
     expect(result.invalid).toBeFalse()
     expect(result.value).toEqual({
       name: 'mylib!',
@@ -87,7 +96,7 @@ describe('run', () => {
       workspaces: f.array(f(string())),
       repository: f.shape({
         type: f(string(), required(), oneOf(['git', 'vcs'])),
-        url: f<string>(
+        url: f(
           string(),
           use(
             // @ts-expect-error

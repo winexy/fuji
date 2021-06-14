@@ -12,11 +12,13 @@ export type EqualWithMeta = {
 export const equalWith = <Value>(
   extractor: Extractor<Value>,
   msg?: string
-): Rule<Value> =>
-  function EqualWithV8N(ctx) {
+): Rule<EqualWithType, Value> => ({
+  type: 'equal-with',
+  func(ctx) {
     if (extractor(ctx.root) !== ctx.current) {
       ctx.errors.push(createError('equal-with', msg, ctx, { f: extractor }))
     }
 
     return ctx
   }
+})

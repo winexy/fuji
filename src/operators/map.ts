@@ -1,10 +1,11 @@
 import { Rule } from '../types'
 
-export const map = <A, B>(f: (a: A) => B): Rule<A, B> => {
-  return function MapFunc(ctx) {
-    return {
-      ...ctx,
-      current: f(ctx.current)
-    }
-  }
-}
+export type MapType = 'map'
+
+export const map = <A, B>(f: (a: A) => B): Rule<MapType, A, B> => ({
+  type: 'map',
+  func: ctx => ({
+    ...ctx,
+    current: f(ctx.current)
+  })
+})

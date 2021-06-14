@@ -7,11 +7,19 @@ export type MaxMeta = {
   limit: number
 }
 
-export const max = (limit: number, msg?: string): Rule<number> =>
-  function MaxV8N(ctx) {
+export const max = (
+  
+  limit: number,
+ 
+  msg?: string
+
+): Rule<'max', number> => ({
+  type: 'max',
+  func(ctx) {
     if (!isNumber(ctx.current) || ctx.current > limit) {
       ctx.errors.push(createError('max', msg, ctx, { limit }))
     }
 
     return ctx
   }
+})

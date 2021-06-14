@@ -7,11 +7,19 @@ export type MinMeta = {
   limit: number
 }
 
-export const min = (limit: number, msg?: string): Rule<number> =>
-  function MinV8N(ctx) {
+export const min = (
+  
+  limit: number,
+ 
+  msg?: string
+
+): Rule<MinType, number> => ({
+  type: 'min',
+  func(ctx) {
     if (ctx.current < limit) {
       ctx.errors.push(createError('min', msg, ctx, { limit }))
     }
 
     return ctx
   }
+})

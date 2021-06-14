@@ -12,12 +12,13 @@ type WithLength = { length: number }
 export const maxLength = <Value extends WithLength>(
   limit: number,
   msg?: string
-): Rule<Value> => {
-  return function MaxLenV8N(ctx) {
+): Rule<MaxLengthType, Value> => ({
+  type: 'max-length',
+  func(ctx) {
     if (ctx.current != null && ctx.current.length > limit) {
       ctx.errors.push(createError('max-length', msg, ctx, { limit }))
     }
 
     return ctx
   }
-}
+})

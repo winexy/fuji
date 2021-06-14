@@ -1,10 +1,9 @@
 import { random } from 'faker'
-import { string } from './string'
-import { Fuji } from '../types'
-import { f, run } from '..'
+import { string, StringType } from './string'
+import { f, Fuji, run } from '..'
 
 describe('rules.string', () => {
-  let schema: Fuji<string>
+  let schema: Fuji<StringType, string>
   let msg = random.word()
   beforeEach(() => {
     schema = f(string(msg))

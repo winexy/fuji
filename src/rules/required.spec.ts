@@ -1,9 +1,9 @@
-import { required } from './required'
+import { required, RequiredType } from './required'
 import { Fuji } from '../types'
 import { f, run } from '..'
 
 describe('rules.required', () => {
-  let schema: Fuji<any>
+  let schema: Fuji<RequiredType, any>
   beforeEach(() => {
     schema = f(required('error'))
   })
@@ -11,7 +11,7 @@ describe('rules.required', () => {
   it('should push error for undefined value', () => {
     const { errors } = run(schema, undefined)
     expect(errors).toBeArrayOfSize(1)
-  }) 
+  })
 
   it('should push provided message for invalid value', () => {
     const { errors } = run(schema, undefined)

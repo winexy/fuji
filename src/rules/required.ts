@@ -3,12 +3,11 @@ import { createError, isUndef } from '../utils'
 
 export type RequiredType = 'required'
 
-export const RequiredName = 'RequiredV8N'
-
 export const required = <Value extends any = any>(
   msg?: string
-): Rule<Value> => {
-  return function RequiredV8N(ctx) {
+): Rule<RequiredType, Value> => ({
+  type: 'required',
+  func(ctx) {
     ctx.required = true
 
     if (isUndef(ctx.current) || ctx.current === '') {
@@ -17,4 +16,4 @@ export const required = <Value extends any = any>(
 
     return ctx
   }
-}
+})

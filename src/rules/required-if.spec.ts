@@ -1,10 +1,15 @@
 import { random } from 'faker'
-import { requiredIf } from './required-if'
+import { requiredIf, RequiredIfType } from './required-if'
 import { Fuji } from '../types'
 import { f, number, run } from '..'
+import { ShapeType } from './shape'
+import { NumberType } from './number'
 
 describe('rules.required-if', () => {
-  let schema: Fuji<{ a: Fuji<number>; b: Fuji<number> }>
+  let schema: Fuji<
+    ShapeType,
+    { a: Fuji<NumberType, number>; b: Fuji<RequiredIfType, number> }
+  >
   let msg = random.word()
 
   beforeEach(() => {

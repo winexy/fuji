@@ -3,7 +3,7 @@ import { string } from './string'
 import { maxLength } from './max-length'
 import { minLength } from './min-length'
 import { expectTypeOf } from 'expect-type'
-import { Fuji } from '../types'
+import { ErrorType, Fuji } from '../types'
 import { f, run } from '..'
 
 describe('rules.arrayOf', () => {
@@ -27,7 +27,7 @@ describe('rules.arrayOf', () => {
 
     expect(errors).toEqual([
       expect.objectContaining({
-        type: 'max-length',
+        type: 'max-length'
       }),
       expect.objectContaining({
         type: 'max-length'
@@ -38,6 +38,6 @@ describe('rules.arrayOf', () => {
   it('should match inferred type', () => {
     const schema = f.array(f(string()))
 
-    expectTypeOf(schema).toMatchTypeOf<Fuji<string[]>>()
+    expectTypeOf(schema).toMatchTypeOf<Fuji<ErrorType, string[]>>()
   })
 })

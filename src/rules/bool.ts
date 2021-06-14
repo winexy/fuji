@@ -3,8 +3,9 @@ import { createError, isBool, isUndef } from '../utils'
 
 export type BoolType = 'bool'
 
-export const bool = (msg?: string): Rule<boolean> => {
-  return function BoolV8N(ctx) {
+export const bool = (msg?: string): Rule<BoolType, boolean> => ({
+  type: 'bool',
+  func(ctx) {
     const shouldCheck = !isUndef(ctx.current) || ctx.required
 
     if (shouldCheck && !isBool(ctx.current)) {
@@ -13,4 +14,4 @@ export const bool = (msg?: string): Rule<boolean> => {
 
     return ctx
   }
-}
+})

@@ -1,77 +1,126 @@
 import { arrayOf } from './rules/array-of'
-import { RequiredName } from './rules/required'
-import { RequiredIfName } from './rules/required-if'
 import { shape } from './rules/shape'
-import type { Rule, Fuji, ShapeSchema } from './types'
+import type {
+  Fuji,
+  Rule,
+  ErrorType,
+  ShapeSchema
+} from './types'
 
-function fuji<V>(r1: Rule<V>): Fuji<V>
+function fuji<TS extends ErrorType, V>(r1: Rule<TS, V>): Fuji<TS, V>
 
-function fuji<A, B = A, C = B>(r1: Rule<A, B>, r2: Rule<B, C>): Fuji<C>
+function fuji<TS extends ErrorType, A, B = A, C = B>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>
+): Fuji<TS, C>
 
-function fuji<A, B = A, C = B, D = C>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>
-): Fuji<D>
+function fuji<TS extends ErrorType, A, B = A, C = B, D = C>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>
+): Fuji<TS, D>
 
-function fuji<A, B = A, C = B, D = C, E = D>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>
-): Fuji<E>
+function fuji<TS extends ErrorType, A, B = A, C = B, D = C, E = D>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>,
+  r4: Rule<TS, D, E>
+): Fuji<TS, E>
 
-function fuji<A, B = A, C = B, D = C, E = D, F = E>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>
-): Fuji<F>
-
-function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>
-): Fuji<G>
-
-function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>
-): Fuji<H>
-
-function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G, I = H>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>
-): Fuji<I>
-
-function fuji<A, B = A, C = B, D = C, E = D, F = E, G = F, H = G, I = H, J = I>(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>
-): Fuji<J>
+function fuji<TS extends ErrorType, A, B = A, C = B, D = C, E = D, F = E>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>,
+  r4: Rule<TS, D, E>,
+  r5: Rule<TS, E, F>
+): Fuji<TS, F>
 
 function fuji<
+  TS extends ErrorType,
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F
+>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>,
+  r4: Rule<TS, D, E>,
+  r5: Rule<TS, E, F>,
+  r6: Rule<TS, F, G>
+): Fuji<TS, G>
+
+function fuji<
+  TS extends ErrorType,
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G
+>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>,
+  r4: Rule<TS, D, E>,
+  r5: Rule<TS, E, F>,
+  r6: Rule<TS, F, G>,
+  r7: Rule<TS, G, H>
+): Fuji<TS, H>
+
+function fuji<
+  TS extends ErrorType,
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H
+>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>,
+  r4: Rule<TS, D, E>,
+  r5: Rule<TS, E, F>,
+  r6: Rule<TS, F, G>,
+  r7: Rule<TS, G, H>,
+  r8: Rule<TS, H, I>
+): Fuji<TS, I>
+
+function fuji<
+  TS extends ErrorType,
+  A,
+  B = A,
+  C = B,
+  D = C,
+  E = D,
+  F = E,
+  G = F,
+  H = G,
+  I = H,
+  J = I
+>(
+  r1: Rule<TS, A, B>,
+  r2: Rule<TS, B, C>,
+  r3: Rule<TS, C, D>,
+  r4: Rule<TS, D, E>,
+  r5: Rule<TS, E, F>,
+  r6: Rule<TS, F, G>,
+  r7: Rule<TS, G, H>,
+  r8: Rule<TS, H, I>,
+  r9: Rule<TS, I, J>
+): Fuji<TS, J>
+
+function fuji<
+  TS extends ErrorType,
   A,
   B = A,
   C = B,
@@ -84,19 +133,20 @@ function fuji<
   J = I,
   K = J
 >(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>,
-  r10: Rule<J, K>
-): Fuji<K>
+  r01: Rule<TS, A, B>,
+  r02: Rule<TS, B, C>,
+  r03: Rule<TS, C, D>,
+  r04: Rule<TS, D, E>,
+  r05: Rule<TS, E, F>,
+  r06: Rule<TS, F, G>,
+  r07: Rule<TS, G, H>,
+  r08: Rule<TS, H, I>,
+  r09: Rule<TS, I, J>,
+  r10: Rule<TS, J, K>
+): Fuji<TS, K>
 
 function fuji<
+  TS extends ErrorType,
   A,
   B = A,
   C = B,
@@ -110,20 +160,21 @@ function fuji<
   K = J,
   L = K
 >(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>,
-  r10: Rule<J, K>,
-  r11: Rule<K, L>
-): Fuji<L>
+  r01: Rule<TS, A, B>,
+  r02: Rule<TS, B, C>,
+  r03: Rule<TS, C, D>,
+  r04: Rule<TS, D, E>,
+  r05: Rule<TS, E, F>,
+  r06: Rule<TS, F, G>,
+  r07: Rule<TS, G, H>,
+  r08: Rule<TS, H, I>,
+  r09: Rule<TS, I, J>,
+  r10: Rule<TS, J, K>,
+  r11: Rule<TS, K, L>
+): Fuji<TS, L>
 
 function fuji<
+  TS extends ErrorType,
   A,
   B = A,
   C = B,
@@ -138,21 +189,22 @@ function fuji<
   L = K,
   M = L
 >(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>,
-  r10: Rule<J, K>,
-  r11: Rule<K, L>,
-  r12: Rule<L, M>
-): Fuji<M>
+  r01: Rule<TS, A, B>,
+  r02: Rule<TS, B, C>,
+  r03: Rule<TS, C, D>,
+  r04: Rule<TS, D, E>,
+  r05: Rule<TS, E, F>,
+  r06: Rule<TS, F, G>,
+  r07: Rule<TS, G, H>,
+  r08: Rule<TS, H, I>,
+  r09: Rule<TS, I, J>,
+  r10: Rule<TS, J, K>,
+  r11: Rule<TS, K, L>,
+  r12: Rule<TS, L, M>
+): Fuji<TS, M>
 
 function fuji<
+  TS extends ErrorType,
   A,
   B = A,
   C = B,
@@ -168,22 +220,23 @@ function fuji<
   M = L,
   N = M
 >(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>,
-  r10: Rule<J, K>,
-  r11: Rule<K, L>,
-  r12: Rule<L, M>,
-  r13: Rule<M, N>
-): Fuji<N>
+  r01: Rule<TS, A, B>,
+  r02: Rule<TS, B, C>,
+  r03: Rule<TS, C, D>,
+  r04: Rule<TS, D, E>,
+  r05: Rule<TS, E, F>,
+  r06: Rule<TS, F, G>,
+  r07: Rule<TS, G, H>,
+  r08: Rule<TS, H, I>,
+  r09: Rule<TS, I, J>,
+  r10: Rule<TS, J, K>,
+  r11: Rule<TS, K, L>,
+  r12: Rule<TS, L, M>,
+  r13: Rule<TS, M, N>
+): Fuji<TS, N>
 
 function fuji<
+  TS extends ErrorType,
   A,
   B = A,
   C = B,
@@ -200,23 +253,24 @@ function fuji<
   N = M,
   O = N
 >(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>,
-  r10: Rule<J, K>,
-  r11: Rule<K, L>,
-  r12: Rule<L, M>,
-  r13: Rule<M, N>,
-  r14: Rule<N, O>
-): Fuji<O>
+  r01: Rule<TS, A, B>,
+  r02: Rule<TS, B, C>,
+  r03: Rule<TS, C, D>,
+  r04: Rule<TS, D, E>,
+  r05: Rule<TS, E, F>,
+  r06: Rule<TS, F, G>,
+  r07: Rule<TS, G, H>,
+  r08: Rule<TS, H, I>,
+  r09: Rule<TS, I, J>,
+  r10: Rule<TS, J, K>,
+  r11: Rule<TS, K, L>,
+  r12: Rule<TS, L, M>,
+  r13: Rule<TS, M, N>,
+  r14: Rule<TS, N, O>
+): Fuji<TS, O>
 
 function fuji<
+  TS extends ErrorType,
   A,
   B = A,
   C = B,
@@ -234,38 +288,44 @@ function fuji<
   O = N,
   P = O
 >(
-  r1: Rule<A, B>,
-  r2: Rule<B, C>,
-  r3: Rule<C, D>,
-  r4: Rule<D, E>,
-  r5: Rule<E, F>,
-  r6: Rule<F, G>,
-  r7: Rule<G, H>,
-  r8: Rule<H, I>,
-  r9: Rule<I, J>,
-  r10: Rule<J, K>,
-  r11: Rule<K, L>,
-  r12: Rule<L, M>,
-  r13: Rule<M, N>,
-  r14: Rule<N, O>,
-  r15: Rule<O, P>
-): Fuji<P>
+  r01: Rule<TS, A, B>,
+  r02: Rule<TS, B, C>,
+  r03: Rule<TS, C, D>,
+  r04: Rule<TS, D, E>,
+  r05: Rule<TS, E, F>,
+  r06: Rule<TS, F, G>,
+  r07: Rule<TS, G, H>,
+  r08: Rule<TS, H, I>,
+  r09: Rule<TS, I, J>,
+  r10: Rule<TS, J, K>,
+  r11: Rule<TS, K, L>,
+  r12: Rule<TS, L, M>,
+  r13: Rule<TS, M, N>,
+  r14: Rule<TS, N, O>,
+  r15: Rule<TS, O, P>
+): Fuji<TS, P>
 
-function fuji<Value>(...rules: Rule<Value>[]): Fuji<Value> {
+function fuji<Types extends ErrorType, Value>(
+  ...rules: Rule<Types, Value>[]
+): Fuji<Types, Value> {
   return { rules: sortRules(rules) }
 }
 
 const f = fuji
 fuji.shape = <Shape extends ShapeSchema>(schema: Shape) => f(shape(schema))
-fuji.array = <Value>(schema: Fuji<Value>) => f(arrayOf(schema))
+fuji.array = <Value>(schema: Fuji<ErrorType, Value>) => f(arrayOf(schema))
 
-const highPriority = [RequiredName, RequiredIfName]
+const requiredTypes: ErrorType[] = ['required', 'required-if']
 
-function sortRules<Value>(rules: Rule<Value>[]): Rule<Value>[] {
+function sortRules<Types extends ErrorType, Value>(
+  rules: Rule<Types, Value>[]
+): Rule<Types, Value>[] {
   return rules.sort((rule1, rule2) => {
-    if (highPriority.includes(rule1.name)) {
+    if (requiredTypes.includes(rule1.type)) {
       return -1
-    } else if (highPriority.includes(rule2.name)) {
+    }
+
+    if (requiredTypes.includes(rule2.type)) {
       return 1
     }
 

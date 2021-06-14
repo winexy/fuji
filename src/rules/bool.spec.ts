@@ -1,10 +1,10 @@
 import { random } from 'faker'
-import { bool } from './bool'
+import { bool, BoolType } from './bool'
 import { Fuji } from '../types'
 import { f, run } from '..'
 
 describe('rules.bool', () => {
-  let schema: Fuji<boolean>
+  let schema: Fuji<BoolType, boolean>
   let msg = random.word()
   beforeEach(() => {
     schema = f(bool(msg))

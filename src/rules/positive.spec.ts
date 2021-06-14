@@ -1,10 +1,10 @@
 import { random } from 'faker'
-import { positive } from './positive'
+import { positive, PositiveType } from './positive'
 import { Fuji } from '../types'
 import { f, run } from '..'
 
 describe('rules.positive', () => {
-  let schema: Fuji<number>
+  let schema: Fuji<PositiveType, number>
   let msg = random.word()
   beforeEach(() => {
     schema = f(positive(msg))

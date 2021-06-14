@@ -12,8 +12,9 @@ type WithLength = { length: number }
 export const minLength = <Value extends WithLength>(
   limit: number,
   msg?: string
-): Rule<Value> => {
-  return function MinLenV8N(ctx) {
+): Rule<MinLengthType, Value> => ({
+  type: 'min-length',
+  func(ctx) {
     const shouldCheck = ctx.required || !isNil(ctx.current)
 
     if (
@@ -25,4 +26,4 @@ export const minLength = <Value extends WithLength>(
 
     return ctx
   }
-}
+})
