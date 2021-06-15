@@ -13,6 +13,7 @@
 
 ```ts
 import { f, run, string, int, required, oneOf, pattern } from '@winexy/fuji'
+import type { Infer } from '@winexy/fuji'
 
 const urlRegex = /.../
 
@@ -26,7 +27,21 @@ const schema = f.shape({
   })
 })
 
-const { value, errors, invalid } = run(schema, {
+type PackageType = Infer<typeof schema>
+/*
+{
+  name: string,
+  version?: string,
+  workspaces?: string[],
+  repository?: {
+    type: string,
+    url?: string
+  }
+}
+*/
+
+
+const result = run(schema, {
   name: '@winexy/fuji',
   version: '0.0.0',
   repository: {
@@ -34,4 +49,22 @@ const { value, errors, invalid } = run(schema, {
     url: 'https://github.com/winexy/fuji'
   }
 })
+
+if (result.invalid) {
+  result.errors // Array<VError>
+  result.value // null
+} else {
+  result.errors // null
+  result.value // same as PackageType
+}
+```
+
+## Troubleshooting
+
+### `Infer<typeof schema>` infers `any`
+
+Set strict mode to true in your **tsconfig.json**
+
+```json
+"strict": true
 ```
