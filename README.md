@@ -7,7 +7,7 @@
 
 # 🗻 fuji
 
-> Schema validation utility library
+> 🎼&nbsp; Composable schema validation utility library
 
 ## Example
 

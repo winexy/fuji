@@ -34,8 +34,8 @@
     "dist"
   ],
   "author": "Seitmagambet Olzhas",
-  "description": "",
-  "keywords": [],
+  "description": "Composable schema validation utility library",
+  "keywords": ["schema", "validation"],
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
