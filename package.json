@@ -1,6 +1,6 @@
 {
   "name": "@winexy/fuji",
-  "version": "0.1.0-beta.16",
+  "version": "0.1.0-beta.17",
   "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -35,7 +35,10 @@
   ],
   "author": "Seitmagambet Olzhas",
   "description": "Composable schema validation utility library",
-  "keywords": ["schema", "validation"],
+  "keywords": [
+    "schema",
+    "validation"
+  ],
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
