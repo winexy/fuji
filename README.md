@@ -63,8 +63,12 @@ if (result.invalid) {
 
 ### `Infer<typeof schema>` infers `any`
 
-Set strict mode to true in your **tsconfig.json**
+Set `strictFunctionTypes` mode to `true` in your **`tsconfig.json`** `compilerOptions` section
 
 ```json
-"strict": true
+{
+  "compilerOptions": {
+    "strictFunctionTypes": true
+  } 
+}
 ```
