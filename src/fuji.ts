@@ -5,25 +5,25 @@ import type { Fuji, Rule, RuleType, AnyShapeSchema } from './types'
 
 function fuji<TS extends RuleType, A, B = A>(r1: Rule<TS, A, B>): Fuji<TS, B>
 
-function fuji<TS extends RuleType, A, B, C>(
+function fuji<TS extends RuleType, A, B = A, C = B>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>
 ): Fuji<TS, C>
 
-function fuji<TS extends RuleType, A, B, C, D>(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>
 ): Fuji<TS, D>
 
-function fuji<TS extends RuleType, A, B, C, D, E>(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
   r4: Rule<TS, D, E>
 ): Fuji<TS, E>
 
-function fuji<TS extends RuleType, A, B, C, D, E, F>(
+function fuji<TS extends RuleType, A, B = A, C = B, D = C, E = D, F = E>(
   r1: Rule<TS, A, B>,
   r2: Rule<TS, B, C>,
   r3: Rule<TS, C, D>,
