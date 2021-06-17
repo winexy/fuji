@@ -60,4 +60,6 @@ export { map } from './operators/map'
 export { fuji, f } from './fuji'
 export { run } from './run'
 
+export { excludeRules } from './modifiers/exclude-rules'
+
 export { DEFAULT_DICT } from './defaults'
