@@ -45,7 +45,7 @@ export const shape = <Shape extends AnyShapeSchema>(
   type: 'shape',
   func(ctx) {
     const keys: Array<keyof Shape> = Object.keys(schema)
-    const { failFast, allowUnknown } = ctx.config
+    const { failFast, allowUnknown, excludeUndef } = ctx.config
 
     if (!isObject(ctx.current)) {
       ctx.errors.push(
@@ -87,7 +87,9 @@ export const shape = <Shape extends AnyShapeSchema>(
         })
       )
 
-      result[key] = resultValue
+      if (!isUndef(resultValue) || !excludeUndef) {
+        result[key] = resultValue
+      }
 
       nextContext.errors.push(...errors)
 

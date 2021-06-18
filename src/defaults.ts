@@ -56,6 +56,7 @@ export const DEFAULT_DICT: ErrorsDict = {
 export const DEFAULT_CONFIG: FujiConfig = {
   failFast: false,
   allowUnknown: false,
+  excludeUndef: true,
   dict: DEFAULT_DICT,
   valueName: 'value'
 }

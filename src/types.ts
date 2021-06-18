@@ -169,6 +169,7 @@ export type ErrorsDict = ErrorsDictI &
 export type FujiConfig = {
   failFast: boolean
   allowUnknown: boolean
+  excludeUndef: boolean
   dict: ErrorsDict
   valueName: string
 }
