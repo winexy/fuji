@@ -50,7 +50,8 @@ export const DEFAULT_DICT: ErrorsDict = {
   fmap: () => 'todo',
   'array-of': () => 'todo',
   shape: () => 'todo',
-  use: () => 'todo'
+  use: () => 'todo',
+  'default-to': () => 'todo'
 }
 
 export const DEFAULT_CONFIG: FujiConfig = {
