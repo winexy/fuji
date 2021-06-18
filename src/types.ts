@@ -31,6 +31,7 @@ import {
 } from './rules/shape'
 import { MapType } from './operators/fmap'
 import { ArrayOfType } from './rules/array-of'
+import { DefaultToType } from './operators/default-to'
 
 export type RuleType =
   | ShapeMismatchType
@@ -62,6 +63,7 @@ export type RuleType =
   | MapType
   | ShapeType
   | ArrayOfType
+  | DefaultToType
   | 'unsupported-type'
 
 export type RuleMeta =
@@ -189,6 +191,8 @@ export type Infer<FujiSchema> = FujiSchema extends Fuji<
     ? InferArrayOfRecords<Value>[]
     : RequiredType extends $RuleType
     ? Value
+    : DefaultToType extends $RuleType
+    ? Value
     : Value | undefined
   : never
 
@@ -208,6 +212,8 @@ type InferRecord<Shape extends Record<string, Fuji<any, any>>> = {
 
 type RequiredKeys<T extends AnyShapeSchema> = {
   [K in keyof T]: Rule<RequiredType, any> extends T[K]['rules'][number]
+    ? K
+    : Rule<DefaultToType, any> extends T[K]['rules'][number]
     ? K
     : never
 }[keyof T]
