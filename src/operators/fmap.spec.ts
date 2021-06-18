@@ -1,13 +1,13 @@
-import { map } from './map'
+import { fmap } from './fmap'
 import { string } from '../rules/string'
 import { int } from '../rules/int'
 import { f, run } from '..'
 
 describe('operators.map', () => {
-  it('should correctly map value between types', () => {
+  it('should correctly fmap value between types', () => {
     const schema = f(
       string(),
-      map(x => parseInt(x)),
+      fmap(x => parseInt(x)),
       int()
     )
 

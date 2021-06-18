@@ -1,7 +1,7 @@
 import {
   arrayOf,
   f,
-  map,
+  fmap,
   max,
   minLength,
   number,
@@ -22,28 +22,28 @@ describe('run', () => {
       name: f(
         string(),
         required(),
-        map(name => `${name}!`)
+        fmap(name => `${name}!`)
       ),
       version: f(
         pattern(/\d+\.\d+.\d+/),
-        map(version => version.split('.').map(Number))
+        fmap(version => version.split('.').map(Number))
       ),
       workspaces: f(
         arrayOf(
           f(
             string(),
-            map(workspace => workspace.toUpperCase())
+            fmap(workspace => workspace.toUpperCase())
           )
         ),
-        map(workspaces => workspaces.map(w => w.split('').join('_'))),
-        map(workspaces => workspaces.join('::'))
+        fmap(workspaces => workspaces.map(w => w.split('').join('_'))),
+        fmap(workspaces => workspaces.join('::'))
       ),
       repository: f.shapeRequired({
         type: f(
           string(),
           required(),
           oneOf(['git', 'vcs']),
-          map(s => s.split('').reverse().join(''))
+          fmap(s => s.split('').reverse().join(''))
         ),
         url: f(
           string(),
@@ -53,7 +53,7 @@ describe('run', () => {
             s => s.startsWith('https://'),
             'url should start with https'
           ),
-          map(url => url.slice(0, 8).toUpperCase())
+          fmap(url => url.slice(0, 8).toUpperCase())
         )
       })
     })
@@ -139,16 +139,16 @@ describe('run', () => {
       name: f(
         string(),
         required(),
-        map(name => name.toUpperCase())
+        fmap(name => name.toUpperCase())
       ),
       version: f(
         pattern(/\d+\.\d+.\d+/),
-        map(version => version.split('.'))
+        fmap(version => version.split('.'))
       ),
       workspaces: f.array(
         f(
           string(),
-          map(w => w[0])
+          fmap(w => w[0])
         )
       )
     })
@@ -168,7 +168,7 @@ describe('run', () => {
     const schema = f(
       string(),
       numeric(),
-      map(x => parseInt(x))
+      fmap(x => parseInt(x))
     )
 
     const result = run(schema, '42')
@@ -201,12 +201,12 @@ describe('run', () => {
       user: f.shape({
         name: f(
           string(),
-          map(n => n.toUpperCase())
+          fmap(n => n.toUpperCase())
         ),
         email: f(
           string(),
-          map(s => s.trim()),
-          map(s => s.toLowerCase())
+          fmap(s => s.trim()),
+          fmap(s => s.toLowerCase())
         )
       })
     })
@@ -339,5 +339,44 @@ describe('allowUnknown', () => {
     )
 
     expect(errors).toBeNull()
+  })
+})
+
+describe('excldueUndef', () => {
+  it('should exclude undefined properties by default', () => {
+    const schema = f.shape({
+      is_important: f(string()),
+      is_completed: f(string())
+    })
+
+    const result = run(schema, {
+      is_important: '1'
+    })
+
+    expect(result.value).toEqual({
+      is_important: '1'
+    })
+  })
+
+  it('should exclude undefined properties by default', () => {
+    const schema = f.shape({
+      is_important: f(string()),
+      is_completed: f(string())
+    })
+
+    const result = run(
+      schema,
+      {
+        is_important: '1'
+      },
+      {
+        excludeUndef: false
+      }
+    )
+
+    expect(result.value).toEqual({
+      is_important: '1',
+      is_completed: undefined
+    })
   })
 })

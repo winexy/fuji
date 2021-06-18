@@ -47,7 +47,7 @@ export const DEFAULT_DICT: ErrorsDict = {
   'shape-mismatch': ctx =>
     `${name(ctx)} has invalid shape. Missing keys: ${ctx.meta.keys.join(', ')}`,
   'unknown-key': ctx => `${name(ctx)} has unknown key: ${ctx.meta.key}`,
-  map: () => 'todo',
+  fmap: () => 'todo',
   'array-of': () => 'todo',
   shape: () => 'todo',
   use: () => 'todo'

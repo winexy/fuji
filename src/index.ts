@@ -55,7 +55,7 @@ export { min } from './rules/min'
 export { max } from './rules/max'
 export { between } from './rules/between'
 
-export { map } from './operators/map'
+export { fmap } from './operators/fmap'
 
 export { fuji, f } from './fuji'
 export { run } from './run'

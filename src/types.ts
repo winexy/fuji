@@ -29,7 +29,7 @@ import {
   UnknownKeyMeta,
   ShapeType
 } from './rules/shape'
-import { MapType } from './operators/map'
+import { MapType } from './operators/fmap'
 import { ArrayOfType } from './rules/array-of'
 
 export type RuleType =
