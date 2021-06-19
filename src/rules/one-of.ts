@@ -1,5 +1,5 @@
 import type { Rule } from '../types'
-import { createError } from '../utils'
+import { createError, isUndef } from '../utils'
 
 export type OneOfType = 'one-of'
 
@@ -13,7 +13,9 @@ export const oneOf = <Value>(
 ): Rule<OneOfType, Value> => ({
   type: 'one-of',
   func(ctx) {
-    if (variants.indexOf(ctx.current) === -1) {
+    const shouldCheck = ctx.required || !isUndef(ctx.current)
+
+    if (shouldCheck && variants.indexOf(ctx.current) === -1) {
       ctx.errors.push(createError('one-of', msg, ctx, { variants }))
     }
 
