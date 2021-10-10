@@ -51,7 +51,8 @@ export const DEFAULT_DICT: ErrorsDict = {
   'array-of': () => 'todo',
   shape: () => 'todo',
   use: () => 'todo',
-  'default-to': () => 'todo'
+  'default-to': () => 'todo',
+  nullable: () => 'todo'
 }
 
 export const DEFAULT_CONFIG: FujiConfig = {

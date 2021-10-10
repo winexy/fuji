@@ -304,7 +304,7 @@ fuji.shapeRequired = <Shape extends AnyShapeSchema>(schema: Shape) =>
   f(shape(schema), required())
 fuji.array = <Value>(schema: Fuji<RuleType, Value>) => f(arrayOf(schema))
 
-const requiredTypes: RuleType[] = ['required', 'required-if']
+const requiredTypes: RuleType[] = ['required', 'required-if', 'nullable']
 
 function sortRules<Types extends RuleType, Value>(
   rules: Rule<Types, Value>[]

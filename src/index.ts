@@ -47,6 +47,7 @@ export { int } from './rules/int'
 
 export { requiredIf } from './rules/required-if'
 export { required } from './rules/required'
+export { nullable } from './rules/nullable'
 
 export { use } from './rules/use'
 export { pattern } from './rules/pattern'

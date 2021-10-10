@@ -71,6 +71,7 @@ export const createContext = <Value>(
   parent: null,
   root: value,
   required: false,
+  nullable: false,
   ...override
 })
 

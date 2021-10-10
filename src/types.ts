@@ -32,8 +32,10 @@ import {
 import { MapType } from './operators/fmap'
 import { ArrayOfType } from './rules/array-of'
 import { DefaultToType } from './operators/default-to'
+import { NullableType } from './rules/nullable'
 
 export type RuleType =
+  | NullableType
   | ShapeMismatchType
   | StringType
   | RequiredType
@@ -146,6 +148,7 @@ export type VContext<Value> = {
   parent: Record<any, any> | null
   root: Record<any, any> | Value
   required: boolean
+  nullable: boolean
 }
 
 export type ErrorContext<Meta extends RuleMeta | null = null> = {
