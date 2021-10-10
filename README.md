@@ -12,7 +12,7 @@
 ## Example
 
 ```ts
-import { f, run, string, int, required, oneOf, pattern } from '@winexy/fuji'
+import { f, run, string, int, required, oneOf, pattern, nullable } from '@winexy/fuji'
 import type { Infer } from '@winexy/fuji'
 
 const urlRegex = /.../
@@ -22,7 +22,7 @@ const schema = f.shape({
   version: f(pattern(/\d+\.\d+.\d+/)),
   workspaces: f.array(f(string())),
   repository: f.shape({
-    type: f(string(), required(), oneOf(['git', 'vcs'])),
+    type: f(string(), required(), oneOf(['git', 'vcs']), nullable()),
     url: f(string(), pattern(urlRegex))
   })
 })
@@ -34,7 +34,7 @@ type PackageType = Infer<typeof schema>
   version?: string,
   workspaces?: string[],
   repository?: {
-    type: string,
+    type: string | null,
     url?: string
   }
 }
