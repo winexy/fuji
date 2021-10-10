@@ -1,4 +1,4 @@
-import { f, run, string } from '..'
+import { f, nullable, number, run, string } from '..'
 import { defaultTo } from './default-to'
 
 describe('operators.defaultTo', () => {
@@ -16,6 +16,14 @@ describe('operators.defaultTo', () => {
       expect(result.value).toBe(defaultValue)
     }
   )
+
+  it('should use defaultValue for nullable value', () => {
+    const schema = f(number(), nullable(), defaultTo(42))
+
+    const result = run(schema, null)
+
+    expect(result.value).toBe(42)
+  })
 
   it.each`
     input    | defaultValue | expected

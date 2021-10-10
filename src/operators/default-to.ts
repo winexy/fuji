@@ -1,5 +1,5 @@
 import { Rule } from '../types'
-import { isString, isUndef } from '../utils'
+import { isString, isNil } from '../utils'
 
 export type DefaultToType = 'default-to'
 
@@ -13,7 +13,7 @@ export const defaultTo = <
   func: ctx => ({
     ...ctx,
     current:
-      isUndef(ctx.current) || (isString(ctx.current) && ctx.current === '')
+      isNil(ctx.current) || (isString(ctx.current) && ctx.current === '')
         ? defaultValue
         : ctx.current
   })
