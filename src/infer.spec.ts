@@ -46,7 +46,9 @@ describe('Infer', () => {
         property: f(string(), nullable(), required())
       })
 
-      const result = run(schema, undefined)
+      const result = run(schema, {
+        property: undefined
+      })
 
       if (!result.invalid) {
         expectTypeOf(result.value.property).toEqualTypeOf<string | null>()
@@ -58,7 +60,9 @@ describe('Infer', () => {
         property: f(string(), required())
       })
 
-      const result = run(schema, undefined)
+      const result = run(schema, {
+        property: undefined
+      })
 
       if (!result.invalid) {
         expectTypeOf(result.value.property).toEqualTypeOf<string>()
@@ -70,7 +74,9 @@ describe('Infer', () => {
         property: f(string(), nullable())
       })
 
-      const result = run(schema, undefined)
+      const result = run(schema, {
+        property: undefined
+      })
 
       if (!result.invalid) {
         expectTypeOf(result.value.property).toEqualTypeOf<
