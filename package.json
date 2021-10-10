@@ -1,6 +1,6 @@
 {
   "name": "@winexy/fuji",
-  "version": "0.1.0-beta.20",
+  "version": "0.1.0-beta.21",
   "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
