@@ -342,7 +342,7 @@ describe('allowUnknown', () => {
   })
 })
 
-describe('excldueUndef', () => {
+describe('excludeUndef', () => {
   it('should exclude undefined properties by default', () => {
     const schema = f.shape({
       is_important: f(string()),
