@@ -11,10 +11,12 @@ import {
   positive,
   required,
   run,
+  shape,
   string,
   use
 } from '.'
 import { expectTypeOf } from 'expect-type'
+import { nullable } from './rules/nullable'
 
 describe('run', () => {
   test('should correctly transform value', () => {
@@ -378,5 +380,96 @@ describe('excludeUndef', () => {
       is_important: '1',
       is_completed: undefined
     })
+  })
+})
+
+describe('canSkipCheck & shouldSkipCheck', () => {
+  it('should not run validation if context is can be skipped', () => {
+    const numberRule = number()
+    const maxRule = max(42)
+
+    jest.spyOn(numberRule, 'func')
+    jest.spyOn(maxRule, 'func')
+
+    const schema = f(numberRule, maxRule, nullable())
+    const result = run(schema, null)
+
+    expect(result.invalid).toBeFalse()
+    expect(numberRule.func).not.toBeCalled()
+    expect(maxRule.func).not.toBeCalled()
+  })
+
+  it('should run validations if skip cannot be skipped', () => {
+    const numberRule = number()
+    numberRule.canSkipCheck = false
+
+    jest.spyOn(numberRule, 'func')
+
+    const schema = f(numberRule, nullable())
+    const result = run(schema, null)
+
+    expect(result.invalid).toBeTrue()
+    expect(numberRule.func).toBeCalled()
+  })
+
+  it('should skip null check for nested properties', () => {
+    const schema = f.shape({
+      name: f(string(), required()),
+      age: f(number(), nullable())
+    })
+
+    const result = run(schema, {
+      name: 'john',
+      age: null
+    })
+
+    expect(result.invalid).toBeFalse()
+  })
+
+  it('should skip check for nested objects optional properties passed as undefined', () => {
+    const schema = f.shape({
+      id: f(number()),
+      user: f.shape({
+        name: f(string(), required()),
+        age: f(number(), nullable())
+      })
+    })
+
+    const result = run(schema, {
+      id: 42,
+      user: undefined
+    })
+
+    expect(result.invalid).toBeFalse()
+  })
+
+  it('should skip checks for nested nullable object properties', () => {
+    const schema = f.shape({
+      user: f(
+        nullable(),
+        shape({
+          name: f(string(), required()),
+          age: f(number(), nullable())
+        })
+      )
+    })
+
+    const result = run(schema, {
+      user: null
+    })
+
+    expect(result.invalid).toBeFalse()
+  })
+
+  it('should skip check for nested nullable array', () => {
+    const schema = f.shape({
+      user: f(nullable(), arrayOf(f(string(), required())))
+    })
+
+    const result = run(schema, {
+      user: null
+    })
+
+    expect(result.invalid).toBeFalse()
   })
 })
