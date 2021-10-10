@@ -193,9 +193,13 @@ export type Infer<FujiSchema> = FujiSchema extends Fuji<
     : Value extends Array<AnyShapeSchema>
     ? InferArrayOfRecords<Value>[]
     : RequiredType extends $RuleType
-    ? Value
+    ? NullableType extends $RuleType
+      ? Value | null
+      : Value
     : DefaultToType extends $RuleType
     ? Value
+    : NullableType extends $RuleType
+    ? Value | null
     : Value | undefined
   : never
 

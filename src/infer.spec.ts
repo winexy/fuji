@@ -1,5 +1,5 @@
 import { expectTypeOf } from 'expect-type'
-import { defaultTo, f, run, string } from '.'
+import { defaultTo, f, nullable, run, string, required } from '.'
 
 describe('Infer', () => {
   describe('defaultTo', () => {
@@ -36,6 +36,46 @@ describe('Infer', () => {
           is_important?: string
           is_completed: string
         }>()
+      }
+    })
+  })
+
+  describe('nullable', () => {
+    it('should infer required & nullable', () => {
+      const schema = f.shape({
+        property: f(string(), nullable(), required())
+      })
+
+      const result = run(schema, undefined)
+
+      if (!result.invalid) {
+        expectTypeOf(result.value.property).toEqualTypeOf<string | null>()
+      }
+    })
+
+    it('should infer non nullable required property', () => {
+      const schema = f.shape({
+        property: f(string(), required())
+      })
+
+      const result = run(schema, undefined)
+
+      if (!result.invalid) {
+        expectTypeOf(result.value.property).toEqualTypeOf<string>()
+      }
+    })
+
+    it('should infer nullable & optional', () => {
+      const schema = f.shape({
+        property: f(string(), nullable())
+      })
+
+      const result = run(schema, undefined)
+
+      if (!result.invalid) {
+        expectTypeOf(result.value.property).toEqualTypeOf<
+          string | null | undefined
+        >()
       }
     })
   })
