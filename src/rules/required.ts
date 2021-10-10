@@ -7,6 +7,7 @@ export const required = <Value extends any = any>(
   msg?: string
 ): Rule<RequiredType, Value> => ({
   type: 'required',
+  canSkipCheck: false,
   func(ctx) {
     ctx.required = true
 

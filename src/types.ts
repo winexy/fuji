@@ -122,6 +122,7 @@ export type RuleFunc<A, B = A> = (ctx: VContext<A>) => VContext<B>
 
 export type Rule<Type extends RuleType, A, B = A> = {
   type: Type
+  canSkipCheck: boolean
   func: RuleFunc<A, B>
 }
 /** Rule END */

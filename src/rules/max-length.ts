@@ -14,6 +14,7 @@ export const maxLength = <Value extends WithLength>(
   msg?: string
 ): Rule<MaxLengthType, Value> => ({
   type: 'max-length',
+  canSkipCheck: true,
   func(ctx) {
     if (ctx.current != null && ctx.current.length > limit) {
       ctx.errors.push(createError('max-length', msg, ctx, { limit }))

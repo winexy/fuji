@@ -7,6 +7,7 @@ export const nullable = <Value extends any = any>(): Rule<
   Value
 > => ({
   type: 'nullable',
+  canSkipCheck: false,
   func(ctx) {
     ctx.nullable = true
     return ctx

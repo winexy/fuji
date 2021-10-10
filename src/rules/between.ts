@@ -1,5 +1,5 @@
 import type { Rule } from '../types'
-import { createError, isUndef } from '../utils'
+import { createError } from '../utils'
 
 export type BetweenType = 'between'
 
@@ -16,10 +16,9 @@ export const between = (
   msg?: string
 ): Rule<BetweenType, number> => ({
   type: 'between',
+  canSkipCheck: true,
   func(ctx) {
-    const shouldCheck = ctx.required || !isUndef(ctx.current)
-
-    if (shouldCheck && (ctx.current < left || ctx.current > right)) {
+    if (ctx.current < left || ctx.current > right) {
       ctx.errors.push(createError('between', msg, ctx, { left, right }))
     }
 

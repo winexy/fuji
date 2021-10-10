@@ -17,6 +17,7 @@ export const use = <T>(
   msg: string
 ): Rule<'use', T> => ({
   type: 'use',
+  canSkipCheck: true,
   func(ctx) {
     if (!predicate(ctx.current)) {
       ctx.errors.push(createError(rule, msg, ctx, { f: predicate }))

@@ -8,6 +8,7 @@ export const arrayOf = <Type extends RuleType, Value>(
   schema: Fuji<Type, Value>
 ): Rule<ArrayOfType, Value[]> => ({
   type: 'array-of',
+  canSkipCheck: true,
   func(context) {
     if (Array.isArray(context.current)) {
       return context.current.reduce((ctx, current, index) => {

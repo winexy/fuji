@@ -43,6 +43,7 @@ export const shape = <Shape extends AnyShapeSchema>(
   schema: Shape
 ): Rule<ShapeType, Shape> => ({
   type: 'shape',
+  canSkipCheck: true,
   func(ctx) {
     const keys: Array<keyof Shape> = Object.keys(schema)
     const { failFast, allowUnknown, excludeUndef } = ctx.config

@@ -7,6 +7,7 @@ type AnyObject = Record<any, any>
 
 export const object = (msg?: string): Rule<ObjectType, AnyObject> => ({
   type: 'object',
+  canSkipCheck: true,
   func(ctx) {
     if (!isObject(ctx.current)) {
       ctx.errors.push(createError('object', msg, ctx))

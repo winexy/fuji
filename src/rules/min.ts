@@ -8,13 +8,12 @@ export type MinMeta = {
 }
 
 export const min = (
-  
   limit: number,
- 
-  msg?: string
 
+  msg?: string
 ): Rule<MinType, number> => ({
   type: 'min',
+  canSkipCheck: true,
   func(ctx) {
     if (ctx.current < limit) {
       ctx.errors.push(createError('min', msg, ctx, { limit }))

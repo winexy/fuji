@@ -5,6 +5,7 @@ export type NegativeType = 'negative'
 
 export const negative = (msg?: string): Rule<NegativeType, number> => ({
   type: 'negative',
+  canSkipCheck: true,
   func(ctx) {
     if (ctx.current >= 0) {
       ctx.errors.push(createError('negative', msg, ctx))

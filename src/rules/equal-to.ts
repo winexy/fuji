@@ -12,6 +12,7 @@ export const equalTo = <Value>(
   msg?: string
 ): Rule<EqualToType, Value> => ({
   type: 'equal-to',
+  canSkipCheck: true,
   func(ctx) {
     if (ctx.current !== target) {
       ctx.errors.push(createError('equal-to', msg, ctx, { target }))

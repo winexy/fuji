@@ -14,13 +14,9 @@ export const minLength = <Value extends WithLength>(
   msg?: string
 ): Rule<MinLengthType, Value> => ({
   type: 'min-length',
+  canSkipCheck: true,
   func(ctx) {
-    const shouldCheck = ctx.required || !isNil(ctx.current)
-
-    if (
-      shouldCheck &&
-      (isNil(ctx.current.length) || ctx.current.length < limit)
-    ) {
+    if (isNil(ctx.current.length) || ctx.current.length < limit) {
       ctx.errors.push(createError('min-length', msg, ctx, { limit }))
     }
 

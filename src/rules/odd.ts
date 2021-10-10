@@ -5,6 +5,7 @@ export type OddType = 'odd'
 
 export const odd = (msg?: string): Rule<OddType, number> => ({
   type: 'odd',
+  canSkipCheck: true,
   func(ctx) {
     if (ctx.current % 2 === 0) {
       ctx.errors.push(createError('odd', msg, ctx))

@@ -10,6 +10,7 @@ export const defaultTo = <
   defaultValue: Exclude<DefaultValue, undefined>
 ): Rule<DefaultToType, Exclude<DefaultValue, undefined>> => ({
   type: 'default-to',
+  canSkipCheck: false,
   func: ctx => ({
     ...ctx,
     current:

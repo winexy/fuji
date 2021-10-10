@@ -14,6 +14,7 @@ export const equalWith = <Value>(
   msg?: string
 ): Rule<EqualWithType, Value> => ({
   type: 'equal-with',
+  canSkipCheck: true,
   func(ctx) {
     if (extractor(ctx.root) !== ctx.current) {
       ctx.errors.push(createError('equal-with', msg, ctx, { f: extractor }))

@@ -14,6 +14,7 @@ export const requiredIf = <Value>(
   msg?: string
 ): Rule<RequiredIfType, Value> => ({
   type: 'required-if',
+  canSkipCheck: false,
   func(ctx) {
     ctx.required = isRequired(ctx.root, ctx.current)
 
