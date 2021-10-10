@@ -11,6 +11,8 @@ import {
 
 export const isUndef = (v: any): v is undefined => v === undefined
 
+export const isNull = (v: any): v is null => v === null
+
 export const isFunc = (v: unknown): v is (...args: any[]) => any =>
   typeof v === 'function'
 
@@ -77,4 +79,11 @@ export const createContext = <Value>(
 
 export function createConfig(config: Partial<FujiConfig>): FujiConfig {
   return { ...DEFAULT_CONFIG, ...config }
+}
+
+export function shouldSkipCheck<Value>(ctx: VContext<Value>) {
+  const shouldSkipNullCheck = isNull(ctx.current) && ctx.nullable
+  const shouldSkipUndefCheck = isUndef(ctx.current) && !ctx.required
+
+  return shouldSkipNullCheck || shouldSkipUndefCheck
 }
